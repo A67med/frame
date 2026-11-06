@@ -245,12 +245,12 @@ def write_config(
 
 def release_binary(root: Path, triple: str) -> Path:
     target_root = Path(os.environ.get("CARGO_TARGET_DIR", root / "src-tauri" / "target"))
-    candidate = target_root / triple / "release" / "harbor"
+    candidate = target_root / triple / "release" / "frame"
     if candidate.is_file():
         return candidate.resolve()
     # Local native builds deliberately omit --target to reuse the warm cache.
     # Never fall back to a different target directory; finalize verifies lipo.
-    native = target_root / "release" / "harbor"
+    native = target_root / "release" / "frame"
     if native.is_file():
         return native.resolve()
     raise RuntimeError(f"Could not locate {candidate}; build with --target {triple}")
@@ -357,7 +357,7 @@ def finalize(args: argparse.Namespace) -> None:
 
 def verify_app(args: argparse.Namespace) -> None:
     app = args.app.resolve()
-    executable = app / "Contents" / "MacOS" / "harbor"
+    executable = app / "Contents" / "MacOS" / "frame"
     frameworks_dir = app / "Contents" / "Frameworks"
     if not executable.is_file():
         raise RuntimeError(f"Harbor executable is missing from {app}")

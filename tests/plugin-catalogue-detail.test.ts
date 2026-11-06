@@ -215,7 +215,7 @@ test("loading without a live bridge answers nothing instead of throwing", async 
   assert.equal(await loadCapstanDetail(capstanId("p", "https://x/1"), "movie"), null);
 });
 
-test("an id the rest of Harbor can resolve is taken only in a shape it accepts", () => {
+test("an id the rest of Frame can resolve is taken only in a shape it accepts", () => {
   assert.equal(canonicalIdOf({ imdbId: "tt0903747" }, "series"), "tt0903747");
   assert.equal(canonicalIdOf({ tmdbId: "1396" }, "series"), "tmdb:tv:1396");
   assert.equal(canonicalIdOf({ tmdbId: "1396" }, "movie"), "tmdb:movie:1396");

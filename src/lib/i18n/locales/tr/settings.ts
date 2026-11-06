@@ -439,7 +439,7 @@ const settings: Record<string, string> = {
   "Cash straight to people living in extreme poverty, no strings.":
     "Hiçbir koşul olmadan, aşırı yoksulluk içinde yaşayan insanlara doğrudan nakit yardımı.",
   "Catalogs to show": "Gösterilecek kataloglar",
-  "Catch stremio:// install links inside Harbor": "stremio:// yükleme bağlantılarını Harbor'da aç",
+  "Catch stremio:// install links inside Frame": "stremio:// yükleme bağlantılarını Frame'da aç",
   Cause: "Neden",
   Change: "Değiştir",
   "Change banner": "Kapak görselini değiştir",
@@ -1246,18 +1246,18 @@ const settings: Record<string, string> = {
     "Frame Setup Frame güncellemesini tamamlayamadı. Hiçbir değişiklik yapılmadı.",
   "Frame Voyages": "Frame Yolculukları",
   "Frame account": "Frame hesabı",
-  "Harbor catches stremio:// install links so the configure-and-install flow stays inside the app.":
-    "Harbor stremio:// kurulum bağlantılarını yakalar, böylece yapılandırma ve kurulum akışı uygulama içinde kalır.",
-  "Harbor catches stremio:// install links so the configure-and-install flow stays inside the app. Every install also syncs to your Stremio account, so the official app remains the canonical home for your library.":
-    "Harbor, stremio:// yükleme bağlantılarını yakalayarak yapılandırma ve yükleme sürecini uygulama içinde tutar. Her yükleme Stremio hesabınızla da eşzamanlanır; böylece resmî uygulama, kitaplığınızın ana merkezi olmaya devam eder.",
+  "Frame catches stremio:// install links so the configure-and-install flow stays inside the app.":
+    "Frame stremio:// kurulum bağlantılarını yakalar, böylece yapılandırma ve kurulum akışı uygulama içinde kalır.",
+  "Frame catches stremio:// install links so the configure-and-install flow stays inside the app. Every install also syncs to your Stremio account, so the official app remains the canonical home for your library.":
+    "Frame, stremio:// yükleme bağlantılarını yakalayarak yapılandırma ve yükleme sürecini uygulama içinde tutar. Her yükleme Stremio hesabınızla da eşzamanlanır; böylece resmî uygulama, kitaplığınızın ana merkezi olmaya devam eder.",
   "Frame checks a few times a day while it's open and lets you know here.":
     "Frame açıkken günde birkaç kez kontrol eder ve sizi burada bilgilendirir.",
   "Frame checks automatically every few hours.":
     "Frame birkaç saatte bir otomatik olarak kontrol eder.",
-  "Harbor checks harbor.site for new versions and installs them in place.":
-    "Harbor yeni sürümleri harbor.site üzerinden kontrol eder ve mevcut kurulumun üzerine yükler.",
-  "Harbor checks harbor.site for new versions and installs them in place. Nothing installs until you choose to, and a dismissed update never nags you again.":
-    "Harbor, harbor.site üzerinden yeni sürümleri kontrol eder ve mevcut kurulumun üzerine yükler. Siz onaylamadan hiçbir şey yüklenmez ve reddettiğiniz bir güncelleme için bir daha bildirim almazsınız.",
+  "Frame checks harbor.site for new versions and installs them in place.":
+    "Frame yeni sürümleri harbor.site üzerinden kontrol eder ve mevcut kurulumun üzerine yükler.",
+  "Frame checks harbor.site for new versions and installs them in place. Nothing installs until you choose to, and a dismissed update never nags you again.":
+    "Frame, harbor.site üzerinden yeni sürümleri kontrol eder ve mevcut kurulumun üzerine yükler. Siz onaylamadan hiçbir şey yüklenmez ve reddettiğiniz bir güncelleme için bir daha bildirim almazsınız.",
   "Frame checks its GitHub releases for new versions and installs them in place. Nothing installs until you choose to, and a dismissed update never nags you again.":
     "Frame, GitHub üzerinden yeni sürümleri kontrol eder ve mevcut kurulumun üzerine yükler. Siz onaylamadan hiçbir şey yüklenmez ve reddettiğiniz bir güncelleme için bir daha bildirim almazsınız.",
   "Frame couldn't analyze the audio for this source. Try again or adjust it manually.":
@@ -1337,8 +1337,8 @@ const settings: Record<string, string> = {
     "Frame'ın yerleşik OpenSubtitles araması varsayılan olarak açıktır. Bir OpenSubtitles eklentisi yüklerseniz sonuçların yinelenmemesi için bu özellik otomatik olarak devreden çıkar.",
   "Frame's built-in frame interpolation. Smooths panning, best on anime. Needs a display refresh rate above the video's frame rate, and can stutter on weak GPUs. Lighter than SVP.":
     "Frame'ın yerleşik kare ara değerleme özelliği. Kamera kaydırmalarını yumuşatır ve en iyi sonucu animelerde verir. Ekran yenileme hızının videonun kare hızından yüksek olması gerekir; zayıf GPU'larda takılabilir. SVP'den daha hafiftir.",
-  "Harbor's in-app installer animates the manifest install and keeps you in context. Anything Harbor installs is also synced to your Stremio account, so the official app stays the canonical library. Turn this off and Stremio becomes the only handler for stremio:// links; Harbor still installs anything you trigger from inside the app (Configure & install, paste, drag-and-drop).":
-    "Harbor'ın uygulama içi yükleyicisi, manifest yüklemesini animasyonla gösterir ve bulunduğunuz ekrandan ayrılmanızı gerektirmez. Harbor'ın yüklediği her şey Stremio hesabınızla da eşitlenir; böylece resmi uygulama ana kitaplığınız olarak kalır. Bunu kapatırsanız stremio:// bağlantılarını yalnızca Stremio açar. Harbor içinden başlattığınız yüklemeler (Yapılandır ve yükle, yapıştırma, sürükleyip bırakma) yine Harbor tarafından yapılır.",
+  "Frame's in-app installer animates the manifest install and keeps you in context. Anything Frame installs is also synced to your Stremio account, so the official app stays the canonical library. Turn this off and Stremio becomes the only handler for stremio:// links; Frame still installs anything you trigger from inside the app (Configure & install, paste, drag-and-drop).":
+    "Frame'ın uygulama içi yükleyicisi, manifest yüklemesini animasyonla gösterir ve bulunduğunuz ekrandan ayrılmanızı gerektirmez. Frame'ın yüklediği her şey Stremio hesabınızla da eşitlenir; böylece resmi uygulama ana kitaplığınız olarak kalır. Bunu kapatırsanız stremio:// bağlantılarını yalnızca Stremio açar. Frame içinden başlattığınız yüklemeler (Yapılandır ve yükle, yapıştırma, sürükleyip bırakma) yine Frame tarafından yapılır.",
   "Frame's native player chrome.": "Frame'ın yerel oynatıcı arayüzü.",
   "Frame's player applies the interpolation itself, embedded like normal playback, and starts SVP Manager in the tray for licensing. Restart playback to apply. If video goes black or won't start, turn this off.":
     "Frame'ın oynatıcısı ara değerlemeyi normal oynatma gibi gömülü olarak kendisi uygular ve lisanslama için SVP Manager'ı sistem tepsisinde başlatır. Uygulamak için oynatmayı yeniden başlatın. Görüntü kararır veya video başlamazsa bunu kapatın.",
@@ -1350,8 +1350,8 @@ const settings: Record<string, string> = {
   "Heads up": "Dikkat",
   "Heads up: Frame was built in English. Multi-language support is partial, so your addons usually catch what Frame's own filters miss. If you speak another language and want to help fill the gaps, the source is open.":
     "Bilginize: Frame İngilizce olarak geliştirildi. Çoklu dil desteği kısmi olduğundan Frame'ın kendi filtrelerinin kaçırdıklarını genellikle eklentileriniz yakalar. Başka bir dil biliyor ve eksiklerin giderilmesine yardımcı olmak istiyorsanız kaynak kodu açıktır.",
-  "Heads up: if Stremio is also installed, Windows may ask which app to use the first time a stremio:// link fires. Pick Harbor to make it stick.":
-    "Bilginize: Stremio da yüklüyse Windows, bir stremio:// bağlantısı ilk kez açıldığında hangi uygulamanın kullanılacağını sorabilir. Kalıcı olması için Harbor'ı seçin.",
+  "Heads up: if Stremio is also installed, Windows may ask which app to use the first time a stremio:// link fires. Pick Frame to make it stick.":
+    "Bilginize: Stremio da yüklüyse Windows, bir stremio:// bağlantısı ilk kez açıldığında hangi uygulamanın kullanılacağını sorabilir. Kalıcı olması için Frame'ı seçin.",
   "Heads up: most IPTV providers cap how many streams an account can run at the same time. If other devices or players are using these credentials, close them and try again.":
     "Dikkat: Çoğu IPTV sağlayıcısı, bir hesabın aynı anda çalıştırabileceği yayın sayısını sınırlar. Bu giriş bilgileri başka cihazlarda veya oynatıcılarda kullanılıyorsa bunları kapatıp tekrar deneyin.",
   "Heads up: {keys} can load outside scripts or open your player to the network. Only keep these if you know exactly what they do.":

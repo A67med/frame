@@ -222,8 +222,8 @@ const settingsRefinements: Record<string, string> = {
   "Email address or Discord handle": "邮箱地址或 Discord 用户名",
   "Enable P2P streaming to run the local engine self-test.":
     "启用 P2P 播放后才能运行本地引擎自检。",
-  "Enter a full http:// or https:// address, or leave blank to use Harbor's server.":
-    "输入完整的 http:// 或 https:// 地址，留空则使用 Harbor 的服务器。",
+  "Enter a full http:// or https:// address, or leave blank to use Frame's server.":
+    "输入完整的 http:// 或 https:// 地址，留空则使用 Frame 的服务器。",
   "Enter a size of 0 or more.": "请输入不小于 0 的大小。",
   "Enter a whole number of 0 or more.": "请输入不小于 0 的整数。",
   "Enter all 4 digits to save this PIN.": "输入全部 4 位数字以保存此 PIN。",

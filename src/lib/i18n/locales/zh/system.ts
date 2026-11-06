@@ -52,8 +52,8 @@ const system: Record<string, string> = {
     "将整个 Frame 配置导出为单个文件，以便在新电脑上恢复或留作备份。",
   Privacy: "隐私",
   "Stremio install links": "Stremio 安装链接",
-  "Harbor catches stremio:// install links so the configure-and-install flow stays inside the app.":
-    "Harbor 会接管 stremio:// 安装链接，让配置和安装流程都在应用内完成。",
+  "Frame catches stremio:// install links so the configure-and-install flow stays inside the app.":
+    "Frame 会接管 stremio:// 安装链接，让配置和安装流程都在应用内完成。",
   "API budget": "API 配额",
   "TorBox API key": "TorBox API 密钥",
   "AllDebrid API key": "AllDebrid API 密钥",
@@ -86,8 +86,8 @@ const system: Record<string, string> = {
   "Token name can be anything. The permission row must be exactly {b1} + {b2} + {b3}.":
     "令牌名称可随意填写。权限行必须严格设置为 {b1} + {b2} + {b3}。",
   Failed: "失败",
-  "Harbor checks harbor.site for new versions and installs them in place. Nothing installs until you choose to, and a dismissed update never nags you again.":
-    "Harbor 会在 harbor.site 上检查新版本并就地安装更新。只有在你选择后才会安装，忽略的更新也不会再次提醒。",
+  "Frame checks harbor.site for new versions and installs them in place. Nothing installs until you choose to, and a dismissed update never nags you again.":
+    "Frame 会在 harbor.site 上检查新版本并就地安装更新。只有在你选择后才会安装，忽略的更新也不会再次提醒。",
   "Frame checks its GitHub releases for new versions and installs them in place. Nothing installs until you choose to, and a dismissed update never nags you again.":
     "Frame 会在 GitHub 上检查新版本并就地安装更新。只有在你选择后才会安装，忽略的更新也不会再次提醒。",
   "Export your entire Frame setup to a single file, then restore it on a new computer or keep it as a backup. Everything is included except your Stremio sign-in.":
@@ -108,9 +108,9 @@ const system: Record<string, string> = {
   "Restore and reload": "恢复并重新加载",
   "Receive early builds with the newest fixes before they reach the stable release. Betas can be rough around the edges; switch this off to return to stable at the next update.":
     "抢先获取包含最新修复的版本，无需等到稳定版发布。测试版可能不够稳定；关闭此选项后，将在下次更新时恢复到稳定版。",
-  "Catch stremio:// install links inside Harbor": "在 Harbor 内接管 stremio:// 安装链接",
-  "stremio:// links now open in the Stremio app. Harbor will only install when you trigger it from inside Harbor.":
-    "stremio:// 链接现在会在 Stremio 应用中打开。仅当你从 Harbor 内触发安装时，Harbor 才会执行安装。",
+  "Catch stremio:// install links inside Frame": "在 Frame 内接管 stremio:// 安装链接",
+  "stremio:// links now open in the Stremio app. Frame will only install when you trigger it from inside Frame.":
+    "stremio:// 链接现在会在 Stremio 应用中打开。仅当你从 Frame 内触发安装时，Frame 才会执行安装。",
   "Downloaded. Ready to install and restart.": "下载完成。可以安装并重启。",
   "Couldn't reach the update server. Try again in a moment.": "无法连接到更新服务器。请稍后重试。",
   "Update now": "立即更新",

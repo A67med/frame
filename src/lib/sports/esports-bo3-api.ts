@@ -11,7 +11,7 @@ import {
  * list endpoint, so one request covers a whole title instead of one request per match.
  *
  * Deliberately never read: bet_updates (bookmaker affiliate redirects and prices), ai_predictions,
- * points, rating and stars. Harbor does not display betting markets or model predictions.
+ * points, rating and stars. Frame does not display betting markets or model predictions.
  */
 export type Bo3GameId = "cs2" | "valorant" | "lol" | "dota2" | "deadlock" | "r6" | "mlbb";
 export type Bo3Status = "current" | "upcoming" | "finished";

@@ -1358,7 +1358,7 @@ const catalogAC: Record<string, string> = {
   Catalogs: "कैटलॉग",
   "Catalogs & metadata": "कैटलॉग और मेटाडेटा",
   "Catalogs to show": "दिखाए जाने वाले कैटलॉग",
-  "Catch stremio:// install links inside Harbor": "Harbor में stremio:// इंस्टॉल लिंक हैंडल करें",
+  "Catch stremio:// install links inside Frame": "Frame में stremio:// इंस्टॉल लिंक हैंडल करें",
   Categories: "श्रेणियाँ",
   Cause: "कारण",
   "Celebrated actors": "प्रसिद्ध कलाकार",

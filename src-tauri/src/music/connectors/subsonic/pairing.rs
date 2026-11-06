@@ -64,7 +64,7 @@ fn read(app: &tauri::AppHandle) -> Result<Map<String, Value>, String> {
 
 fn write(app: &tauri::AppHandle, items: Map<String, Value>) -> Result<(), String> {
     let content = serde_json::to_string(&Value::Object(items))
-        .map_err(|error| format!("Harbor could not store this music server sign in: {error}"))?;
+        .map_err(|error| format!("Frame could not store this music server sign in: {error}"))?;
     crate::settings_store::secrets_write(app.clone(), content)
 }
 

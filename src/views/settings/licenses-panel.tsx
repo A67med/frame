@@ -6,7 +6,7 @@ import { APP_VERSION } from "@/lib/build-info";
 import { Section } from "./shared";
 import { ROW_DESC } from "./kit";
 import { AssetDownloadFeedback, useAssetDownload, type AssetDownload } from "./asset-download";
-import harborWordmark from "@/assets/harbor-wordmark.svg";
+import frameWordmark from "@/assets/frame-wordmark.svg";
 import crowdinLogo from "@/assets/crowdin-mark.png";
 import stremioAddonsLogo from "@/assets/stremio-addons-net.png";
 import stremioLogo from "@/assets/stremio.png";
@@ -770,7 +770,7 @@ export function LicensesPanel() {
     <>
       <div className="hset-attr-hero">
         <span className="hset-attr-wordmark">
-          <img src={harborWordmark} alt="Frame" draggable={false} />
+          <img src={frameWordmark} alt="Frame" draggable={false} />
           <span className="hset-attr-version">{APP_VERSION}</span>
         </span>
         <p className="hset-attr-license">

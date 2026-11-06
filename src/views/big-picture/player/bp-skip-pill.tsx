@@ -26,7 +26,7 @@ const PILL_H = "clamp(56px,6.4vh,86px)";
 // key and Enter is Select on every D-pad, so a pill that grabbed focus the
 // moment an intro started would spend the next ninety seconds turning the two
 // most-used remote presses into a seek nobody asked for. Netflix can afford
-// that because Select does not mean pause there. Harbor cannot.
+// that because Select does not mean pause there. Frame cannot.
 //
 // So it carries no data-bp-autofocus. That attribute is not a tiebreak, it is a
 // force-seed: use-bp-focus stamps it on the settle pass with no user press at

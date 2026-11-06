@@ -396,10 +396,15 @@ async function withoutSources() {
       "Put the layer in this checkout, or set HARBOR_CAPSTAN_OPTIONAL=1 to build deliberately without it.",
     );
   }
-  // tauri.conf.json names resources/capstan/ unconditionally. The bundler skips an empty
-  // directory and cannot resolve a missing one.
+  // tauri.conf.json names resources/capstan/ unconditionally. The bundler cannot resolve a
+  // missing directory, and an empty one makes its resource list silently drop other entries,
+  // which shipped a Windows installer without libmpv, so the directory always holds a file.
   rmSync(dest, { recursive: true, force: true });
   mkdirSync(dest, { recursive: true });
+  writeFileSync(
+    join(dest, "NOT-INCLUDED.txt"),
+    "This build was made without the extension compat layer, so extensions will not run.\n",
+  );
   warn(
     "BUILDING WITHOUT EXTENSION SUPPORT. HARBOR_CAPSTAN_OPTIONAL is set and this checkout has no",
     "compat layer, so nothing is staged and installed extensions will not run in this build.",

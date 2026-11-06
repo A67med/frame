@@ -235,8 +235,8 @@ const catalog08: Record<string, string> = {
   "Start here. The ones almost everyone has.": "Inizia da qui. Quelli che hanno quasi tutti.",
   "Start import": "Avvia importazione",
   "Start of manga": "Inizio del manga",
-  "Start or stop recording a GIF of the video (no subtitles). Saves to Pictures/Harbor.":
-    "Avvia o interrompi la registrazione di una GIF del video, senza sottotitoli. Viene salvata in Immagini/Harbor.",
+  "Start or stop recording a GIF of the video (no subtitles). Saves to Pictures/Frame.":
+    "Avvia o interrompi la registrazione di una GIF del video, senza sottotitoli. Viene salvata in Immagini/Frame.",
   "Start over": "Ricomincia",
   "Start playback": "Avvia riproduzione",
   "Start recording": "Avvia registrazione",

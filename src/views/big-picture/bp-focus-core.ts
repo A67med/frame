@@ -231,7 +231,7 @@ function chromeInset(): number {
 //
 // The bottom term used to reserve bpSafeAreaPx().y and nothing else. --bp-hint-h
 // is 65px at 1140x641 with the 2 percent default overscan while safe-y alone is
-// 13, so a focused cell settled 28px behind Harbor's own OK / Back footer and
+// 13, so a focused cell settled 28px behind Frame's own OK / Back footer and
 // well inside its 180 percent scrim. Only bp-detail and bp-person reach the line
 // that uses this: every other page returns at the self-rail guard below.
 //

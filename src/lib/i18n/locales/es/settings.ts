@@ -313,8 +313,7 @@ const settings: Record<string, string> = {
   "Card overlays": "Superposiciones de tarjetas",
   "Card size": "Tamaño de las tarjetas",
   "Catalogs to show": "Catálogos para mostrar",
-  "Catch stremio:// install links inside Harbor":
-    "Abrir enlaces de instalación stremio:// en Harbor",
+  "Catch stremio:// install links inside Frame": "Abrir enlaces de instalación stremio:// en Frame",
   "chat ID": "ID del chat",
   "Chat ID": "ID del chat",
   "Check for updates": "Buscar actualizaciones",
@@ -786,16 +785,16 @@ const settings: Record<string, string> = {
   "Hand-tuned colors. Edit them in the section above.":
     "Colores ajustados a mano. Edítalos en la sección anterior.",
   "Frame {version} available": "Frame {version} disponible",
-  "Harbor catches stremio:// install links so the configure-and-install flow stays inside the app.":
-    "Harbor intercepta los enlaces de instalación stremio:// para que el proceso de configuración e instalación permanezca dentro de la app.",
-  "Harbor catches stremio:// install links so the configure-and-install flow stays inside the app. Every install also syncs to your Stremio account, so the official app remains the canonical home for your library.":
-    "Harbor intercepta los enlaces de instalación stremio:// para que el proceso de configuración e instalación permanezca dentro de la app. Cada instalación también se sincroniza con tu cuenta de Stremio, por lo que la app oficial sigue siendo el lugar principal de tu biblioteca.",
+  "Frame catches stremio:// install links so the configure-and-install flow stays inside the app.":
+    "Frame intercepta los enlaces de instalación stremio:// para que el proceso de configuración e instalación permanezca dentro de la app.",
+  "Frame catches stremio:// install links so the configure-and-install flow stays inside the app. Every install also syncs to your Stremio account, so the official app remains the canonical home for your library.":
+    "Frame intercepta los enlaces de instalación stremio:// para que el proceso de configuración e instalación permanezca dentro de la app. Cada instalación también se sincroniza con tu cuenta de Stremio, por lo que la app oficial sigue siendo el lugar principal de tu biblioteca.",
   "Frame checks automatically every few hours.":
     "Frame comprueba automáticamente cada pocas horas.",
-  "Harbor checks harbor.site for new versions and installs them in place.":
-    "Harbor busca nuevas versiones en harbor.site y las instala sobre la versión actual.",
-  "Harbor checks harbor.site for new versions and installs them in place. Nothing installs until you choose to, and a dismissed update never nags you again.":
-    "Harbor busca nuevas versiones en harbor.site y las instala sobre la versión actual. No se instala nada hasta que tú lo decidas, y una actualización descartada no volverá a molestarte.",
+  "Frame checks harbor.site for new versions and installs them in place.":
+    "Frame busca nuevas versiones en harbor.site y las instala sobre la versión actual.",
+  "Frame checks harbor.site for new versions and installs them in place. Nothing installs until you choose to, and a dismissed update never nags you again.":
+    "Frame busca nuevas versiones en harbor.site y las instala sobre la versión actual. No se instala nada hasta que tú lo decidas, y una actualización descartada no volverá a molestarte.",
   "Frame checks its GitHub releases for new versions and installs them in place. Nothing installs until you choose to, and a dismissed update never nags you again.":
     "Frame busca nuevas versiones en GitHub y las instala sobre la versión actual. No se instala nada hasta que tú lo decidas, y una actualización descartada no volverá a molestarte.",
   "Frame curated": "Selección de Frame",
@@ -835,8 +834,8 @@ const settings: Record<string, string> = {
     "Frame registrará en Trakt lo que reproduzcas y sincronizará tu lista de seguimiento.",
   "Frame's built-in frame interpolation. Smooths panning, best on anime. Needs a display refresh rate above the video's frame rate, and can stutter on weak GPUs. Lighter than SVP.":
     "Interpolación de fotogramas integrada de Frame. Suaviza los paneos y funciona mejor con anime. Requiere que la frecuencia de actualización de la pantalla sea superior a la velocidad de fotogramas del video y puede entrecortarse en GPU poco potentes. Consume menos recursos que SVP.",
-  "Harbor's in-app installer animates the manifest install and keeps you in context. Anything Harbor installs is also synced to your Stremio account, so the official app stays the canonical library. Turn this off and Stremio becomes the only handler for stremio:// links; Harbor still installs anything you trigger from inside the app (Configure & install, paste, drag-and-drop).":
-    "El instalador integrado de Harbor anima la instalación del manifiesto y te mantiene en contexto. Todo lo que Harbor instala también se sincroniza con tu cuenta de Stremio, por lo que la app oficial sigue siendo la biblioteca principal. Desactiva esta opción para que Stremio sea el único controlador de enlaces stremio://; Harbor seguirá instalando todo lo que actives desde la app (Configurar e instalar, pegar, arrastrar y soltar).",
+  "Frame's in-app installer animates the manifest install and keeps you in context. Anything Frame installs is also synced to your Stremio account, so the official app stays the canonical library. Turn this off and Stremio becomes the only handler for stremio:// links; Frame still installs anything you trigger from inside the app (Configure & install, paste, drag-and-drop).":
+    "El instalador integrado de Frame anima la instalación del manifiesto y te mantiene en contexto. Todo lo que Frame instala también se sincroniza con tu cuenta de Stremio, por lo que la app oficial sigue siendo la biblioteca principal. Desactiva esta opción para que Stremio sea el único controlador de enlaces stremio://; Frame seguirá instalando todo lo que actives desde la app (Configurar e instalar, pegar, arrastrar y soltar).",
   "Frame's native player chrome.": "Interfaz nativa del reproductor de Frame.",
   "Frame's player applies the interpolation itself, embedded like normal playback, and starts SVP Manager in the tray for licensing. Restart playback to apply. If video goes black or won't start, turn this off.":
     "El reproductor de Frame aplica la interpolación por sí mismo, integrada como en la reproducción normal, e inicia SVP Manager en la bandeja para gestionar la licencia. Reinicia la reproducción para aplicarla. Si el video queda en negro o no se inicia, desactiva esta opción.",
@@ -854,8 +853,8 @@ const settings: Record<string, string> = {
     "Atención: {keys} puede cargar scripts externos o exponer tu reproductor a la red. Conserva estas opciones solo si sabes exactamente lo que hacen.",
   "Heads up: Frame was built in English. Multi-language support is partial, so your addons usually catch what Frame's own filters miss. If you speak another language and want to help fill the gaps, the source is open.":
     "Atención: Frame se creó en inglés. La compatibilidad con otros idiomas es parcial, por lo que tus complementos suelen encontrar lo que los filtros de Frame no detectan. Si hablas otro idioma y quieres ayudar a completar lo que falta, el código fuente es abierto.",
-  "Heads up: if Stremio is also installed, Windows may ask which app to use the first time a stremio:// link fires. Pick Harbor to make it stick.":
-    "Atención: si Stremio también está instalado, es posible que Windows pregunte qué app usar la primera vez que se abra un enlace stremio://. Elige Harbor para establecerlo como predeterminado.",
+  "Heads up: if Stremio is also installed, Windows may ask which app to use the first time a stremio:// link fires. Pick Frame to make it stick.":
+    "Atención: si Stremio también está instalado, es posible que Windows pregunte qué app usar la primera vez que se abra un enlace stremio://. Elige Frame para establecerlo como predeterminado.",
   "Health check returns 5xx": "La comprobación de estado devuelve 5xx",
   "Health for {n} services below": "Estado de los {n} servicios siguientes",
   "Hello World": "Hola, mundo",
@@ -1528,8 +1527,8 @@ const settings: Record<string, string> = {
     "Guarda una clave de OMDB en Biblioteca y metadatos para habilitar la obtención de calificaciones.",
   "Save layout": "Guardar diseño",
   "Save rule": "Guardar regla",
-  "Save the current frame (video only, no subtitles) as a PNG to Pictures/Harbor.":
-    "Guarda el fotograma actual (solo video, sin subtítulos) como PNG en Imágenes/Harbor.",
+  "Save the current frame (video only, no subtitles) as a PNG to Pictures/Frame.":
+    "Guarda el fotograma actual (solo video, sin subtítulos) como PNG en Imágenes/Frame.",
   "Save the worker source. Copy": "Guarda el código fuente del worker. Copiar",
   "Save the worker source. Copy {code1} from the Frame repo into a new directory as {code2}.":
     "Guarda el código fuente del worker. Copia {code1} del repositorio de Frame en un directorio nuevo con el nombre {code2}.",
@@ -1724,8 +1723,8 @@ const settings: Record<string, string> = {
     "Marca cuadrada en la barra lateral. Un PNG transparente o un SVG ofrecen mejores resultados.",
   "SSimSuperRes detail refinement": "Refinamiento de detalles de SSimSuperRes",
   "Stable selectors": "Selectores estables",
-  "Start or stop recording a GIF of the video (no subtitles). Saves to Pictures/Harbor.":
-    "Inicia o detén la grabación de un GIF del video (sin subtítulos). Se guarda en Imágenes/Harbor.",
+  "Start or stop recording a GIF of the video (no subtitles). Saves to Pictures/Frame.":
+    "Inicia o detén la grabación de un GIF del video (sin subtítulos). Se guarda en Imágenes/Frame.",
   "Start server": "Iniciar servidor",
   "Step back one frame and pause. Frame-accurate on mpv.":
     "Retrocede un fotograma y pausa. Precisión de fotograma en mpv.",
@@ -1762,8 +1761,8 @@ const settings: Record<string, string> = {
   "Stremio install links": "Enlaces de instalación de Stremio",
   "Stremio library repair": "Reparación de la biblioteca de Stremio",
   "Stremio rail": "Carrusel de Stremio",
-  "stremio:// links now open in the Stremio app. Harbor will only install when you trigger it from inside Harbor.":
-    "Los enlaces stremio:// ahora se abren en la app de Stremio. Harbor solo instalará el complemento cuando lo actives desde Harbor.",
+  "stremio:// links now open in the Stremio app. Frame will only install when you trigger it from inside Frame.":
+    "Los enlaces stremio:// ahora se abren en la app de Stremio. Frame solo instalará el complemento cuando lo actives desde Frame.",
   "Stremio's typeface. Geometric humanist sans.":
     "La tipografía de Stremio. Sans serif humanista y geométrica.",
   "Stretch the featured hero edge to edge and taller, across every layout.":

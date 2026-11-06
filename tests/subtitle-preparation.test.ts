@@ -264,7 +264,7 @@ test("autosync hash swaps use safe archive preparation", async () => {
   const archive = zipSync({ "Movie.2026.WEB-DL.en.srt": strToU8(manyCues) });
   const resolved = await resolveSwapCues(
     { url: dataUrl("application/zip", archive) },
-    { apiKey: "", userAgent: "Harbor-Test" },
+    { apiKey: "", userAgent: "Frame-Test" },
   );
 
   assert.equal(resolved?.cues.length, 24);

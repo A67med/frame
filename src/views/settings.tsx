@@ -8,7 +8,6 @@ import {
   useState,
 } from "react";
 import type { LibraryKey } from "./settings/library-panel";
-import type { RelayMode } from "./settings/relay-section";
 import type { DebridKey } from "./settings/streaming-sources-panel";
 import { SettingsTools } from "./settings/nav";
 import { groupForSection, TOP_GROUPS } from "./settings/groups";
@@ -26,7 +25,6 @@ import { SettingsActiveContext, type SectionId } from "./settings/shared";
 import { SectionCards } from "./settings/section-cards";
 import { LicensesPanel } from "./settings/licenses-panel";
 import { IconsPanel } from "./settings/icons-panel";
-import "./settings/tv-panel/store";
 import { useThemeLibraryOpen } from "./settings/theme-panel/library-open-store";
 import { BackToTop } from "@/components/back-to-top";
 import { resetOmdbBudget } from "@/lib/providers/omdb";
@@ -36,8 +34,6 @@ import { useT } from "@/lib/i18n";
 import { useMediaQuery } from "@/lib/use-media-query";
 import { isBackKey } from "@/lib/keyboard-navigation/geometry";
 
-const IS_WEB = typeof window !== "undefined" && !("__TAURI_INTERNALS__" in window);
-
 const BasicsPanel = lazy(() =>
   import("./settings/basics-panel").then((m) => ({ default: m.BasicsPanel })),
 );
@@ -46,12 +42,6 @@ const AccountStub = lazy(() =>
 );
 const LibraryPanel = lazy(() =>
   import("./settings/library-panel").then((m) => ({ default: m.LibraryPanel })),
-);
-const PluginsPanel = lazy(() =>
-  import("./settings/plugins-panel").then((m) => ({ default: m.PluginsPanel })),
-);
-const RelaySection = lazy(() =>
-  import("./settings/relay-section").then((m) => ({ default: m.RelaySection })),
 );
 const StreamingSourcesPanel = lazy(() =>
   import("./settings/streaming-sources-panel").then((m) => ({ default: m.StreamingSourcesPanel })),
@@ -79,12 +69,6 @@ const ShadersPanel = lazy(() =>
 const PlayerLayoutPanel = lazy(() =>
   import("./settings/player-layout-panel").then((m) => ({ default: m.PlayerLayoutPanel })),
 );
-const HotkeysPanel = lazy(() =>
-  import("./settings/hotkeys-panel").then((m) => ({ default: m.HotkeysPanel })),
-);
-const ControllersPanel = lazy(() =>
-  import("./settings/controllers-panel").then((m) => ({ default: m.ControllersPanel })),
-);
 const ThemePanel = lazy(() =>
   import("./settings/theme-panel").then((m) => ({ default: m.ThemePanel })),
 );
@@ -99,13 +83,6 @@ const BugReportPanel = lazy(() =>
 );
 const SupportPanel = lazy(() =>
   import("./settings/support-panel").then((m) => ({ default: m.SupportPanel })),
-);
-const RemotesPanel = lazy(() =>
-  import("./settings/remotes-panel").then((m) => ({ default: m.RemotesPanel })),
-);
-const TvPanel = lazy(() => import("./settings/tv-panel").then((m) => ({ default: m.TvPanel })));
-const BigPicturePanel = lazy(() =>
-  import("./settings/big-picture-panel").then((m) => ({ default: m.BigPicturePanel })),
 );
 const StoragePanel = lazy(() =>
   import("./settings/storage-panel").then((m) => ({ default: m.StoragePanel })),
@@ -124,8 +101,6 @@ const SECTION_PRELOAD: Partial<Record<SectionId, () => Promise<unknown>>> = {
   basics: () => import("./settings/basics-panel"),
   account: () => import("./settings/account"),
   library: () => import("./settings/library-panel"),
-  plugins: () => import("./settings/plugins-panel"),
-  relay: () => import("./settings/relay-section"),
   streaming: () => import("./settings/streaming-sources-panel"),
   streamFilters: () => import("./settings/stream-filters-panel"),
   p2p: () => import("./settings/p2p-panel"),
@@ -136,8 +111,6 @@ const SECTION_PRELOAD: Partial<Record<SectionId, () => Promise<unknown>>> = {
   anime: () => import("./settings/anime-panel"),
   shaders: () => import("./settings/shaders-panel"),
   playerLayout: () => import("./settings/player-layout-panel"),
-  hotkeys: () => import("./settings/hotkeys-panel"),
-  controllers: () => import("./settings/controllers-panel"),
   theme: () => import("./settings/theme-panel"),
   badges: () => import("./settings/stream-badges-panel"),
   awardIcons: () => import("./settings/award-icons-panel"),
@@ -145,9 +118,6 @@ const SECTION_PRELOAD: Partial<Record<SectionId, () => Promise<unknown>>> = {
   support: () => import("./settings/support-panel"),
   licenses: () => import("./settings/licenses-panel"),
   icons: () => import("./settings/icons-panel"),
-  remotes: () => import("./settings/remotes-panel"),
-  tv: () => import("./settings/tv-panel"),
-  bigPicture: () => import("./settings/big-picture-panel"),
   storage: () => import("./settings/storage-panel"),
   trackers: () => import("./settings/trackers-panel"),
   updates: () => import("./settings/updates-panel"),
@@ -167,16 +137,12 @@ const SECTION_META: Record<SectionId, { label: string; sub: string }> = {
     sub: "The handful of settings most people set once. Sign in, choose how Play behaves, and pick your look.",
   },
   account: {
-    label: "Account",
-    sub: "Your Stremio sign-in. Library, watch progress, and addons sync from here.",
+    label: "Your profile",
+    sub: "Your Stremio account, its addons, and how Frame handles Stremio links.",
   },
   library: {
     label: "Library & metadata",
     sub: "Optional keys that unlock TMDB rails, baked-in poster ratings, fanart, and TVDB episode data.",
-  },
-  plugins: {
-    label: "Plugins",
-    sub: "Small scripts that find streams, manga and books on sites Frame does not know about, installed from repositories you choose.",
   },
   trakt: {
     label: "Trakt",
@@ -197,12 +163,6 @@ const SECTION_META: Record<SectionId, { label: string; sub: string }> = {
   letterboxd: {
     label: "Letterboxd",
     sub: "Bring your Letterboxd watchlist, diary, liked films and lists into Frame via the Stremboxd bridge.",
-  },
-  relay: {
-    label: "Frame Relay",
-    sub: IS_WEB
-      ? "Watch Together rooms are routed through Frame's hosted relay."
-      : "A Cloudflare Worker on your own account that hosts your Watch Together rooms.",
   },
   streaming: {
     label: "Streaming sources",
@@ -244,14 +204,6 @@ const SECTION_META: Record<SectionId, { label: string; sub: string }> = {
     label: "Player layout",
     sub: "Pick a theme, then rearrange every button in the player chrome. Hide what you never use, promote what you do.",
   },
-  hotkeys: {
-    label: "Hotkeys",
-    sub: "Every shortcut Frame responds to. Click a binding to rebind it.",
-  },
-  controllers: {
-    label: "Controllers",
-    sub: "Use a game controller to browse Frame and control playback. Tune the sticks and see the button map.",
-  },
   theme: {
     label: "Theme & appearance",
     sub: "Color presets, custom backgrounds, and the font pair Frame renders in.",
@@ -283,18 +235,6 @@ const SECTION_META: Record<SectionId, { label: string; sub: string }> = {
   icons: {
     label: "Icons & animation",
     sub: "Every icon and animation drawn for Frame, who drew them, and how to take one with you.",
-  },
-  remotes: {
-    label: "Remotes",
-    sub: "Frame on your other devices: the web app, the phone remote, and the manga reader remote.",
-  },
-  tv: {
-    label: "TV Settings",
-    sub: "Find the Frames on your network and choose how Big Picture looks and plays on your TV.",
-  },
-  bigPicture: {
-    label: "Big Picture",
-    sub: "A full screen, couch friendly Frame for TVs, handhelds and big monitors. How it launches, the top-bar button, the interface sounds, and how it fills your screen.",
   },
   storage: {
     label: "Storage",
@@ -363,7 +303,6 @@ export function Settings({ visible = true }: { visible?: boolean }) {
   };
   const [landing, setLanding] = useState<string | null>(null);
   const [active, setActive] = useState<SectionId>(resolveSection(settingsSectionRequest.section));
-  const [relayMode, setRelayMode] = useState<RelayMode>("panel");
   const [pendingAnchor, setPendingAnchor] = useState<SettingsAnchorRequest | null>(null);
   const [pendingPage, setPendingPage] = useState<{ section: SectionId; tab?: string } | null>(null);
   const [query, setQuery] = useState("");
@@ -479,10 +418,6 @@ export function Settings({ visible = true }: { visible?: boolean }) {
     setActive(resolveSection(settingsSectionRequest.section));
   }, [settingsSectionRequest]);
 
-  useEffect(() => {
-    if (active !== "relay") setRelayMode("panel");
-  }, [active]);
-
   const [pageActions, setPageActions] = useState<PageActionReg>(null);
   const [subRegRaw, setSubReg] = useState<SubTabReg>(null);
   const subReg = subRegRaw?.section === active && subRegRaw.tabs.length > 0 ? subRegRaw : null;
@@ -587,7 +522,7 @@ export function Settings({ visible = true }: { visible?: boolean }) {
     if (themeLibOpen) scrollRef.current?.scrollTo({ top: 0 });
   }, [themeLibOpen]);
 
-  const chromeHidden = wide || (active === "relay" && relayMode !== "panel");
+  const chromeHidden = wide;
 
   return (
     <SettingsActiveContext.Provider value={{ setActive: handleNav, openPage }}>
@@ -680,10 +615,6 @@ export function Settings({ visible = true }: { visible?: boolean }) {
                         />
                       )}
 
-                      {active === "relay" && (
-                        <RelaySection mode={relayMode} onModeChange={setRelayMode} />
-                      )}
-
                       {active === "streaming" && (
                         <StreamingSourcesPanel
                           rdDraft={rdDraft}
@@ -705,8 +636,6 @@ export function Settings({ visible = true }: { visible?: boolean }) {
 
                       {active === "p2p" && <P2PPanel />}
 
-                      {active === "plugins" && <PluginsPanel />}
-
                       {active === "language" && <LanguagePanel />}
                       {active === "subtitles" && <SubtitlesPanel />}
 
@@ -720,10 +649,6 @@ export function Settings({ visible = true }: { visible?: boolean }) {
 
                       {active === "playerLayout" && <PlayerLayoutPanel />}
 
-                      {active === "hotkeys" && <HotkeysPanel />}
-
-                      {active === "controllers" && <ControllersPanel />}
-
                       {active === "theme" && <ThemePanel />}
 
                       {active === "badges" && <StreamBadgesPanel />}
@@ -731,12 +656,6 @@ export function Settings({ visible = true }: { visible?: boolean }) {
 
                       {active === "bug" && <BugReportPanel />}
                       {active === "support" && <SupportPanel />}
-
-                      {active === "remotes" && <RemotesPanel />}
-
-                      {active === "tv" && <TvPanel />}
-
-                      {active === "bigPicture" && <BigPicturePanel />}
 
                       {active === "storage" && <StoragePanel />}
 

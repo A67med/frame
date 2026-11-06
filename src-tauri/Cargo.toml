@@ -1,11 +1,11 @@
 [package]
-name = "harbor"
-version = "0.1.0"
-description = "A Stremio client built for adventure"
+name = "frame"
+version = "0.2.0"
+description = "A personal desktop media app for movies and TV"
 edition = "2021"
 
 [lib]
-name = "harbor_lib"
+name = "frame_lib"
 crate-type = ["staticlib", "cdylib", "rlib"]
 
 [build-dependencies]

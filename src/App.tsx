@@ -651,7 +651,7 @@ function Shell({ onReady }: { onReady?: () => void }) {
       kidProfileActive: kid !== null,
     });
     if (!go) return;
-    // Move Harbor onto the chosen monitor before entering Big Picture, so the
+    // Move Frame onto the chosen monitor before entering Big Picture, so the
     // fullscreen that follows binds to that display. Automatic skips the move
     // and leaves the window where the window-state plugin restored it.
     const display = settings.bigPictureDisplay;
@@ -971,7 +971,7 @@ function Shell({ onReady }: { onReady?: () => void }) {
       back: () => goBack(),
       search: () => setSearchOpen(true),
       openSettings: () => setView("settings"),
-      // Profiles, notifications and the account menu needed Harbor accounts. The
+      // Profiles, notifications and the account menu needed Frame accounts. The
       // hooks stay as no-ops so custom theme code that calls them keeps running.
       openNotifications: () => {},
       openAccountMenu: () => {},

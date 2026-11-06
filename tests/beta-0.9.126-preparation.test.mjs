@@ -7,20 +7,12 @@ const read = (path) =>
   readFileSync(new URL("../" + path, import.meta.url), "utf8").replace(/\r\n/g, "\n");
 const notes = JSON.parse(read("src/lib/updater/bundled-release-notes.json"));
 
-test("beta app and managed installer versions agree", () => {
+test("beta app versions agree", () => {
   const version = JSON.parse(read("package.json")).version;
-  for (const path of [
-    "package.json",
-    "src-tauri/tauri.conf.json",
-    "installer/package.json",
-    "installer/src-tauri/tauri.conf.json",
-  ]) {
+  for (const path of ["package.json", "src-tauri/tauri.conf.json"]) {
     assert.equal(JSON.parse(read(path)).version, version, path);
   }
-  for (const [path, name] of [
-    ["src-tauri", "harbor"],
-    ["installer/src-tauri", "harbor-setup"],
-  ]) {
+  for (const [path, name] of [["src-tauri", "frame"]]) {
     assert.ok(read(path + "/Cargo.toml").includes('version = "' + version + '"'));
     assert.ok(
       read(path + "/Cargo.lock").includes('name = "' + name + '"\nversion = "' + version + '"'),

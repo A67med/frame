@@ -60,7 +60,7 @@ pub async fn speech_intervals(
         .find(|(k, _)| k.to_lowercase() == "user-agent")
         .map(|(_, v)| v.clone());
     cmd.arg("-user_agent")
-        .arg(ua.unwrap_or_else(|| "Harbor".into()));
+        .arg(ua.unwrap_or_else(|| "Frame".into()));
     let blob = header_blob(headers);
     if !blob.is_empty() {
         cmd.arg("-headers").arg(blob);

@@ -1,4 +1,4 @@
-import { THEME_PRESETS, type ThemePreset } from "@/lib/theme";
+import { selectableThemes, type ThemePreset } from "@/lib/theme";
 import { useT } from "@/lib/i18n";
 import { Fit } from "../custom-themes-section/community-store/market/fit";
 import { tokensFromPreset } from "../custom-themes-section/community-store/market/fit-palette";
@@ -8,7 +8,7 @@ export function PresetGallery({ onSeed }: { onSeed: (t: ThemePreset) => void }) 
   const t = useT();
   return (
     <div className="grid grid-cols-2 gap-2.5">
-      {Object.values(THEME_PRESETS).map((p) => (
+      {selectableThemes().map((p) => (
         <button
           key={p.id}
           type="button"

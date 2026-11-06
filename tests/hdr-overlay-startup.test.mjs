@@ -43,7 +43,7 @@ test("native HDR creation does not block the UI event loop or async runtime work
   assert.doesNotMatch(native, /run_on_main_thread|rx\.recv/);
 });
 
-test("HDR overlay is owned by Harbor rather than globally topmost", () => {
+test("HDR overlay is owned by Frame rather than globally topmost", () => {
   assert.match(native, /\.parent\(&main\)/);
   assert.doesNotMatch(native, /\.always_on_top\(true\)/);
   assert.match(native, /browser_args::match_main/);

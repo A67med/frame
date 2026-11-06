@@ -643,17 +643,17 @@ const catalog04: Record<string, string> = {
     "Frame에서는 인증 정보가 포함된 링크를 열 수 없습니다.",
   "Frame caps playlists at 80 MB to stay responsive. Most providers offer a filtered URL with fewer channels.":
     "Frame는 원활한 작동을 위해 재생목록을 80 MB로 제한합니다. 대부분의 제공업체는 채널 수가 적은 필터링된 URL을 제공합니다.",
-  "Harbor catches stremio:// install links so the configure-and-install flow stays inside the app.":
-    "Harbor가 stremio:// 설치 링크를 처리하여 구성 및 설치 과정이 앱 안에서 진행되게 합니다.",
-  "Harbor catches stremio:// install links so the configure-and-install flow stays inside the app. Every install also syncs to your Stremio account, so the official app remains the canonical home for your library.":
-    "Harbor가 stremio:// 설치 링크를 처리하므로 구성 및 설치 과정이 앱 안에서 진행됩니다. 설치할 때마다 Stremio 계정에도 동기화되므로 공식 앱이 라이브러리의 기준으로 유지됩니다.",
+  "Frame catches stremio:// install links so the configure-and-install flow stays inside the app.":
+    "Frame가 stremio:// 설치 링크를 처리하여 구성 및 설치 과정이 앱 안에서 진행되게 합니다.",
+  "Frame catches stremio:// install links so the configure-and-install flow stays inside the app. Every install also syncs to your Stremio account, so the official app remains the canonical home for your library.":
+    "Frame가 stremio:// 설치 링크를 처리하므로 구성 및 설치 과정이 앱 안에서 진행됩니다. 설치할 때마다 Stremio 계정에도 동기화되므로 공식 앱이 라이브러리의 기준으로 유지됩니다.",
   "Frame checks a few times a day while it's open and lets you know here.":
     "Frame가 열려 있는 동안 하루에 몇 차례 확인하여 이곳에서 알려드립니다.",
   "Frame checks automatically every few hours.": "Frame는 몇 시간마다 자동으로 확인합니다.",
-  "Harbor checks harbor.site for new versions and installs them in place.":
-    "Harbor가 harbor.site에서 새 버전을 확인하고 현재 위치에 설치합니다.",
-  "Harbor checks harbor.site for new versions and installs them in place. Nothing installs until you choose to, and a dismissed update never nags you again.":
-    "Harbor는 harbor.site에서 새 버전을 확인하고 현재 위치에 설치합니다. 사용자가 선택하기 전에는 아무것도 설치되지 않으며, 무시한 업데이트는 다시 알리지 않습니다.",
+  "Frame checks harbor.site for new versions and installs them in place.":
+    "Frame가 harbor.site에서 새 버전을 확인하고 현재 위치에 설치합니다.",
+  "Frame checks harbor.site for new versions and installs them in place. Nothing installs until you choose to, and a dismissed update never nags you again.":
+    "Frame는 harbor.site에서 새 버전을 확인하고 현재 위치에 설치합니다. 사용자가 선택하기 전에는 아무것도 설치되지 않으며, 무시한 업데이트는 다시 알리지 않습니다.",
   "Frame checks its GitHub releases for new versions and installs them in place. Nothing installs until you choose to, and a dismissed update never nags you again.":
     "Frame는 GitHub에서 새 버전을 확인하고 현재 위치에 설치합니다. 사용자가 선택하기 전에는 아무것도 설치되지 않으며, 무시한 업데이트는 다시 알리지 않습니다.",
   "Frame could not find these": "Frame가 다음 항목을 찾지 못했습니다",
@@ -816,8 +816,8 @@ const catalog04: Record<string, string> = {
     "Frame에 내장된 프레임 보간 기능입니다. 패닝을 부드럽게 하며 애니메이션에 가장 적합합니다. 디스플레이 주사율이 영상 프레임 레이트보다 높아야 하며, 성능이 낮은 GPU에서는 끊길 수 있습니다. SVP보다 가볍습니다.",
   "Frame's full video engine. Plays anything you throw at it.":
     "Frame의 완전한 동영상 엔진입니다. 어떤 파일이든 재생합니다.",
-  "Harbor's in-app installer animates the manifest install and keeps you in context. Anything Harbor installs is also synced to your Stremio account, so the official app stays the canonical library. Turn this off and Stremio becomes the only handler for stremio:// links; Harbor still installs anything you trigger from inside the app (Configure & install, paste, drag-and-drop).":
-    "Harbor의 앱 내 설치 프로그램은 매니페스트 설치 과정을 애니메이션으로 보여 주며 현재 화면을 벗어나지 않게 합니다. Harbor에서 설치한 항목은 Stremio 계정에도 동기화되므로 공식 앱이 기준 라이브러리로 유지됩니다. 이 기능을 끄면 stremio:// 링크는 Stremio에서만 처리됩니다. 단, Harbor 앱 안에서 실행한 설치(구성 및 설치, 붙여넣기, 끌어서 놓기)는 계속 Harbor에서 처리됩니다.",
+  "Frame's in-app installer animates the manifest install and keeps you in context. Anything Frame installs is also synced to your Stremio account, so the official app stays the canonical library. Turn this off and Stremio becomes the only handler for stremio:// links; Frame still installs anything you trigger from inside the app (Configure & install, paste, drag-and-drop).":
+    "Frame의 앱 내 설치 프로그램은 매니페스트 설치 과정을 애니메이션으로 보여 주며 현재 화면을 벗어나지 않게 합니다. Frame에서 설치한 항목은 Stremio 계정에도 동기화되므로 공식 앱이 기준 라이브러리로 유지됩니다. 이 기능을 끄면 stremio:// 링크는 Stremio에서만 처리됩니다. 단, Frame 앱 안에서 실행한 설치(구성 및 설치, 붙여넣기, 끌어서 놓기)는 계속 Frame에서 처리됩니다.",
   "Frame's native player chrome.": "Frame 기본 플레이어 컨트롤.",
   "Frame's own bar": "Frame 자체 바",
   "Frame's own community server": "Frame 자체 커뮤니티 서버",
@@ -851,8 +851,8 @@ const catalog04: Record<string, string> = {
   "Heads up": "알림",
   "Heads up: Frame was built in English. Multi-language support is partial, so your addons usually catch what Frame's own filters miss. If you speak another language and want to help fill the gaps, the source is open.":
     "참고: Frame는 영어로 제작되었습니다. 다국어 지원은 일부만 제공되므로 Frame 자체 필터가 놓치는 항목은 대개 애드온이 보완합니다. 다른 언어를 사용하며 미비한 부분을 채우는 데 도움을 주고 싶다면 소스가 공개되어 있습니다.",
-  "Heads up: if Stremio is also installed, Windows may ask which app to use the first time a stremio:// link fires. Pick Harbor to make it stick.":
-    "알림: Stremio도 설치되어 있으면 stremio:// 링크를 처음 열 때 Windows에서 사용할 앱을 물을 수 있습니다. 계속 Harbor로 열려면 Harbor를 선택하세요.",
+  "Heads up: if Stremio is also installed, Windows may ask which app to use the first time a stremio:// link fires. Pick Frame to make it stick.":
+    "알림: Stremio도 설치되어 있으면 stremio:// 링크를 처음 열 때 Windows에서 사용할 앱을 물을 수 있습니다. 계속 Frame로 열려면 Frame를 선택하세요.",
   "Heads up: most IPTV providers cap how many streams an account can run at the same time. If other devices or players are using these credentials, close them and try again.":
     "주의: 대부분의 IPTV 제공업체는 계정에서 동시에 재생할 수 있는 스트림 수를 제한합니다. 다른 기기나 플레이어에서 이 로그인 정보를 사용 중이라면 해당 스트림을 종료한 후 다시 시도하세요.",
   "Heads up: this is a large file for peer-to-peer streaming, so it can take a while to start. A 1080p source or a debrid service will load faster.":

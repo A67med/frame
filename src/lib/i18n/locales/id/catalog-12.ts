@@ -551,8 +551,8 @@ const catalog: Record<string, string> = {
   stars: "bintang",
   stats: "statistik",
   "stremio:// link": "tautan stremio://",
-  "stremio:// links now open in the Stremio app. Harbor will only install when you trigger it from inside Harbor.":
-    "tautan stremio:// kini dibuka di aplikasi Stremio. Harbor hanya akan diinstal saat Anda memicunya dari dalam Harbor.",
+  "stremio:// links now open in the Stremio app. Frame will only install when you trigger it from inside Frame.":
+    "tautan stremio:// kini dibuka di aplikasi Stremio. Frame hanya akan diinstal saat Anda memicunya dari dalam Frame.",
   "stremio://… or https://…/manifest.json": "stremio://… atau https://…/manifest.json",
   "stub files": "file stub",
   "study, character, quote": "studi, karakter, kutipan",

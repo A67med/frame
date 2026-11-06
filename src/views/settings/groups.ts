@@ -19,9 +19,9 @@ export const TOP_GROUPS: TopGroup[] = [
   {
     id: "account",
     section: "SETUP",
-    label: "Account & sync",
-    sub: "Your Stremio sign-in, Letterboxd, and your relay.",
-    children: ["account", "trackers", "relay"],
+    label: "Account & trackers",
+    sub: "Your Stremio profile and Letterboxd.",
+    children: ["account", "trackers"],
   },
   {
     id: "watching",
@@ -32,7 +32,7 @@ export const TOP_GROUPS: TopGroup[] = [
   },
   {
     id: "language",
-    section: "LANGUAGE",
+    section: "WATCHING",
     label: "Languages & subtitles",
     sub: "What language Frame speaks, and how subtitles behave.",
     children: ["language", "subtitles"],
@@ -45,25 +45,11 @@ export const TOP_GROUPS: TopGroup[] = [
     children: ["streaming", "streamFilters", "p2p", "library"],
   },
   {
-    id: "plugins",
-    section: "PLUGINS",
-    label: "Plugins",
-    sub: "Small scripts that find streams, manga and books on sites Frame does not know about, installed from repositories you choose.",
-    children: ["plugins"],
-  },
-  {
     id: "look",
     section: "LOOK & FEEL",
     label: "Appearance",
     sub: "Theme, the player's own layout, artwork, and what Frame shows on a card.",
     children: ["theme", "playerLayout", "badges", "awardIcons"],
-  },
-  {
-    id: "devices",
-    section: "DEVICES",
-    label: "Controls & devices",
-    sub: "Keyboard, controller, remotes, and the big-screen build.",
-    children: ["hotkeys", "controllers", "remotes", "tv", "bigPicture"],
   },
   {
     id: "system",
@@ -73,18 +59,18 @@ export const TOP_GROUPS: TopGroup[] = [
     children: ["storage", "advanced"],
   },
   {
+    id: "updates",
+    section: "SYSTEM",
+    label: "Updates & backup",
+    sub: "Install updates and keep a copy of your setup.",
+    children: ["updates"],
+  },
+  {
     id: "help",
-    section: "HELP",
+    section: "SYSTEM",
     label: "Help & support",
     sub: "Report something broken, or support the project.",
     children: ["bug", "support", "licenses", "icons"],
-  },
-  {
-    id: "updates",
-    section: "UPDATES",
-    label: "Updates & backup",
-    sub: "Install updates, try beta builds, and keep a copy of your setup.",
-    children: ["updates"],
   },
 ];
 

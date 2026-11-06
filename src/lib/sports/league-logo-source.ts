@@ -22,7 +22,7 @@ export function leagueLogoSource(league: { key?: string; logo: string }): string
   return generic ? "" : league.logo;
 }
 
-/** Dark publisher wordmarks need a neutral light canvas in Harbor's dark themes. */
+/** Dark publisher wordmarks need a neutral light canvas in Frame's dark themes. */
 export const LEAGUE_KEY_LOGO_BACKGROUNDS: Readonly<Record<string, "light" | "dark">> = {
   EPL: "light",
   UCL: "light",

@@ -208,10 +208,10 @@ pub fn run_loop(app: AppHandle) {
             let mut assets = match desired.small_image.as_deref() {
                 Some(s) => Assets::new()
                     .small_image(s)
-                    .small_text(desired.small_text.as_deref().unwrap_or("Harbor")),
+                    .small_text(desired.small_text.as_deref().unwrap_or("Frame")),
                 None => Assets::new()
                     .small_image(SMALL_IMAGE_KEY)
-                    .small_text("Harbor"),
+                    .small_text("Frame"),
             };
             if let Some(img) = desired.large_image.as_deref() {
                 assets = assets.large_image(img);

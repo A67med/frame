@@ -575,16 +575,16 @@ const settings: Record<string, string> = {
   "Hero carousel, Top 10, Trending, In Theaters, per-service rails.":
     "Băng chuyền nổi bật, Top 10, Thịnh hành, Đang chiếu tại rạp, các hàng theo từng dịch vụ.",
   Updates: "Cập nhật",
-  "Harbor checks harbor.site for new versions and installs them in place.":
-    "Harbor kiểm tra phiên bản mới trên harbor.site và cài đặt trực tiếp.",
+  "Frame checks harbor.site for new versions and installs them in place.":
+    "Frame kiểm tra phiên bản mới trên harbor.site và cài đặt trực tiếp.",
   "Backup & restore": "Sao lưu và khôi phục",
   "Export your entire Frame setup to a single file, then restore it on a new computer or keep it as a backup.":
     "Xuất toàn bộ thiết lập Frame thành một tệp duy nhất, sau đó khôi phục trên máy tính mới hoặc lưu làm bản sao lưu.",
   Privacy: "Quyền riêng tư",
   "System tray": "Khay hệ thống",
   "Stremio install links": "Liên kết cài đặt Stremio",
-  "Harbor catches stremio:// install links so the configure-and-install flow stays inside the app.":
-    "Harbor tiếp nhận các liên kết cài đặt stremio:// để toàn bộ quy trình cấu hình và cài đặt diễn ra trong ứng dụng.",
+  "Frame catches stremio:// install links so the configure-and-install flow stays inside the app.":
+    "Frame tiếp nhận các liên kết cài đặt stremio:// để toàn bộ quy trình cấu hình và cài đặt diễn ra trong ứng dụng.",
   "Discord Rich Presence": "Discord Rich Presence",
   "Let your Discord friends see what you are watching, with the show poster and a live progress bar.":
     "Cho bạn bè trên Discord biết bạn đang xem gì, kèm áp phích phim và thanh tiến trình trực tiếp.",
@@ -1213,11 +1213,11 @@ const settings: Record<string, string> = {
   "Step zoom in to crop baked-in black bars (Zoom mode).":
     "Phóng to từng mức để cắt các dải đen có sẵn trong video (chế độ Thu phóng).",
   Screenshot: "Chụp màn hình",
-  "Save the current frame (video only, no subtitles) as a PNG to Pictures/Harbor.":
-    "Lưu khung hình hiện tại (chỉ video, không có phụ đề) dưới dạng PNG vào Pictures/Harbor.",
+  "Save the current frame (video only, no subtitles) as a PNG to Pictures/Frame.":
+    "Lưu khung hình hiện tại (chỉ video, không có phụ đề) dưới dạng PNG vào Pictures/Frame.",
   "Record GIF": "Quay GIF",
-  "Start or stop recording a GIF of the video (no subtitles). Saves to Pictures/Harbor.":
-    "Bắt đầu hoặc dừng quay GIF từ video (không có phụ đề). Lưu vào Pictures/Harbor.",
+  "Start or stop recording a GIF of the video (no subtitles). Saves to Pictures/Frame.":
+    "Bắt đầu hoặc dừng quay GIF từ video (không có phụ đề). Lưu vào Pictures/Frame.",
   "Jump back by the Back seek step set under Behavior.":
     "Lùi theo khoảng tua lùi được đặt trong Hành vi.",
   "Jump forward by the Forward seek step set under Behavior.":
@@ -1421,8 +1421,8 @@ const settings: Record<string, string> = {
   "My library": "Thư viện của tôi",
   Anticipated: "Được mong đợi",
   "Custom calendar": "Lịch tùy chỉnh",
-  "Harbor checks harbor.site for new versions and installs them in place. Nothing installs until you choose to, and a dismissed update never nags you again.":
-    "Harbor kiểm tra phiên bản mới trên harbor.site và cài đặt trực tiếp. Không có gì được cài đặt cho đến khi bạn chọn, và bản cập nhật đã bỏ qua sẽ không nhắc lại.",
+  "Frame checks harbor.site for new versions and installs them in place. Nothing installs until you choose to, and a dismissed update never nags you again.":
+    "Frame kiểm tra phiên bản mới trên harbor.site và cài đặt trực tiếp. Không có gì được cài đặt cho đến khi bạn chọn, và bản cập nhật đã bỏ qua sẽ không nhắc lại.",
   "Frame checks its GitHub releases for new versions and installs them in place. Nothing installs until you choose to, and a dismissed update never nags you again.":
     "Frame kiểm tra phiên bản mới trên GitHub và cài đặt trực tiếp. Không có gì được cài đặt cho đến khi bạn chọn, và bản cập nhật đã bỏ qua sẽ không nhắc lại.",
   "Library, watch progress, and addon collection sync from this account.":
@@ -1436,8 +1436,8 @@ const settings: Record<string, string> = {
   "Your color": "Màu của bạn",
   "Used for your cursor in Watch Together, your draw color, and your name pill in chat.":
     "Dùng cho con trỏ của bạn trong Xem cùng nhau, màu vẽ và thẻ tên trong cuộc trò chuyện.",
-  "Harbor catches stremio:// install links so the configure-and-install flow stays inside the app. Every install also syncs to your Stremio account, so the official app remains the canonical home for your library.":
-    "Harbor tiếp nhận các liên kết cài đặt stremio:// để quy trình cấu hình và cài đặt luôn diễn ra trong ứng dụng. Mỗi lượt cài đặt cũng được đồng bộ với tài khoản Stremio của bạn, vì vậy ứng dụng chính thức vẫn là nơi quản lý chuẩn cho thư viện của bạn.",
+  "Frame catches stremio:// install links so the configure-and-install flow stays inside the app. Every install also syncs to your Stremio account, so the official app remains the canonical home for your library.":
+    "Frame tiếp nhận các liên kết cài đặt stremio:// để quy trình cấu hình và cài đặt luôn diễn ra trong ứng dụng. Mỗi lượt cài đặt cũng được đồng bộ với tài khoản Stremio của bạn, vì vậy ứng dụng chính thức vẫn là nơi quản lý chuẩn cho thư viện của bạn.",
   "Let your Discord friends see what you are watching, with the show poster and a live progress bar. Desktop only, and only your own Discord client is involved (nothing touches a Frame server).":
     "Cho phép bạn bè trên Discord biết bạn đang xem gì, kèm áp phích phim và thanh tiến độ trực tiếp. Chỉ dành cho máy tính và chỉ liên quan đến ứng dụng Discord của bạn (không có dữ liệu nào đi qua máy chủ Frame).",
   "Saved {d} from Frame {a}.": "Đã lưu {d} từ Frame {a}.",
@@ -1749,13 +1749,13 @@ const settings: Record<string, string> = {
   "Get beta updates": "Nhận bản cập nhật beta",
   "Receive early builds with the newest fixes before they reach the stable release. Betas can be rough around the edges; switch this off to return to stable at the next update.":
     "Nhận sớm các bản dựng có bản sửa lỗi mới nhất trước khi được phát hành ổn định. Bản beta có thể chưa hoàn thiện; hãy tắt tùy chọn này để trở lại bản ổn định trong lần cập nhật tiếp theo.",
-  "Catch stremio:// install links inside Harbor": "Mở liên kết cài đặt stremio:// trong Harbor",
-  "Harbor's in-app installer animates the manifest install and keeps you in context. Anything Harbor installs is also synced to your Stremio account, so the official app stays the canonical library. Turn this off and Stremio becomes the only handler for stremio:// links; Harbor still installs anything you trigger from inside the app (Configure & install, paste, drag-and-drop).":
-    "Trình cài đặt trong Harbor sẽ hiển thị hoạt ảnh khi cài manifest và giúp bạn không bị gián đoạn. Mọi nội dung Harbor cài đặt cũng được đồng bộ với tài khoản Stremio của bạn, nên ứng dụng chính thức vẫn là thư viện chuẩn. Nếu tắt tùy chọn này, Stremio sẽ là ứng dụng duy nhất xử lý liên kết stremio://; Harbor vẫn cài đặt mọi nội dung bạn kích hoạt từ trong ứng dụng (Định cấu hình và cài đặt, dán, kéo và thả).",
-  "Heads up: if Stremio is also installed, Windows may ask which app to use the first time a stremio:// link fires. Pick Harbor to make it stick.":
-    "Lưu ý: nếu Stremio cũng được cài đặt, Windows có thể hỏi ứng dụng cần dùng trong lần đầu mở liên kết stremio://. Chọn Harbor để đặt làm mặc định.",
-  "stremio:// links now open in the Stremio app. Harbor will only install when you trigger it from inside Harbor.":
-    "Liên kết stremio:// hiện sẽ mở trong ứng dụng Stremio. Harbor chỉ cài đặt khi bạn kích hoạt từ trong Harbor.",
+  "Catch stremio:// install links inside Frame": "Mở liên kết cài đặt stremio:// trong Frame",
+  "Frame's in-app installer animates the manifest install and keeps you in context. Anything Frame installs is also synced to your Stremio account, so the official app stays the canonical library. Turn this off and Stremio becomes the only handler for stremio:// links; Frame still installs anything you trigger from inside the app (Configure & install, paste, drag-and-drop).":
+    "Trình cài đặt trong Frame sẽ hiển thị hoạt ảnh khi cài manifest và giúp bạn không bị gián đoạn. Mọi nội dung Frame cài đặt cũng được đồng bộ với tài khoản Stremio của bạn, nên ứng dụng chính thức vẫn là thư viện chuẩn. Nếu tắt tùy chọn này, Stremio sẽ là ứng dụng duy nhất xử lý liên kết stremio://; Frame vẫn cài đặt mọi nội dung bạn kích hoạt từ trong ứng dụng (Định cấu hình và cài đặt, dán, kéo và thả).",
+  "Heads up: if Stremio is also installed, Windows may ask which app to use the first time a stremio:// link fires. Pick Frame to make it stick.":
+    "Lưu ý: nếu Stremio cũng được cài đặt, Windows có thể hỏi ứng dụng cần dùng trong lần đầu mở liên kết stremio://. Chọn Frame để đặt làm mặc định.",
+  "stremio:// links now open in the Stremio app. Frame will only install when you trigger it from inside Frame.":
+    "Liên kết stremio:// hiện sẽ mở trong ứng dụng Stremio. Frame chỉ cài đặt khi bạn kích hoạt từ trong Frame.",
   "Checking harbor.site for a newer build.": "Đang kiểm tra bản dựng mới hơn trên harbor.site.",
   "Checking GitHub for a newer build.": "Đang kiểm tra bản dựng mới hơn trên GitHub.",
   "Downloading {pct}%": "Đang tải xuống {pct}%",

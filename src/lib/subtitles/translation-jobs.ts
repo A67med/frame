@@ -2,7 +2,7 @@ import { useSyncExternalStore } from "react";
 import type { SubtitleLoadMetadata } from "./types";
 
 /**
- * A subtitle a translating addon accepted but has not produced yet. Harbor keeps
+ * A subtitle a translating addon accepted but has not produced yet. Frame keeps
  * re-checking the same URL and, once the finished file is served, adds it automatically.
  */
 export type TranslationJob = {

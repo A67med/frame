@@ -1,7 +1,7 @@
 import { usePreviewNavCustomization } from "@/lib/theme-preview";
 import { Lock } from "lucide-react";
 import { useState, type ReactNode } from "react";
-import { HarborMark } from "@/components/icons/harbor-mark";
+import { FrameMark } from "@/components/icons/frame-mark";
 import { ProfileChip } from "@/chrome/sidebar/profile-chip";
 import { CollapseToggle } from "@/chrome/sidebar/collapse-toggle";
 import { useContextMenu } from "@/lib/context-menu";
@@ -107,7 +107,7 @@ export function ForestSidebar() {
               aria-label={t("chrome.harborHome")}
               className="flex items-center gap-2.5 text-ink"
             >
-              <HarborMark className="h-[26px] w-[26px] shrink-0 drop-shadow-[0_0_11px_var(--color-accent-soft)]" />
+              <FrameMark className="h-[26px] w-[26px] shrink-0 drop-shadow-[0_0_11px_var(--color-accent-soft)]" />
               {!collapsed && (
                 <span
                   className="hidden text-[27px] font-medium leading-none lg:inline"

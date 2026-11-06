@@ -105,7 +105,7 @@ pub(super) fn resolve_jvm(app: &AppHandle) -> Result<Jvm, String> {
             source: "java on PATH".into(),
         });
     }
-    Err("Harbor could not find a Java runtime, which extensions need. Install Java 17 or newer, or set HARBOR_JAVA to a copy you already have, then try again.".into())
+    Err("Frame could not find a Java runtime, which extensions need. Install Java 17 or newer, or set HARBOR_JAVA to a copy you already have, then try again.".into())
 }
 
 pub(super) struct Layout {
@@ -153,7 +153,7 @@ fn walk_up(start: &Path, out: &mut Vec<PathBuf>) {
     }
 }
 
-// Where the staged directory can be, on every platform Harbor ships to. resource_dir() is the
+// Where the staged directory can be, on every platform Frame ships to. resource_dir() is the
 // answer for an installed app: the executable's own directory on Windows, /usr/lib/<app> or the
 // AppImage mount on Linux, Contents/Resources inside the bundle on macOS. The rest are walked
 // because that function resolves to a path that does not exist when the app runs from a cargo
@@ -188,5 +188,5 @@ pub(super) fn resolve_layout(app: &AppHandle) -> Result<Layout, String> {
     roots(app)
         .iter()
         .find_map(|root| layout_at(root))
-        .ok_or_else(|| "The extension runtime is missing from this install. Reinstall Harbor, or build the layer with tools/build.sh if you are running from source.".into())
+        .ok_or_else(|| "The extension runtime is missing from this install. Reinstall Frame, or build the layer with tools/build.sh if you are running from source.".into())
 }

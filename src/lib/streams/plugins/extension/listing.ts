@@ -1,7 +1,7 @@
 /** What a provider put in a listing title besides the title.
  *
  * A provider names a listing after everything it carries — the year, the audio, the quality, the
- * size, the kind of release — because in its own app that whole line is the name. Harbor shows the
+ * size, the kind of release — because in its own app that whole line is the name. Frame shows the
  * title alone, so the rest of the line is read here and kept, rather than thrown away at the cut.
  * Nothing is badged unless it was recognised: an unfamiliar word is kept in `rest` and shown as it
  * was, because a badge that says Hindi on an English file is worse than no badge at all. */

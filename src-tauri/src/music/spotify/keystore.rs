@@ -47,7 +47,7 @@ pub fn write(app: &AppHandle, key: &str, value: Option<&str>) -> Result<(), Stri
     }
     let entries = document
         .as_object_mut()
-        .ok_or_else(|| "Harbor secrets are not a JSON object".to_string())?;
+        .ok_or_else(|| "Frame secrets are not a JSON object".to_string())?;
     match value {
         Some(value) => {
             entries.insert(key.to_string(), Value::String(value.to_string()));

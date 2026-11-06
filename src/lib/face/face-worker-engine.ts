@@ -47,7 +47,7 @@ async function boot(): Promise<void> {
     // This engine runs inside an ES module worker. The classic MediaPipe loader
     // relies on importScripts(), which module workers reject; its fallback then
     // imports the script without publishing ModuleFactory to the worker global.
-    // Harbor ships MediaPipe's module-worker runtime locally, so select it
+    // Frame ships MediaPipe's module-worker runtime locally, so select it
     // explicitly instead of relaxing CSP or loading executable code remotely.
     fileset = await FilesetResolver.forVisionTasks(MP_WASM, true);
   } catch {

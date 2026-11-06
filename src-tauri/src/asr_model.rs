@@ -36,7 +36,7 @@ pub async fn asr_ensure_model(app: tauri::AppHandle) -> Result<String, String> {
     let tmp = dir.join("ggml-tiny.bin.part");
 
     let client = reqwest::Client::builder()
-        .user_agent("Harbor")
+        .user_agent("Frame")
         .build()
         .map_err(|e| e.to_string())?;
     let resp = client

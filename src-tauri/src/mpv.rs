@@ -378,8 +378,8 @@ fn apply_pre_init(
         .map(split_extra_option_pairs)
         .unwrap_or_default();
     let joined_init_only = join_init_only_pairs(&init_only_pairs);
-    set("title", "Harbor");
-    set("audio-client-name", "Harbor");
+    set("title", "Frame");
+    set("audio-client-name", "Frame");
     set("terminal", "no");
     set("msg-level", "all=warn,vo=v,d3d11=v,gpu=v,win32=v");
     let is_live = args.is_live.unwrap_or(false);
@@ -434,7 +434,7 @@ fn apply_pre_init(
     set("input-cursor", "no");
     // `osc` is provided by mpv's optional on-screen-controller script. Some
     // libmpv builds, including the Flatpak build, do not ship that script, so
-    // its option is unavailable. Harbor supplies its own controls either way.
+    // its option is unavailable. Frame supplies its own controls either way.
     let _ = set("osc", "no");
     set("osd-level", "0");
     set("cursor-autohide", "200");
@@ -1103,7 +1103,7 @@ pub async fn mpv_start(
         );
     }
     // mpv may auto-select an embedded subtitle as soon as loadfile runs. Keep
-    // both subtitle slots empty until Harbor applies the user's language choice.
+    // both subtitle slots empty until Frame applies the user's language choice.
     // Still discover sidecars beside local files so they are available in the
     // track picker even for libraries indexed before sidecars were persisted.
     let _ = mpv.set_property("sub-auto", "all");
@@ -1216,11 +1216,11 @@ fn reassert_hdr_colorspace(mpv: &Arc<Mpv>) {
 /// Confident HDR-to-SDR restore after mpv quit. The user script's own
 /// shutdown toggle (hdr-mode.lua's `toggle-hdr-display off`) runs while the
 /// vo window is already being destroyed and can be cut off before the display
-/// flip lands, so Harbor re-applies the flip itself once mpv is gone. Only
+/// flip lands, so Frame re-applies the flip itself once mpv is gone. Only
 /// acts when this session flipped HDR off->on (baseline was SDR); a session
 /// on an always-HDR display keeps that mode untouched.
 ///
-/// The display is the one Harbor's own window sits on, which matches the
+/// The display is the one Frame's own window sits on, which matches the
 /// embedded player (mpv is a child of "main"). The separate-window player is
 /// opened on the same display (via the `screen` option), so the same monitor
 /// check works for both modes.
@@ -1657,7 +1657,7 @@ pub async fn mpv_set_geometry(
     geom: MpvGeometry,
 ) -> Result<(), String> {
     // The detached window owns the live surface and resizes it through its own
-    // fit command. Late geometry updates from Harbor must not move that surface.
+    // fit command. Late geometry updates from Frame must not move that surface.
     if app.state::<crate::pip_window::PipWindowState>().active.load(std::sync::atomic::Ordering::SeqCst) {
         return Ok(());
     }
@@ -1701,7 +1701,7 @@ pub async fn mpv_set_geometry(
     let _ = app;
 
     // Separate window: mpv owns its own placement. The `geom` here is the embed
-    // rect measured inside Harbor's layout, which must never be pushed onto the
+    // rect measured inside Frame's layout, which must never be pushed onto the
     // standalone VO window (it sized it to a fraction of the chosen monitor).
     // The window is fixed on its display via the pre-init `screen` option instead.
     #[cfg(any(windows, target_os = "linux"))]
@@ -1982,7 +1982,7 @@ fn monitor_hdr_active(hmon: windows::Win32::Graphics::Gdi::HMONITOR) -> bool {
 
 /// Flips the display that `hwnd` sits on into or out of advanced color (HDR)
 /// mode via the DisplayConfig set-advanced-color state packet. Same mechanism
-/// Windows Settings and display-info.dll use; Harbor calls it as an
+/// Windows Settings and display-info.dll use; Frame calls it as an
 /// authoritative restore after mpv teardown.
 #[cfg(windows)]
 fn set_monitor_advanced_color(
@@ -3185,7 +3185,7 @@ fn set_embedded_mpv_children_visible(app: &AppHandle, visible: bool) -> Result<(
         let title = String::from_utf16_lossy(&title_buf[..title_len as usize]);
         let is_mpv = class_name == "mpv"
             || class_name.starts_with("mpv ")
-            || (class_name.is_empty() && title.starts_with("Harbor"));
+            || (class_name.is_empty() && title.starts_with("Frame"));
         if is_mpv {
             (*(lparam.0 as *mut Vec<isize>)).push(hwnd.0 as isize);
         }
@@ -3273,7 +3273,7 @@ fn position_embedded_mpv_child(app: &AppHandle, css: MpvGeometry) -> Result<(), 
             .push((hwnd.0 as isize, class_name.clone(), title.clone()));
         let is_mpv = class_name == "mpv"
             || class_name.starts_with("mpv ")
-            || (class_name.is_empty() && title.starts_with("Harbor"));
+            || (class_name.is_empty() && title.starts_with("Frame"));
         if is_mpv {
             (*s).mpv_hwnds.push(hwnd.0 as isize);
         }

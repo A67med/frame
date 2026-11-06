@@ -4,14 +4,12 @@ import { useT } from "@/lib/i18n";
 import { useSettings } from "@/lib/settings";
 import { useTogether } from "@/lib/together/provider";
 import { isPublicRelay, REQUIRED_RELAY_VERSION } from "@/lib/together/relay-version";
-import { useView } from "@/lib/view";
 
 const DISMISS_KEY = "harbor.relayBannerDismissed";
 
 export function TogetherRelayBanner() {
-  const { relayOutdated, closeModal } = useTogether();
+  const { relayOutdated } = useTogether();
   const { settings } = useSettings();
-  const { openSettings } = useView();
   const t = useT();
   const pub = isPublicRelay(settings.togetherRelayUrl);
   const [dismissed, setDismissed] = useState(() => {
@@ -51,17 +49,6 @@ export function TogetherRelayBanner() {
                 "Redeploy it to get the latest Watch Together fixes. Frame's public relay updates on its own.",
               )}
         </span>
-        {!pub && (
-          <button
-            onClick={() => {
-              closeModal();
-              openSettings("relay");
-            }}
-            className="mt-1 w-fit rounded-lg border border-edge px-2.5 py-1 text-[11.5px] font-medium text-ink-muted transition-colors hover:bg-raised hover:text-ink"
-          >
-            {t("Open relay settings")}
-          </button>
-        )}
       </div>
       {pub && (
         <button

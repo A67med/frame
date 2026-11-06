@@ -9,7 +9,7 @@ import { stripArrowKeys } from "./shared";
 import { SButton } from "./ui";
 
 const KEY = "harbor.build.rating.v1";
-const REPO_ISSUE = "https://github.com/crazyrabbit0/harbor/issues/new";
+const REPO_ISSUE = "https://github.com/abdallahkattriah-sketch/frame/issues/new";
 
 const SCALE_LABEL =
   "text-[13px] font-bold uppercase leading-[17px] tracking-[0.72px] text-ink-subtle";

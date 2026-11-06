@@ -183,11 +183,11 @@ const catalog11: Record<string, string> = {
     "Zapisuj ostrzejsze klatki zamiast uproszczonych miniatur. Wyglądają wyraźniej na karcie, ale zajmują więcej miejsca, więc przed usunięciem najstarszych przechowywanych jest ich mniej.",
   "Save status": "Zapisz status",
   "Save sync": "Zapisz synchronizację",
-  "Save the current frame (video only, no subtitles) as a PNG to Pictures/Harbor.":
-    "Zapisz bieżącą klatkę jako plik PNG w folderze Obrazy/Harbor (tylko obraz, bez napisów).",
+  "Save the current frame (video only, no subtitles) as a PNG to Pictures/Frame.":
+    "Zapisz bieżącą klatkę jako plik PNG w folderze Obrazy/Frame (tylko obraz, bez napisów).",
   "Save the last 30 seconds": "Zapisz ostatnie 30 sekund",
-  "Save the last 30 seconds as a video clip with audio, choosing subtitles on or off. Saves to Pictures/Harbor.":
-    "Zapisz ostatnie 30 sekund jako klip wideo z dźwiękiem, z możliwością włączenia lub wyłączenia napisów. Plik zostanie zapisany w folderze Pictures/Harbor.",
+  "Save the last 30 seconds as a video clip with audio, choosing subtitles on or off. Saves to Pictures/Frame.":
+    "Zapisz ostatnie 30 sekund jako klip wideo z dźwiękiem, z możliwością włączenia lub wyłączenia napisów. Plik zostanie zapisany w folderze Pictures/Frame.",
   "Save the worker source. Copy": "Zapisz kod źródłowy workera. Skopiuj",
   "Save the worker source. Copy {code1} from the Frame repo into a new directory as {code2}.":
     "Zapisz kod źródłowy skryptu Worker. Skopiuj plik {code1} z repozytorium Frame do nowego katalogu jako {code2}.",

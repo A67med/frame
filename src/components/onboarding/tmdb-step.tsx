@@ -57,7 +57,7 @@ export function TmdbStep() {
           recognised as a direct user gesture; when it is blocked the caller
           swallows the failure and the tap can end up navigating the current tab
           instead. js hit exactly that: TMDB replaced the setup page and there
-          was no way back to Harbor.
+          was no way back to Frame.
           A user-activated anchor is never popup-blocked, so this is the one form
           that cannot strand the setup flow. preventDefault plus openUrl keeps
           the Tauri path, where the desktop app must hand the url to the OS

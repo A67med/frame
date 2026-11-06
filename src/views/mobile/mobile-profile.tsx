@@ -147,7 +147,7 @@ function TouchpadGlyph() {
 /* `href` renders a real anchor rather than a button calling window.open. This
    screen is where the setup flow lands people, and a programmatic open that a
    mobile browser does not credit as a user gesture can navigate the current
-   tab instead, which is how a viewer ends up outside Harbor with no way back. */
+   tab instead, which is how a viewer ends up outside Frame with no way back. */
 function Row({
   icon,
   label,

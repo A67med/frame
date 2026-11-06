@@ -1,4 +1,4 @@
-import { HarborMark } from "@/components/icons/harbor-mark";
+import { FrameMark } from "@/components/icons/frame-mark";
 import { useT } from "@/lib/i18n";
 
 export function WelcomeStep() {
@@ -7,19 +7,12 @@ export function WelcomeStep() {
     <div className="flex flex-col gap-6">
       <div className="flex flex-col gap-4">
         <div className="flex items-center gap-2 text-ink">
-          <HarborMark className="h-12 w-12 shrink-0" />
+          <FrameMark className="h-12 w-12 shrink-0" />
           <span
             className="font-display text-[44px] font-medium leading-none tracking-tight"
             style={{ transform: "translateY(2px)" }}
           >
-            Harb
-            <span
-              className="inline-block"
-              style={{ transform: "rotate(7deg)", transformOrigin: "50% 65%" }}
-            >
-              o
-            </span>
-            r
+            Frame
           </span>
         </div>
         <p className="text-[15.5px] leading-relaxed text-ink-muted">

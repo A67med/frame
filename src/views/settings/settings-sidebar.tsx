@@ -1,12 +1,9 @@
-import { useEffect, useRef, useState } from "react";
-import { HarborMark } from "@/components/icons/harbor-mark";
-import uploadGlyph from "@/assets/nav-icons/download.svg?raw";
-import { resizeAvatar } from "./account/avatar-utils";
+import { useView } from "@/lib/view";
+import { useEffect, useState } from "react";
+import { FrameMark } from "@/components/icons/frame-mark";
 import { ProfileAvatar, SubtitleText } from "@/chrome/account-menu/account-menu-parts";
 import { useAuth } from "@/lib/auth";
 import { useT } from "@/lib/i18n";
-import { useProfiles } from "@/lib/profiles";
-import { useSettings } from "@/lib/settings";
 import { TOP_GROUPS } from "./groups";
 import { SECTION_ICONS } from "./section-icons";
 import { SetIcon } from "./set-icon";
@@ -44,27 +41,15 @@ const PAGE_LABELS: Record<string, string> = {
   "streaming.picker": "Source picker",
   "p2p.engine": "P2P engine",
   "p2p.server": "Streaming server",
-  "plugins.plugins": "Installed plugins",
-  "plugins.repositories": "Plugin repositories",
   "library.cards": "Poster cards",
   "library.providers": "Metadata providers",
   "badges.badges": "Stream badges",
   "badges.rules": "Badge rules",
   "badges.packs": "Badge packs",
-  "hotkeys.keys": "Keyboard shortcuts",
-  "hotkeys.behaviour": "Keyboard behavior",
-  "controllers.setup": "Controllers",
-  "controllers.mapping": "Buttons & sticks",
-  "tv.devices": "TV devices",
-  "tv.look": "TV appearance",
-  "tv.watching": "TV playback",
-  "tv.content": "TV content",
   "storage.overview": "Storage overview",
   "webhooks.destinations": "Notification destinations",
   "webhooks.what": "Notification sources",
   "webhooks.rules": "Notification rules",
-  "relay.status": "Frame Relay",
-  "relay.manage": "Manage relay",
   "advanced.system": "Startup & system",
   "advanced.repair": "Repair & diagnostics",
 };
@@ -119,60 +104,24 @@ function bands(): Band[] {
 
 function RailAccount() {
   const t = useT();
-  const fileRef = useRef<HTMLInputElement | null>(null);
   const { user } = useAuth();
-  const { profiles, activeProfile, updateProfile } = useProfiles();
-  const { settings, update } = useSettings();
-  const harborAvatar = settings.harborAvatar?.startsWith("/kids/avatars/")
-    ? null
-    : settings.harborAvatar;
-  const onPickAvatar = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    e.target.value = "";
-    if (!file) return;
-    try {
-      const dataUrl = await resizeAvatar(file, 320);
-      update({ harborAvatar: dataUrl });
-      if (activeProfile) updateProfile(activeProfile.id, { avatar: dataUrl });
-    } catch (err) {
-      console.warn("[avatar] resize failed", err);
-    }
-  };
-
-  const name =
-    activeProfile?.name ?? user?.fullname ?? user?.email?.split("@")[0] ?? t("profile.fallback");
+  const { openSettings } = useView();
+  const name = user?.fullname || user?.email?.split("@")[0] || t("profile.fallback");
 
   return (
     <div data-tv-nav-cell className="hset-rail-me">
       <button
         type="button"
-        onClick={() => fileRef.current?.click()}
-        aria-label={t("Change your picture")}
+        onClick={() => openSettings("account")}
+        aria-label={t("Your profile")}
         className="hset-rail-me-avatar"
       >
-        <ProfileAvatar
-          profile={activeProfile}
-          user={user}
-          fallbackAvatar={harborAvatar}
-          size="lg"
-        />
-        <span
-          aria-hidden
-          className="hset-rail-me-swap"
-          dangerouslySetInnerHTML={{ __html: uploadGlyph }}
-        />
+        <ProfileAvatar user={user} size="lg" />
       </button>
-      <input
-        ref={fileRef}
-        type="file"
-        accept="image/*"
-        onChange={onPickAvatar}
-        className="hidden"
-      />
       <span className="hset-rail-me-text">
         <span className="hset-rail-me-name">{name}</span>
         <span className="hset-rail-me-sub">
-          <SubtitleText active={activeProfile} profiles={profiles} user={user} />
+          <SubtitleText user={user} />
         </span>
       </span>
     </div>
@@ -201,7 +150,7 @@ function SectionRow({
     >
       <span className="hset-rail-chip">
         {tab?.icon === "Frame" ? (
-          <HarborMark className="h-5 w-5" />
+          <FrameMark className="h-5 w-5" />
         ) : tab?.img ? (
           <img
             src={tab.img}
@@ -234,7 +183,6 @@ export function SettingsSidebar({
   onJump?: (section: SectionId, anchor?: string, tab?: string) => void;
 }) {
   const t = useT();
-  const { settings } = useSettings();
   const native = typeof window !== "undefined" && "__TAURI_INTERNALS__" in window;
   const trimmed = query.trim().toLowerCase();
   const { matches, optionMatches } = useNavSearch(trimmed);
@@ -383,8 +331,7 @@ export function SettingsSidebar({
               >
                 {band.sections.map((id) => {
                   const tabs =
-                    (!native && (id === "mpv" || id === "shaders" || id === "plugins")) ||
-                    (id === "relay" && !settings.togetherRelayUrl)
+                    !native && (id === "mpv" || id === "shaders")
                       ? []
                       : tabsFor(id).filter(
                           (tab) => native || id !== "theme" || tab.id !== "window",

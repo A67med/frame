@@ -18,7 +18,7 @@ export type EBook = {
   seriesTitle?: string;
   /** Alternative titles explicitly supplied by the installed source. */
   sourceAliases?: string[];
-  /** Titles obtained from a metadata result that passed Harbor's verification checks. */
+  /** Titles obtained from a metadata result that passed Frame's verification checks. */
   verifiedAliases?: string[];
   /** Stable identifiers explicitly supplied by the installed source. */
   sourceIdentity?: {

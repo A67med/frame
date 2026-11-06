@@ -480,8 +480,8 @@ const sweepC: Record<string, string> = {
   "Frame checks a few times a day while it's open and lets you know here.":
     "Frame 会在打开期间每天检查数次，并在此通知你。",
   "Frame checks automatically every few hours.": "Frame 每隔几小时会自动检查一次。",
-  "Harbor checks harbor.site for new versions and installs them in place.":
-    "Harbor 会在 harbor.site 检查新版本并就地安装。",
+  "Frame checks harbor.site for new versions and installs them in place.":
+    "Frame 会在 harbor.site 检查新版本并就地安装。",
   "Frame could not find these": "Frame 找不到这些内容",
   "Frame couldn't play this source": "Frame 无法播放此播放源",
   "Frame couldn't start any source": "Frame 无法启动任何播放源",
@@ -569,8 +569,8 @@ const sweepC: Record<string, string> = {
   Head: "页首",
   "Headphone series": "戴耳机看的剧",
   "Heads up": "提示",
-  "Heads up: if Stremio is also installed, Windows may ask which app to use the first time a stremio:// link fires. Pick Harbor to make it stick.":
-    "请注意：如果也安装了 Stremio，首次触发 stremio:// 链接时，Windows 可能会询问要使用哪个应用。选择 Harbor 即可将其设为默认应用。",
+  "Heads up: if Stremio is also installed, Windows may ask which app to use the first time a stremio:// link fires. Pick Frame to make it stick.":
+    "请注意：如果也安装了 Stremio，首次触发 stremio:// 链接时，Windows 可能会询问要使用哪个应用。选择 Frame 即可将其设为默认应用。",
   Health: "健康状态",
   "Health check returns 5xx": "健康检查返回 5xx",
   "Health for {n} service": "{n} 个服务的运行状况",

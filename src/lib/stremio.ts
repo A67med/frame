@@ -106,7 +106,7 @@ export function cwSortKey(i: LibraryItem): number {
   const lastWatched = Date.parse(i.state?.lastWatched ?? "");
   const m = i._mtime as unknown;
   const mtime = typeof m === "number" ? m : Date.parse(String(m ?? ""));
-  // Recency must agree with the dismiss check's itemActivity: Harbor and external
+  // Recency must agree with the dismiss check's itemActivity: Frame and external
   // playback imports record freshness in `harbor.resume` without touching the cloud
   // _mtime/lastWatched. Otherwise an item un-dismissed by fresh resume keeps sorting
   // by its stale cloud timestamp and sinks to the end of Continue Watching.

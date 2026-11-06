@@ -270,8 +270,8 @@ const catalog02: Record<string, string> = {
   Catalogs: "Cataloghi",
   "Catalogs & metadata": "Cataloghi e metadati",
   "Catalogs to show": "Cataloghi da mostrare",
-  "Catch stremio:// install links inside Harbor":
-    "Intercetta in Harbor i link di installazione stremio://",
+  "Catch stremio:// install links inside Frame":
+    "Intercetta in Frame i link di installazione stremio://",
   Categories: "Categorie",
   Cause: "Causa",
   "Celebrated actors": "Attori acclamati",

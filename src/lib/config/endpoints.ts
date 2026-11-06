@@ -16,7 +16,7 @@ export const HARBOR_BUG_FORM_URL = `${HARBOR_ISSUES_URL}/new?template=bug_report
 // Static feeds (awards, hero art, release notes, theme index) served from the repo's data/ folder.
 export const HARBOR_DATA_BASE = resolveBase(
   import.meta.env.VITE_HARBOR_DATA_BASE,
-  "https://raw.githubusercontent.com/crazyrabbit0/harbor/main/data",
+  "https://raw.githubusercontent.com/abdallahkattriah-sketch/frame/main/data",
 );
 
 export const HARBOR_TRAKT_BASE = resolveBase(

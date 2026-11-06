@@ -1119,16 +1119,16 @@ const settings: Record<string, string> = {
   "Hero carousel, Top 10, Trending, In Theaters, per-service rails.":
     "عرض دوّار، Top 10، الأكثر رواجاً، في دور السينما، صفوف لكل خدمة.",
   Updates: "التحديثات",
-  "Harbor checks harbor.site for new versions and installs them in place.":
-    "يتحقق Harbor من harbor.site من إصدارات جديدة ويثبّتها في مكانها.",
+  "Frame checks harbor.site for new versions and installs them in place.":
+    "يتحقق Frame من harbor.site من إصدارات جديدة ويثبّتها في مكانها.",
   "Backup & restore": "النسخ الاحتياطي والاستعادة",
   "Export your entire Frame setup to a single file, then restore it on a new computer or keep it as a backup.":
     "صدّر إعداداتك الكاملة لملف واحد، ثم استعدها على جهاز جديد.",
   Privacy: "الخصوصية",
   "System tray": "شريط النظام",
   "Stremio install links": "روابط تثبيت Stremio",
-  "Harbor catches stremio:// install links so the configure-and-install flow stays inside the app.":
-    "Harbor يلتقط روابط stremio:// ليبقي تدفق التثبيت داخل التطبيق.",
+  "Frame catches stremio:// install links so the configure-and-install flow stays inside the app.":
+    "Frame يلتقط روابط stremio:// ليبقي تدفق التثبيت داخل التطبيق.",
   "Discord Rich Presence": "Discord Rich Presence",
   "Let your Discord friends see what you are watching, with the show poster and a live progress bar.":
     "اسمح لأصدقائك على Discord برؤية ما تشاهد، مع ملصق العرض وشريط تقدم حي.",
@@ -1796,11 +1796,11 @@ const settings: Record<string, string> = {
   "Step zoom in to crop baked-in black bars (Zoom mode).":
     "تكبير تدريجي لقص الأشرطة السوداء المدمجة (وضع التكبير).",
   Screenshot: "لقطة شاشة",
-  "Save the current frame (video only, no subtitles) as a PNG to Pictures/Harbor.":
-    "حفظ الإطار الحالي (فيديو فقط، بدون ترجمة) كصورة PNG في مجلد Pictures/Harbor.",
+  "Save the current frame (video only, no subtitles) as a PNG to Pictures/Frame.":
+    "حفظ الإطار الحالي (فيديو فقط، بدون ترجمة) كصورة PNG في مجلد Pictures/Frame.",
   "Record GIF": "تسجيل صورة متحركة (GIF)",
-  "Start or stop recording a GIF of the video (no subtitles). Saves to Pictures/Harbor.":
-    "بدء أو إيقاف تسجيل صورة متحركة للفيديو (بدون ترجمة). يتم حفظها في مجلد Pictures/Harbor.",
+  "Start or stop recording a GIF of the video (no subtitles). Saves to Pictures/Frame.":
+    "بدء أو إيقاف تسجيل صورة متحركة للفيديو (بدون ترجمة). يتم حفظها في مجلد Pictures/Frame.",
   "Seek back": "رجوع",
   "Jump back by the Back seek step set under Behavior.":
     "الرجوع للخلف حسب خطوة الرجوع المحددة في السلوك.",
@@ -2006,8 +2006,8 @@ const settings: Record<string, string> = {
   "My library": "مكتبتي",
   Anticipated: "المنتظرة",
   "Custom calendar": "التقويم المخصص",
-  "Harbor checks harbor.site for new versions and installs them in place. Nothing installs until you choose to, and a dismissed update never nags you again.":
-    "يتحقق Harbor من harbor.site للبحث عن إصدارات جديدة ويثبتها في مكانها. لا يتم تثبيت أي شيء حتى تختار ذلك، ولن يزعجك إشعار التحديث المرفوض مرة أخرى.",
+  "Frame checks harbor.site for new versions and installs them in place. Nothing installs until you choose to, and a dismissed update never nags you again.":
+    "يتحقق Frame من harbor.site للبحث عن إصدارات جديدة ويثبتها في مكانها. لا يتم تثبيت أي شيء حتى تختار ذلك، ولن يزعجك إشعار التحديث المرفوض مرة أخرى.",
   "Frame checks its GitHub releases for new versions and installs them in place. Nothing installs until you choose to, and a dismissed update never nags you again.":
     "يتحقق Frame من GitHub للبحث عن إصدارات جديدة ويثبتها في مكانها. لا يتم تثبيت أي شيء حتى تختار ذلك، ولن يزعجك إشعار التحديث المرفوض مرة أخرى.",
   "Library, watch progress, and addon collection sync from this account.":
@@ -2021,8 +2021,8 @@ const settings: Record<string, string> = {
   "Your color": "لونك",
   "Used for your cursor in Watch Together, your draw color, and your name pill in chat.":
     "يُستخدم لمؤشرك في المشاهدة معاً، ولون الرسم الخاص بك، وشريط اسمك في الدردشة.",
-  "Harbor catches stremio:// install links so the configure-and-install flow stays inside the app. Every install also syncs to your Stremio account, so the official app remains the canonical home for your library.":
-    "يلتقط Harbor روابط التثبيت stremio:// بحيث تبقى عملية الإعداد والتثبيت داخل التطبيق. تتم مزامنة كل تثبيت مع حسابك في Stremio أيضًا، بحيث يظل التطبيق الرسمي هو المرجع الأساسي لمكتبتك.",
+  "Frame catches stremio:// install links so the configure-and-install flow stays inside the app. Every install also syncs to your Stremio account, so the official app remains the canonical home for your library.":
+    "يلتقط Frame روابط التثبيت stremio:// بحيث تبقى عملية الإعداد والتثبيت داخل التطبيق. تتم مزامنة كل تثبيت مع حسابك في Stremio أيضًا، بحيث يظل التطبيق الرسمي هو المرجع الأساسي لمكتبتك.",
   "Let your Discord friends see what you are watching, with the show poster and a live progress bar. Desktop only, and only your own Discord client is involved (nothing touches a Frame server).":
     "دع أصدقاءك على Discord يرون ما تشاهده، مع بوستر العرض وشريط تقدم مباشر. متوفر للديسكتوب فقط، ولا يتطلب سوى برنامج Discord الخاص بك (لا شيء يمر عبر خوادم Frame).",
   "Saved {d} from Frame {a}.": "تم الحفظ {d} من Frame {a}.",
@@ -2348,13 +2348,13 @@ const settings: Record<string, string> = {
   "Get beta updates": "الحصول على التحديثات التجريبية",
   "Receive early builds with the newest fixes before they reach the stable release. Betas can be rough around the edges; switch this off to return to stable at the next update.":
     "تلقَّ إصدارات مبكّرة بأحدث الإصلاحات قبل وصولها إلى الإصدار المستقرّ. قد تكون النسخ التجريبية غير مصقولة؛ عطّل هذا للعودة إلى المستقرّ في التحديث القادم.",
-  "Catch stremio:// install links inside Harbor": "التقاط روابط التثبيت ‎stremio://‎ داخل Harbor",
-  "Harbor's in-app installer animates the manifest install and keeps you in context. Anything Harbor installs is also synced to your Stremio account, so the official app stays the canonical library. Turn this off and Stremio becomes the only handler for stremio:// links; Harbor still installs anything you trigger from inside the app (Configure & install, paste, drag-and-drop).":
-    "يحرّك مُثبّت Harbor داخل التطبيق تثبيت البيان ويبقيك في السياق. يتزامن أي شيء يثبّته Harbor أيضًا مع حساب Stremio الخاص بك، ليبقى التطبيق الرسمي المكتبة المعتمدة. عطّل هذا فيصبح Stremio المعالج الوحيد لروابط ‎stremio://‎؛ ويظل Harbor يثبّت أي شيء تطلقه من داخل التطبيق (الإعداد والتثبيت، اللصق، السحب والإفلات).",
-  "Heads up: if Stremio is also installed, Windows may ask which app to use the first time a stremio:// link fires. Pick Harbor to make it stick.":
-    "تنبيه: إن كان Stremio مثبّتًا أيضًا، فقد يسأل Windows عن أي تطبيق تستخدمه في أول مرة يُطلق فيها رابط ‎stremio://‎. اختر Harbor ليثبت ذلك.",
-  "stremio:// links now open in the Stremio app. Harbor will only install when you trigger it from inside Harbor.":
-    "تُفتح روابط ‎stremio://‎ الآن في تطبيق Stremio. ولن يثبّت Harbor إلا عندما تطلقه من داخل Harbor.",
+  "Catch stremio:// install links inside Frame": "التقاط روابط التثبيت ‎stremio://‎ داخل Frame",
+  "Frame's in-app installer animates the manifest install and keeps you in context. Anything Frame installs is also synced to your Stremio account, so the official app stays the canonical library. Turn this off and Stremio becomes the only handler for stremio:// links; Frame still installs anything you trigger from inside the app (Configure & install, paste, drag-and-drop).":
+    "يحرّك مُثبّت Frame داخل التطبيق تثبيت البيان ويبقيك في السياق. يتزامن أي شيء يثبّته Frame أيضًا مع حساب Stremio الخاص بك، ليبقى التطبيق الرسمي المكتبة المعتمدة. عطّل هذا فيصبح Stremio المعالج الوحيد لروابط ‎stremio://‎؛ ويظل Frame يثبّت أي شيء تطلقه من داخل التطبيق (الإعداد والتثبيت، اللصق، السحب والإفلات).",
+  "Heads up: if Stremio is also installed, Windows may ask which app to use the first time a stremio:// link fires. Pick Frame to make it stick.":
+    "تنبيه: إن كان Stremio مثبّتًا أيضًا، فقد يسأل Windows عن أي تطبيق تستخدمه في أول مرة يُطلق فيها رابط ‎stremio://‎. اختر Frame ليثبت ذلك.",
+  "stremio:// links now open in the Stremio app. Frame will only install when you trigger it from inside Frame.":
+    "تُفتح روابط ‎stremio://‎ الآن في تطبيق Stremio. ولن يثبّت Frame إلا عندما تطلقه من داخل Frame.",
   "Checking harbor.site for a newer build.": "يتحقّق من harbor.site بحثًا عن إصدار أحدث.",
   "Checking GitHub for a newer build.": "يتحقّق من GitHub بحثًا عن إصدار أحدث.",
   "Downloading {pct}%": "جارٍ التنزيل {pct}%",

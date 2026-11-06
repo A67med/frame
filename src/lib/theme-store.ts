@@ -15,7 +15,7 @@ const ORIGIN = HARBOR_API_BASE;
 const API = `${ORIGIN}/themes/api`;
 const INDEX_BASE = `${HARBOR_DATA_BASE}/themes`;
 export const THEME_SUBMIT_URL =
-  "https://github.com/crazyrabbit0/harbor/blob/main/data/themes/README.md";
+  "https://github.com/abdallahkattriah-sketch/frame/blob/main/data/themes/README.md";
 const UPLOADS_KEY = "harbor.theme-uploads.v1";
 const CLIENT_KEY = "harbor.theme-client-id";
 
@@ -124,7 +124,7 @@ function fromIndex(e: IndexEntry): StoreTheme {
     ratingCount: 0,
     visibility: "public",
     status: "approved",
-    share: `https://github.com/crazyrabbit0/harbor/blob/main/data/themes/${e.file}`,
+    share: `https://github.com/abdallahkattriah-sketch/frame/blob/main/data/themes/${e.file}`,
     createdAt: e.createdAt ?? "",
     updatedAt: e.updatedAt,
     versionsCount: rev,

@@ -31,7 +31,7 @@ const MARKS: Record<AwardType, string> = {
 // Twin of the NOUN map in components/card-award.tsx, which is not exported. The
 // award-catalog shorthand cannot stand in: it is "The Oscars", so a three-time
 // winner reads "3 The Oscarss". Body names are proper nouns and stay untranslated
-// exactly as they are everywhere else in Harbor; only the count form goes through
+// exactly as they are everywhere else in Frame; only the count form goes through
 // the catalog, and a missing key there interpolates to desktop's own string.
 const NOUN: Record<AwardType, string> = {
   oscar: "Oscar",

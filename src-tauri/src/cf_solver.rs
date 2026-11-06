@@ -84,7 +84,7 @@ fn cf_clear_failure(host: &str) {
 
 /// Must already be on the main thread. Topmost is set before the window is shown
 /// because Windows refuses SetForegroundWindow to a process that does not own the
-/// current foreground window, which left the check sitting behind Harbor.
+/// current foreground window, which left the check sitting behind Frame.
 fn raise_window(w: &tauri::WebviewWindow) {
     let _ = w.unminimize();
     let _ = w.set_always_on_top(true);
@@ -210,7 +210,7 @@ fn open_solver(app: &AppHandle, url: &str) -> Result<(), String> {
     app.run_on_main_thread(move || {
         let builder =
             WebviewWindowBuilder::new(&app_main, SOLVER_LABEL, WebviewUrl::External(parsed))
-                .title("Harbor · checking source")
+                .title("Frame · checking source")
                 .inner_size(480.0, 640.0)
                 .center()
                 .resizable(true)

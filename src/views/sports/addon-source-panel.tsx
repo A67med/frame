@@ -182,7 +182,7 @@ function AddonSources({ game, onAvailable }: AddonSourcesProps) {
       else setError("Could not start this stream. Choose another source.");
       return;
     }
-    // Keep torrent/debrid consent and non-direct transports in Harbor's full picker.
+    // Keep torrent/debrid consent and non-direct transports in Frame's full picker.
     if (
       stream.infoHash ||
       !stream.url ||

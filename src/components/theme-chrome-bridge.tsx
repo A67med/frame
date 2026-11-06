@@ -3,8 +3,6 @@ import { createPortal } from "react-dom";
 import { AccountMenuFloating } from "@/chrome/account-menu/account-menu-floating";
 import { StatusPicker } from "@/chrome/sidebar/status-control";
 import { useAuth } from "@/lib/auth";
-import { useProfiles } from "@/lib/profiles";
-import { useSettings } from "@/lib/settings";
 import {
   anchorFromElement,
   openAccountMenu,
@@ -146,13 +144,8 @@ function StatusPickerFloating() {
 }
 
 export function ThemeChromeBridge() {
-  const { settings } = useSettings();
-  const { activeProfile } = useProfiles();
   const { user } = useAuth();
-  const harborAvatar = settings.harborAvatar?.startsWith("/kids/avatars/")
-    ? null
-    : settings.harborAvatar;
-  const avatarUrl = activeProfile?.avatar ?? harborAvatar ?? user?.avatar ?? null;
+  const avatarUrl = user?.avatar ?? null;
   const avatarRef = useRef(avatarUrl);
   avatarRef.current = avatarUrl;
   const bpOffer = useBigPictureEntry().offer;

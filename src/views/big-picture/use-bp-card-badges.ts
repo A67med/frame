@@ -34,7 +34,7 @@ export type BpCardBadges = { badges: readonly BpCardBadge[]; imdbId: string | un
 /**
  * Which settings family answers "is this provider on".
  *
- * Harbor ships two independent sets, showXBadge for cards and showXDetail for
+ * Frame ships two independent sets, showXBadge for cards and showXDetail for
  * detail pages, and they diverge on stock defaults: TMDB, RT audience,
  * Metacritic, Letterboxd, MDBList and Trakt are all off for cards and on for
  * detail. Reading the card family on a detail page drops six of the ten

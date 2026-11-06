@@ -1,5 +1,5 @@
 !macro NSIS_HOOK_PREINSTALL
-  ; #419/#812: free Harbor's bundled sidecars so their files aren't locked when we overwrite them during
+  ; #419/#812: free Frame's bundled sidecars so their files aren't locked when we overwrite them during
   ; install/update/reinstall. Native nsis_tauri_utils only (no PowerShell/WMI) so AV/EDR machines can't stall
   ; the installer in its initial phase and silent updates always finish. CurrentUser scope matches installMode.
   nsis_tauri_utils::KillProcessCurrentUser "mpv.exe"
@@ -16,4 +16,9 @@
   nsExec::Exec 'taskkill /F /T /FI "IMAGENAME eq stremio-server*"'
   Pop $0
   Sleep 500
+!macroend
+
+!macro NSIS_HOOK_POSTINSTALL
+  ; v0.1.0 installed its binary as harbor.exe; an in-place update would otherwise leave it behind.
+  Delete "$INSTDIR\harbor.exe"
 !macroend

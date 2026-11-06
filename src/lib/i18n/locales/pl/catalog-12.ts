@@ -531,8 +531,8 @@ const catalog12: Record<string, string> = {
   "Start here. The ones almost everyone has.": "Zacznij tutaj. Te dodatki ma prawie każdy.",
   "Start import": "Rozpocznij import",
   "Start of manga": "Początek mangi",
-  "Start or stop recording a GIF of the video (no subtitles). Saves to Pictures/Harbor.":
-    "Rozpocznij lub zatrzymaj nagrywanie obrazu do pliku GIF (bez napisów). Plik zostanie zapisany w folderze Obrazy/Harbor.",
+  "Start or stop recording a GIF of the video (no subtitles). Saves to Pictures/Frame.":
+    "Rozpocznij lub zatrzymaj nagrywanie obrazu do pliku GIF (bez napisów). Plik zostanie zapisany w folderze Obrazy/Frame.",
   "Start over": "Zacznij od nowa",
   "Start playback": "Rozpocznij odtwarzanie",
   "Start recording": "Rozpocznij nagrywanie",

@@ -94,7 +94,7 @@ function BroadcastPlayer({
           stream.platform === "youtube" ? "autoplay=1" : "autoplay=true",
         )
       : rawEmbed;
-  // Twitch refuses an iframe at Harbor's packaged origin, so the channel plays top-level.
+  // Twitch refuses an iframe at Frame's packaged origin, so the channel plays top-level.
   const windowUrl = playback?.mode === "window" ? playback.url : null;
   const external = esportsExternalUrl(stream.url);
   const chatPopoutUrl = esportsChatPopoutUrl(stream);

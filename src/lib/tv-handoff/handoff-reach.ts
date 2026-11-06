@@ -2,7 +2,7 @@ import { invoke } from "@tauri-apps/api/core";
 
 /**
  * Can a phone actually get here. Two independent facts, both of which fail
- * silently today: whether Harbor knows this machine's LAN address, and whether
+ * silently today: whether Frame knows this machine's LAN address, and whether
  * the web server is genuinely bound to a port.
  */
 

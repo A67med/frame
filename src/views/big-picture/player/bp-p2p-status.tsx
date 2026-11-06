@@ -163,7 +163,7 @@ export function useBpP2pStatus(params: {
 }
 
 // Preparing and buffering are not the same thing and the screen must not blur
-// them: preparing is Harbor still filling the head of the file, buffering is the
+// them: preparing is Frame still filling the head of the file, buffering is the
 // player already holding the stream and waiting on the next piece.
 export function bpStageLabel(
   status: BpP2pStatus,

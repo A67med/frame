@@ -87,6 +87,7 @@ mod harbor_lan;
 mod hdr_overlay;
 #[cfg(desktop)]
 mod installer_handoff;
+mod legacy_data;
 #[cfg(desktop)]
 mod media_controls;
 #[cfg(target_os = "windows")]
@@ -724,6 +725,7 @@ pub fn run() {
     if games::try_run_achievement_worker() { return; }
     if games::try_run_archive_worker() { return; }
     if games::try_run_hydra_import_worker() { return; }
+    legacy_data::migrate();
     {
         let args: Vec<String> = std::env::args().skip(1).collect();
         if let Some(p) = media_file_from_args(&args) {
@@ -772,14 +774,14 @@ pub fn run() {
                 app.exit(0);
                 return;
             }
-            if let Some(url) = args.iter().find(|a| a.starts_with("harbor://")) {
+            if let Some(url) = args.iter().find(|a| a.starts_with("frame://") || a.starts_with("harbor://")) {
                 let _ = app.emit("harbor:stremio-deeplink", url.clone());
             }
             if let Some(path) = media_file_from_args(&args) {
                 let _ = app.emit("harbor:open-file", path);
             }
         }))
-        // tauri-plugin-opener injects a page script that itself opens target="_blank" anchors, duplicating Harbor's own openUrl.
+        // tauri-plugin-opener injects a page script that itself opens target="_blank" anchors, duplicating Frame's own openUrl.
         .plugin(tauri_plugin_opener::Builder::new().open_js_links_on_click(false).build())
         .plugin(tauri_plugin_os::init())
         .plugin(tauri_plugin_shell::init())
@@ -824,7 +826,7 @@ pub fn run() {
         tauri::http::Response::builder()
             .status(200)
             .header("content-type", "text/html; charset=utf-8")
-            .body(b"<!doctype html><meta charset=\"utf-8\"><title>Harbor</title>".to_vec())
+            .body(b"<!doctype html><meta charset=\"utf-8\"><title>Frame</title>".to_vec())
             .unwrap()
     });
 
@@ -838,6 +840,13 @@ pub fn run() {
             }
         })
         .setup(move |app| {
+            if legacy_data::failed() {
+                use tauri_plugin_dialog::DialogExt;
+                app.dialog()
+                    .message("Frame couldn't copy your Harbor data on this launch, so it's starting without it. Your original data has not been changed. Close Harbor if it's open, then restart Frame to try again.")
+                    .title("Frame")
+                    .show(|_| {});
+            }
             if let Err(error) = crash_report::initialize(app.handle()) {
                 eprintln!("[harbor::crash-report] initialization failed: {error}");
             }

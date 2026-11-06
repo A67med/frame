@@ -14,7 +14,7 @@ const harborLoaderSource = readFileSync(
   "utf8",
 );
 
-test("active downloads reuse the shared Harbor loader at compact size", () => {
+test("active downloads reuse the shared Frame loader at compact size", () => {
   assert.match(downloadsPopoverSource, /import \{ HarborLoader \}/);
   assert.match(downloadsPopoverSource, /downloadingCount > 0[\s\S]*?<HarborLoader size="xs"/);
   assert.match(harborLoaderSource, /xs: "h-7 w-7"/);

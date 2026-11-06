@@ -222,7 +222,7 @@ pub fn configure_linux_graphics() {
     // compositor (WebKit bug 192305), and with compositing off every layer the
     // player promotes via transform/opacity/position:fixed collapses into
     // document order, which is what puts the subtitle modal behind the seek
-    // bar. Harbor must therefore NOT disable compositing. WebKit checks these
+    // bar. Frame must therefore NOT disable compositing. WebKit checks these
     // variables for presence and ignores the value, so "=0" cannot undo it;
     // only never setting it works. HARBOR_LINUX_LEGACY_GFX=1 restores the old
     // behaviour for A/B testing without a rebuild.

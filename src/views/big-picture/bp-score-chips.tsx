@@ -38,7 +38,7 @@ function markFor(badge: BpCardBadge, size: string) {
     case "audience":
       return <Popcorn size="1.25em" strokeWidth={2.4} className="shrink-0 text-ink" />;
     case "metacritic":
-      // No Metacritic mark ships with Harbor, and desktop's red/amber/green
+      // No Metacritic mark ships with Frame, and desktop's red/amber/green
       // tone would be a third and fourth saturated colour on this surface.
       return <span className="shrink-0 text-[0.78em] tracking-[0.04em] text-ink-muted">MC</span>;
     case "letterboxd":

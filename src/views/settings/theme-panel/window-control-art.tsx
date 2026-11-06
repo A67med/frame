@@ -1,7 +1,7 @@
 import { WindowCaptionPreview } from "@/chrome/hybrid-title-bar";
 import { HybridMenuBar } from "@/chrome/hybrid-menu-bar";
 import { WindowControlButton, WindowControlGlyph } from "@/chrome/window-control-button";
-import { HarborMark } from "@/components/icons/harbor-mark";
+import { FrameMark } from "@/components/icons/frame-mark";
 import { UiIcon } from "@/components/ui-icon";
 import { useT } from "@/lib/i18n";
 import { osClass } from "@/lib/platform";
@@ -49,7 +49,7 @@ export function TitleBarArt() {
       <span
         className={`flex min-w-0 flex-1 items-center gap-2 px-2 text-[12px] text-ink ${mac ? "justify-center pe-16" : ""}`}
       >
-        {!mac && <HarborMark className="h-4 w-4 shrink-0" />}
+        {!mac && <FrameMark className="h-4 w-4 shrink-0" />}
         Frame
       </span>
       {!mac && <WindowCaptionPreview native />}

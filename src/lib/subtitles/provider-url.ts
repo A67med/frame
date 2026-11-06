@@ -1,5 +1,5 @@
 /** Internal renderer-to-native policy marker. It must never be sent upstream. */
-export const SUBTITLE_PUBLIC_NETWORK_HEADER = "X-Frame-Public-Network-Only";
+export const SUBTITLE_PUBLIC_NETWORK_HEADER = "X-Harbor-Public-Network-Only";
 
 function ipv4Octets(host: string): number[] | null {
   const parts = host.split(".");

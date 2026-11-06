@@ -1,7 +1,7 @@
 import { ArrowLeft, Monitor } from "lucide-react";
 import { useContextMenu } from "@/lib/context-menu";
 import { Search } from "@/components/icons/search-icon";
-import { HarborMark } from "@/components/icons/harbor-mark";
+import { FrameMark } from "@/components/icons/frame-mark";
 import { AccountMenu } from "@/chrome/account-menu/account-menu";
 import { TogetherButton } from "@/chrome/topbar";
 import { useBigPictureEntry } from "@/chrome/use-big-picture-entry";
@@ -48,7 +48,7 @@ export function FloatingTop() {
         {customMark ? (
           <img src={customMark} alt="" draggable={false} className="h-8 w-8 object-contain" />
         ) : (
-          <HarborMark className="h-8 w-8" />
+          <FrameMark className="h-8 w-8" />
         )}
       </button>
       {showBack && (

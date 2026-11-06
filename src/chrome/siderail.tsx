@@ -2,7 +2,7 @@ import { usePreviewNavCustomization } from "@/lib/theme-preview";
 import { useContextMenu } from "@/lib/context-menu";
 import { useState } from "react";
 import { Search } from "lucide-react";
-import { HarborMark } from "@/components/icons/harbor-mark";
+import { FrameMark } from "@/components/icons/frame-mark";
 import { AccountMenu } from "@/chrome/account-menu/account-menu";
 import { CollapseToggle } from "@/chrome/sidebar/collapse-toggle";
 import { SidebarBigPictureEntry } from "@/chrome/sidebar/big-picture-entry";
@@ -105,7 +105,7 @@ export function SideRail() {
             className="relative flex items-center gap-2 text-accent"
             aria-label={t("chrome.harborHome")}
           >
-            <HarborMark className="h-[22px] w-[22px] shrink-0 drop-shadow-[0_0_10px_var(--color-accent-soft)]" />
+            <FrameMark className="h-[22px] w-[22px] shrink-0 drop-shadow-[0_0_10px_var(--color-accent-soft)]" />
             {!collapsed && (
               <span
                 className="text-[25px] font-medium leading-none tracking-tight"

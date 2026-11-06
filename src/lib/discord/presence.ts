@@ -9,7 +9,9 @@ const HARBOR_LOGO = `${HARBOR_DATA_BASE}/discord/harbordiscord.png`;
 // Discord strips buttons that link to its own invites: discord.gg makes it
 // reject the whole activity (presence vanishes), discord.com/invite is dropped
 // silently. A community-invite button needs a redirect on a domain we own.
-const STATIC_BUTTONS = [{ label: "Get Frame", url: "https://github.com/crazyrabbit0/harbor" }];
+const STATIC_BUTTONS = [
+  { label: "Get Frame", url: "https://github.com/abdallahkattriah-sketch/frame" },
+];
 
 type DiscordConfig = {
   enabled: boolean;

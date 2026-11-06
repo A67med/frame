@@ -654,11 +654,11 @@ const catalog08: Record<string, string> = {
     "가벼운 썸네일 대신 더 선명한 프레임을 저장합니다. 카드에서 더 또렷하게 보이지만 공간을 더 차지하므로 저장되는 수가 적고 가장 오래된 것부터 삭제됩니다.",
   "Save status": "상태 저장",
   "Save sync": "동기화 저장",
-  "Save the current frame (video only, no subtitles) as a PNG to Pictures/Harbor.":
-    "현재 프레임을 자막 없이 동영상만 PNG로 Pictures/Harbor에 저장합니다.",
+  "Save the current frame (video only, no subtitles) as a PNG to Pictures/Frame.":
+    "현재 프레임을 자막 없이 동영상만 PNG로 Pictures/Frame에 저장합니다.",
   "Save the last 30 seconds": "최근 30초 저장",
-  "Save the last 30 seconds as a video clip with audio, choosing subtitles on or off. Saves to Pictures/Harbor.":
-    "마지막 30초를 오디오가 포함된 동영상 클립으로 저장하며 자막 포함 여부를 선택할 수 있습니다. Pictures/Harbor에 저장됩니다.",
+  "Save the last 30 seconds as a video clip with audio, choosing subtitles on or off. Saves to Pictures/Frame.":
+    "마지막 30초를 오디오가 포함된 동영상 클립으로 저장하며 자막 포함 여부를 선택할 수 있습니다. Pictures/Frame에 저장됩니다.",
   "Save the worker source. Copy": "워커 소스를 저장하세요. Frame 저장소의",
   "Save the worker source. Copy {code1} from the Frame repo into a new directory as {code2}.":
     "Worker 소스를 저장합니다. Frame 저장소의 {code1}을(를) 새 디렉터리에 {code2}(으)로 복사합니다.",

@@ -68,7 +68,7 @@ export function TogetherPopover({
     closeModal,
     clientId,
   } = useTogether();
-  const { openSettings, openPicker, topKind } = useView();
+  const { openPicker, topKind } = useView();
   const { settings, update } = useSettings();
   const { avatar: selfAvatar, color: selfColor } = useSelfIdentity();
   const t = useT();
@@ -129,11 +129,6 @@ export function TogetherPopover({
 
   const commitName = () => {
     if (draftName.trim() && draftName.trim() !== displayName) setDisplayName(draftName);
-  };
-
-  const goToSettings = () => {
-    closeModal();
-    openSettings("relay");
   };
 
   const participants = useMemo(
@@ -241,9 +236,7 @@ export function TogetherPopover({
             <div>
               <p className="text-[13px] text-ink">{t("Watch Together needs a relay.")}</p>
               <p className="mt-1 text-[12px] leading-relaxed text-ink-muted">
-                {t(
-                  "A relay is a tiny Cloudflare Worker that passes play/pause/seek messages between you and your friends. No video data ever touches it. Deploy your own in one click (free tier is plenty), or paste a friend's invite link to use theirs.",
-                )}
+                {t("Paste an invite link from someone hosting a room to join them.")}
               </p>
             </div>
             <input
@@ -260,12 +253,6 @@ export function TogetherPopover({
                 className="inline-flex h-9 items-center justify-center rounded-lg bg-ink px-3 text-[13px] font-medium text-canvas transition-transform hover:scale-[1.02] disabled:opacity-40 disabled:hover:scale-100"
               >
                 {t("Join")}
-              </button>
-              <button
-                onClick={goToSettings}
-                className="inline-flex h-9 items-center justify-center rounded-lg bg-white/[0.06] px-3 text-[13px] font-medium text-ink-muted transition-colors hover:bg-white/[0.10] hover:text-ink"
-              >
-                {t("Open Settings")}
               </button>
             </div>
           </div>

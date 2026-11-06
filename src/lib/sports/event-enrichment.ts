@@ -24,7 +24,7 @@ export type PublishedEvent = {
   round?: string;
   square?: string;
   banner?: string;
-  /** A video link supplied by the metadata provider, not a Harbor stream. */
+  /** A video link supplied by the metadata provider, not a Frame stream. */
   videoUrl?: string;
 };
 

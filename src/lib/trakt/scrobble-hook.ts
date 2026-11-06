@@ -15,7 +15,7 @@ type Snap = {
 type LastAction = "start" | "pause" | "stop" | null;
 
 const STUB_MAX_SEC = 150;
-// Keep pause scrobbles (resumable on other devices) up to where Harbor's own
+// Keep pause scrobbles (resumable on other devices) up to where Frame's own
 // CW drops the card (CW_FINISHED_RATIO); only beyond that report stop/watched.
 const WATCHED_MARK_PCT = 90;
 

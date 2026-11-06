@@ -146,19 +146,6 @@ jobs:
           node-version: 22
           cache: pnpm
 
-      - name: Set up Pokémon engine SDK
-        uses: actions/setup-dotnet@v5
-        with:
-          dotnet-version: "10.0.401"
-
-      - name: Build Pokémon engine and corresponding source bundle
-        run: node tools/pokemon-engine/build.mjs --fetch-source "${{ runner.temp }}/harbor-pokemon-source" --output src-tauri/resources/pokemon-engine --artifacts "${{ runner.temp }}/harbor-pokemon-build"
-
-      # .NET loads this LTTng tracing provider only when present; linuxdeploy fails on its missing liblttng-ust.
-      - name: Drop the optional .NET tracing provider (Linux)
-        if: contains(matrix.platform.runner, 'ubuntu')
-        run: rm -f src-tauri/resources/pokemon-engine/libcoreclrtraceptprovider.so
-
       - name: Install JS deps
         run: pnpm install --frozen-lockfile
 
@@ -174,6 +161,10 @@ jobs:
       - name: Fetch mpv (Windows x64)
         if: matrix.platform.target == 'x86_64-pc-windows-msvc'
         run: pnpm run setup:mpv
+
+      - name: Copy the Visual C++ runtime (Windows x64)
+        if: matrix.platform.target == 'x86_64-pc-windows-msvc'
+        run: pnpm run setup:vcruntime
 
       - name: Fetch external binaries
         run: pnpm run setup:binaries
@@ -254,6 +245,10 @@ jobs:
         with:
           tauriScript: pnpm tauri
           args: --target ${{ matrix.platform.target }} ${{ steps.sign.outputs.config }} ${{ steps.macos-libraries.outputs.config }}
+
+      - name: Check the Windows installer has every required file
+        if: contains(matrix.platform.runner, 'windows')
+        run: node scripts/verify-windows-bundle.mjs
 
       - name: Build Linux system packages
         if: contains(matrix.platform.runner, 'ubuntu')
@@ -360,7 +355,7 @@ jobs:
             -o -name '*.deb' -o -name '*.AppImage' \) -exec cp {} upload/ \;
           # latest.json carries each signature inline, so the .sig files are read here and never published.
           find artifacts -type f \( -name '*-setup.exe.sig' -o -name 'Frame_*.app.tar.gz.sig' -o -name 'Frame_*.AppImage.sig' \) -exec cp {} sigs/ \;
-          cp artifacts/Harbor-flatpak-x86_64/Harbor.flatpak "upload/Frame_${VERSION}_x86_64.flatpak"
+          cp artifacts/Frame-flatpak-x86_64/Frame.flatpak "upload/Frame_${VERSION}_x86_64.flatpak"
           previous="$(git tag --list 'v*' --sort=-v:refname | grep -vx "v$VERSION" | head -n 1 || true)"
           node scripts/release-notes.mjs "${previous:-$(git rev-list --max-parents=0 HEAD | tail -n 1)}" "$SHA" > notes.md
           node scripts/updater-manifest.mjs "$VERSION" upload sigs notes.md
@@ -385,10 +380,3 @@ jobs:
             --latest
 
   # A release made with GITHUB_TOKEN fires no release event, so WinGet is called from here.
-  winget:
-    name: WinGet
-    needs: [prepare, publish]
-    uses: ./.github/workflows/winget.yml
-    with:
-      tag: v${{ needs.prepare.outputs.version }}
-    secrets: inherit

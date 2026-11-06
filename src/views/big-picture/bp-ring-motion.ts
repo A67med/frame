@@ -95,7 +95,7 @@ const BLANK = "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAA
 // decode churn and the held-key collapse all at once. Stremio avoids this by
 // mounting ten items a row and rendering placeholders with no img at all.
 //
-// Harbor keeps its rows scrollable, so instead the bitmap goes: a tile far from
+// Frame keeps its rows scrollable, so instead the bitmap goes: a tile far from
 // the viewport keeps its element, its box and its focusability, and loses only
 // the pixels. Everything the focus engine measures is on the button, not the
 // image, so releasing changes nothing it can see.
@@ -155,7 +155,7 @@ declare global {
 // release assigns BLANK over a first load that is still in flight.
 //
 // `complete` is false only while a load is outstanding, so this counts exactly
-// the loads Harbor cancels itself. Read window.__bpArtCancelled over harbor_eval
+// the loads Frame cancels itself. Read window.__bpArtCancelled over harbor_eval
 // after a cold anime load. Near eleven means the finding is ours and release()
 // should wait for the element's own load event; near zero means it is not, and
 // changing release() would risk the banked memory work for nothing.

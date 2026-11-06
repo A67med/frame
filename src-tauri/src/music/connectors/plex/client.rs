@@ -4,7 +4,7 @@ use std::sync::LazyLock;
 use std::time::{Duration, SystemTime, UNIX_EPOCH};
 
 pub const API_VERSION: &str = "1.2.2";
-pub const AGENT: &str = "Harbor/1.0";
+pub const AGENT: &str = "Frame/1.0";
 pub const ACCOUNT_ORIGIN: &str = "https://clients.plex.tv";
 pub const COVER_SIZE: u32 = 480;
 pub const CIRCLE_SIZE: u32 = 320;
@@ -82,12 +82,12 @@ pub async fn get_json(
         .get(format!("{origin}{path}"))
         .timeout(timeout)
         .header("Accept", "application/json")
-        .header("X-Plex-Product", "Harbor")
+        .header("X-Plex-Product", "Frame")
         .header("X-Plex-Version", "1")
         .header("X-Plex-Platform", std::env::consts::OS)
         .header("X-Plex-Platform-Version", "1")
-        .header("X-Plex-Device", "Harbor")
-        .header("X-Plex-Device-Name", "Harbor Desktop")
+        .header("X-Plex-Device", "Frame")
+        .header("X-Plex-Device-Name", "Frame Desktop")
         .header("X-Plex-Model", "standalone")
         .header("X-Plex-Pms-Api-Version", API_VERSION)
         .header("X-Plex-Client-Identifier", client_id);

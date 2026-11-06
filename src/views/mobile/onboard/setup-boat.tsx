@@ -1,5 +1,5 @@
 /**
- * Harbor's mark, taken apart so the setup flow can build it one confirmed step
+ * Frame's mark, taken apart so the setup flow can build it one confirmed step
  * at a time. The path data is copied from components/icons/harbor-mark.tsx
  * rather than imported: that component paints all three paths inside one
  * flipped matrix, and a transform on a child path would be applied in that

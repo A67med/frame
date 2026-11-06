@@ -67,7 +67,7 @@ export function useBpCardState(
   useTop10Version();
   // On a television the ribbon is not a preference, it is the mark. The only
   // control that writes settings.top10Ribbon is desktop Settings then Library,
-  // and it defaults to false, so a viewer who only ever sees Harbor on a TV had
+  // and it defaults to false, so a viewer who only ever sees Frame on a TV had
   // no way to reach it and the mark could not appear however the feed was wired.
   // Defaulting it here rather than in lib/settings/defaults.ts on purpose: that
   // file is shared, and flipping it there would turn the ribbon on for every

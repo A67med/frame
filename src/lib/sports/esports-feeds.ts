@@ -587,7 +587,7 @@ async function settledMatches(jobs: Promise<EsportsMatch[]>[]): Promise<FeedBatc
   };
 }
 
-/** One allowlist for every adapter: a link Harbor cannot open never reaches a card. */
+/** One allowlist for every adapter: a link Frame cannot open never reaches a card. */
 export function allowedEsportsStreams(matches: EsportsMatch[]): EsportsMatch[] {
   return matches.map((match) => {
     const streams = match.streams

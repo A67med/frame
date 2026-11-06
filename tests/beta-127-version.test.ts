@@ -18,15 +18,12 @@ function carriedVersions(): Record<string, string | undefined> {
   return {
     "package.json": json("package.json"),
     "src-tauri/tauri.conf.json": json("src-tauri/tauri.conf.json"),
-    "installer/package.json": json("installer/package.json"),
-    "installer/src-tauri/tauri.conf.json": json("installer/src-tauri/tauri.conf.json"),
     "src-tauri/Cargo.toml": toml("src-tauri/Cargo.toml"),
-    "installer/src-tauri/Cargo.toml": toml("installer/src-tauri/Cargo.toml"),
-    "src-tauri/Cargo.lock": lock("src-tauri/Cargo.lock", "harbor"),
-    "installer/src-tauri/Cargo.lock": lock("installer/src-tauri/Cargo.lock", "harbor-setup"),
-    "flatpak/site.harbor.Harbor.metainfo.xml": /<release version="([^"]+)" date="[^"]+"\s*\/>/.exec(
-      read("flatpak/site.harbor.Harbor.metainfo.xml"),
-    )?.[1],
+    "src-tauri/Cargo.lock": lock("src-tauri/Cargo.lock", "frame"),
+    "flatpak/io.github.abdallahkattriah_sketch.Frame.metainfo.xml":
+      /<release version="([^"]+)" date="[^"]+"\s*\/>/.exec(
+        read("flatpak/io.github.abdallahkattriah_sketch.Frame.metainfo.xml"),
+      )?.[1],
   };
 }
 

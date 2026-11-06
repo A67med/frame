@@ -6,7 +6,7 @@ if (!version || !names.length) {
   process.exit(1);
 }
 
-const base = `https://github.com/crazyrabbit0/harbor/releases/download/v${version}`;
+const base = `https://github.com/abdallahkattriah-sketch/frame/releases/download/v${version}`;
 const ROWS = [
   ["Windows", "x64", [/_x64-setup\.exe$/]],
   ["macOS", "Apple silicon", [/_aarch64\.dmg$/]],

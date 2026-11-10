@@ -49,6 +49,12 @@ corepack pnpm test
 
 The in-app updater reads releases from this repository. Before publishing a release, generate your own updater signing key (`pnpm tauri signer generate`), put its public half in `plugins.updater.pubkey` in `src-tauri/tauri.conf.json`, and store the private half as the `TAURI_SIGNING_PRIVATE_KEY` repository secret. The key in the config today belongs to the Harbor fork, so updates signed by anyone else will not install.
 
+## Contributing
+
+Bug reports and pull requests are welcome. Before opening a pull request, please read the
+development notes in `AGENTS.md` and make sure `corepack pnpm run typecheck` and
+`corepack pnpm test` pass.
+
 ## License
 
 [MIT](./LICENSE). Frame is a modified version of Harbor; the original copyright notice is kept in `LICENSE`.

@@ -50,9 +50,15 @@ export function SidePanel({
 
   const fallbackBackdrop = meta.background ?? meta.poster;
 
+  // Four distinct stills fill the grid. With fewer (always, without a TMDB key) show what
+  // there is instead of repeating the same backdrop in every tile.
   const tiles = useMemo(() => {
-    const sample = stills.length > 4 ? pickRandom(stills, 4, Date.now() ^ stills.length) : stills;
-    return Array.from({ length: 4 }, (_, i) => sample[i] ?? fallbackBackdrop);
+    if (stills.length >= 4) {
+      return stills.length > 4 ? pickRandom(stills, 4, Date.now() ^ stills.length) : stills;
+    }
+    if (stills.length >= 2) return stills.slice(0, 2);
+    const only = stills[0] ?? fallbackBackdrop;
+    return only ? [only] : [];
   }, [stills, fallbackBackdrop]);
 
   const lightboxImages = stills.length > 0 ? stills : fallbackBackdrop ? [fallbackBackdrop] : [];
@@ -78,6 +84,7 @@ export function SidePanel({
           <Still
             key={`${meta.id}-${i}`}
             src={src}
+            wide={tiles.length === 1}
             alt={meta.name}
             expandLabel={t("Expand {title} image", { title: meta.name })}
             onClick={lightboxImages.length > 0 ? () => openAt(src) : undefined}
@@ -111,18 +118,24 @@ function Still({
   alt,
   onClick,
   expandLabel,
+  wide = false,
 }: {
   src: string | undefined;
   alt: string;
   onClick?: () => void;
   expandLabel: string;
+  wide?: boolean;
 }) {
+  // The tile color doubles as the placeholder while the image loads.
+  const span = wide ? "col-span-2" : "";
   if (!src) {
-    return <div className="aspect-[16/9] rounded-md bg-elevated/45" />;
+    return <div className={`aspect-[16/9] rounded-md bg-elevated/45 ${span}`} />;
   }
   if (!onClick) {
     return (
-      <div className="relative aspect-[16/9] overflow-hidden rounded-md border border-edge-soft">
+      <div
+        className={`relative aspect-[16/9] overflow-hidden rounded-md border border-edge-soft bg-elevated/45 ${span}`}
+      >
         <img
           src={src}
           alt={alt}
@@ -137,10 +150,10 @@ function Still({
       type="button"
       onClick={onClick}
       aria-label={expandLabel}
-      className="group/still relative aspect-[16/9] overflow-hidden rounded-md border border-edge-soft transition-colors duration-200 hover:border-ink"
+      className={`group/still relative aspect-[16/9] overflow-hidden rounded-md border border-edge-soft bg-elevated/45 transition-colors duration-200 hover:border-ink ${span}`}
     >
       <img
-        src={artAtWidth(src, 200)}
+        src={artAtWidth(src, wide ? 400 : 200)}
         alt={alt}
         loading="lazy"
         className="absolute inset-0 h-full w-full object-cover transition-transform duration-300 group-hover/still:scale-[1.04]"

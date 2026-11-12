@@ -12,11 +12,16 @@ export async function saveTextFileWithPath(
 ): Promise<SaveResult> {
   if (IS_TAURI) {
     try {
-      const { save } = await import("@tauri-apps/plugin-dialog");
       const { invoke } = await import("@tauri-apps/api/core");
-      const path = await save({ defaultPath: filename, filters: [{ name: label, extensions }] });
+      // The native side opens the save dialog and writes the chosen file, so
+      // the page never hands the app an arbitrary path to overwrite.
+      const path = await invoke<string | null>("save_text_file_as", {
+        defaultName: filename,
+        filterName: label,
+        extensions,
+        contents: text,
+      });
       if (!path) return { saved: false, path: null };
-      await invoke("save_text_file", { path, contents: text });
       return { saved: true, path };
     } catch (err) {
       if (options.nativeFailure === "throw") throw err;

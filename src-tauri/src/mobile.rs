@@ -80,6 +80,7 @@ pub fn run() {
         .invoke_handler(tauri::generate_handler![
             lan_ip,
             crate::save_text_file,
+            crate::text_files::save_text_file_as,
             crate::harbor_take_pending_file,
             crate::harbor_set_webview_memory_low,
             crate::harbor_set_webview_visible,

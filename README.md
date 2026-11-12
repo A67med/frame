@@ -6,6 +6,16 @@ Version 0.2.0.
 
 Frame began as a fork of [Harbor](https://github.com/crazyrabbit0/harbor), a Stremio client, and keeps its MIT license and notice. See [LICENSE](LICENSE) and `src-tauri/THIRD-PARTY-NOTICES.txt`.
 
+## Screenshots
+
+| Sidebar                                                                                                  | Theme selection                                                                                  |
+| -------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------ |
+| <img src="docs/screenshots/sidebar.png" alt="Frame sidebar with Settings above the profile" width="160"> | <img src="docs/screenshots/theme-selection.png" alt="Theme and appearance settings" width="560"> |
+
+| Backup & restore                                                                      | Choosing what a backup includes                                                                            |
+| ------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------- |
+| <img src="docs/screenshots/backup.png" alt="Backup and restore settings" width="420"> | <img src="docs/screenshots/backup-export.png" alt="Backup export dialog with password option" width="420"> |
+
 ## What it does
 
 - **Browse:** Home, Discover, Movies, TV Shows and My Library, with global search, advanced filters and right-click menus.
@@ -17,7 +27,7 @@ Frame began as a fork of [Harbor](https://github.com/crazyrabbit0/harbor), a Str
 - **Track:** Letterboxd is the only tracker.
 - **Themes:** Default, Stremio, Royal, Velvet and Amoled. Themes import and export as `.framestyle` files.
 
-Backups save as `frame-backup-YYYY-MM-DD.framex`, optionally encrypted with a password (AES-256-GCM). Both `.framex` and older `.harbx` backups can be imported. Before a restore, the desktop app saves a copy of your current setup to its data folder (`backups/`, newest five kept), and a restore that cannot finish is rolled back. Backups hold settings and app data only, never your video files.
+Backups save as `frame-backup-YYYY-MM-DD.framex`, optionally encrypted with a password (AES-256-GCM). Both `.framex` and older `.harbx` backups can be imported. Before a restore, the desktop app saves a copy of your current setup to its data folder (`backups/`, newest five kept), and a restore that cannot finish is rolled back. Custom JavaScript and HTML in a backup are only restored if you tick that option. Backups hold settings and app data only, never your video files.
 
 ## Install
 
@@ -45,7 +55,7 @@ To regenerate the logo, icons and installer art, run `node scripts/generate-bran
 
 ## Updates
 
-Frame checks GitHub Releases for a newer version and offers it. It downloads and installs only when you choose, and it refuses an update whose signature does not match the key built into the app. There is one stable channel.
+Frame checks GitHub Releases for a newer version and downloads it in the background (unless you dismissed that version or your connection is in Data Saver mode). It installs and restarts only when you choose, and it refuses an update whose signature does not match the key built into the app. There is one stable channel.
 
 ## Releases
 

@@ -1,133 +1,87 @@
-// TMDB release types (`/movie/{id}/release_dates`).
-export const RELEASE_TYPE = {
-  premiere: 1,
-  theatricalLimited: 2,
-  theatrical: 3,
-  digital: 4,
-  physical: 5,
-  tv: 6,
-} as const;
+// Release windows and dates for Radar. TMDB dates are date-only strings, so they are
+// compared as text against the operating system's local calendar day and never go
+// through a UTC conversion that could move them to a neighbouring day.
 
-export const THEATRICAL_TYPES: readonly number[] = [
-  RELEASE_TYPE.theatricalLimited,
-  RELEASE_TYPE.theatrical,
-];
-export const DIGITAL_TYPES: readonly number[] = [RELEASE_TYPE.digital];
+const DATE_ONLY = /^\d{4}-\d{2}-\d{2}$/;
 
-export type RadarSectionId = "coming" | "digital" | "new" | "popular";
+export type ReleaseKind = "upcoming" | "new";
+export type ReleaseMedia = "movie" | "tv";
 
-export type RawReleaseDates = {
-  results?: Array<{
-    iso_3166_1?: string;
-    release_dates?: Array<{ release_date?: string; type?: number; note?: string }>;
-  }>;
-};
+/** How far back a title still counts as newly released. */
+export const NEW_RELEASE_DAYS = 60;
 
-export type RadarDate = {
-  /** YYYY-MM-DD as TMDB lists it. */
-  date: string;
-  kind: "theatrical" | "digital";
-  /** ISO 3166-1 country the date belongs to. */
-  region: string;
-};
-
-export function isoDay(ms: number): string {
-  return new Date(ms).toISOString().slice(0, 10);
+export function isDateOnly(value: string | null | undefined): value is string {
+  return !!value && DATE_ONLY.test(value);
 }
 
-const DAY = 24 * 60 * 60 * 1000;
+function pad(n: number): string {
+  return String(n).padStart(2, "0");
+}
+
+/** Today's calendar day in the operating system's time zone. */
+export function localIsoDay(ms: number): string {
+  const d = new Date(ms);
+  return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
+}
+
+export function addDays(day: string, days: number): string {
+  const [y, m, d] = day.split("-").map(Number);
+  const next = new Date(y, m - 1, d + days);
+  return `${next.getFullYear()}-${pad(next.getMonth() + 1)}-${pad(next.getDate())}`;
+}
 
 /**
- * `discover/movie` filters for a section. With `region` set, TMDB applies the
- * release-type and date filters to that country's release dates, so every result
- * has a listed release of that type there. Windows are deliberately wide: Coming
- * Soon has no upper bound and Newly Released reaches back six months.
+ * `discover` filters for a release list. Both ask for the title's actual release or
+ * first-air date, so a record newly added to TMDB does not count as a new release.
  */
-export function discoverParams(
-  section: Exclude<RadarSectionId, "popular">,
-  region: string,
+export function releaseWindowParams(
+  kind: ReleaseKind,
+  media: ReleaseMedia,
   now: number,
 ): Record<string, string> {
-  const today = isoDay(now);
-  const base: Record<string, string> = {
-    region,
+  const today = localIsoDay(now);
+  const field = media === "movie" ? "primary_release_date" : "first_air_date";
+  const range: Record<string, string> =
+    kind === "upcoming"
+      ? { [`${field}.gte`]: addDays(today, 1) }
+      : { [`${field}.gte`]: addDays(today, -NEW_RELEASE_DAYS), [`${field}.lte`]: today };
+  return {
+    ...range,
     sort_by: "popularity.desc",
     include_adult: "false",
-  };
-  if (section === "coming") {
-    return {
-      ...base,
-      with_release_type: THEATRICAL_TYPES.join("|"),
-      "release_date.gte": isoDay(now + DAY),
-    };
-  }
-  if (section === "new") {
-    return {
-      ...base,
-      with_release_type: THEATRICAL_TYPES.join("|"),
-      "release_date.gte": isoDay(now - 180 * DAY),
-      "release_date.lte": today,
-    };
-  }
-  return {
-    ...base,
-    with_release_type: DIGITAL_TYPES.join("|"),
-    "release_date.gte": isoDay(now - 120 * DAY),
-    "release_date.lte": isoDay(now + 60 * DAY),
+    ...(media === "movie"
+      ? { with_release_type: kind === "upcoming" ? "2|3" : "2|3|4" }
+      : { include_null_first_air_dates: "false" }),
   };
 }
 
-function datesOfTypes(raw: RawReleaseDates, country: string, types: readonly number[]): string[] {
-  const entry = raw.results?.find((r) => r.iso_3166_1 === country);
-  return (entry?.release_dates ?? [])
-    .filter((d) => typeof d.type === "number" && types.includes(d.type) && d.release_date)
-    .map((d) => d.release_date!.slice(0, 10))
-    .sort();
+/** Whether a listed date really falls inside the requested release window. */
+export function inReleaseWindow(
+  date: string | null | undefined,
+  kind: ReleaseKind,
+  now: number,
+): boolean {
+  if (!isDateOnly(date)) return false;
+  const today = localIsoDay(now);
+  if (kind === "upcoming") return date > today;
+  return date <= today && date >= addDays(today, -NEW_RELEASE_DAYS);
 }
 
 /**
- * The date to show for a movie in a section, read only from TMDB's listed release
- * dates. The chosen region wins; otherwise the earliest matching date in any
- * country, labelled with that country. Returns null when nothing is listed, so the
- * UI shows no date rather than a guess.
+ * Merges ranked lists by reciprocal rank, so a title high on both Trending and
+ * Popular beats one that is high on only one of them.
  */
-export function pickRadarDate(
-  raw: RawReleaseDates | null,
-  section: RadarSectionId,
-  region: string,
-  now: number,
-): RadarDate | null {
-  if (!raw?.results?.length) return null;
-  const kind: RadarDate["kind"] = section === "digital" ? "digital" : "theatrical";
-  const types = kind === "digital" ? DIGITAL_TYPES : THEATRICAL_TYPES;
-  const today = isoDay(now);
-  const choose = (dates: string[]): string | undefined => {
-    if (section === "coming") return dates.find((d) => d > today);
-    if (section === "new") return dates.filter((d) => d <= today).at(-1);
-    return dates[0];
-  };
-  const local = choose(datesOfTypes(raw, region, types));
-  if (local) return { date: local, kind, region };
-  let best: RadarDate | null = null;
-  for (const r of raw.results) {
-    const country = r.iso_3166_1;
-    if (!country || country === region) continue;
-    const d = choose(datesOfTypes(raw, country, types));
-    if (!d) continue;
-    if (!best || d < best.date) best = { date: d, kind, region: country };
+export function rankByLists<T extends { id: string }>(lists: T[][]): T[] {
+  const scores = new Map<string, { item: T; score: number }>();
+  for (const list of lists) {
+    list.forEach((item, index) => {
+      const entry = scores.get(item.id);
+      const add = 1 / (20 + index);
+      if (entry) entry.score += add;
+      else scores.set(item.id, { item, score: add });
+    });
   }
-  return best;
-}
-
-/** Followed people's titles first (keeping each group's order), then the rest. */
-export function prioritizeFollowed<T extends { id: string }>(
-  items: T[],
-  followedIds: ReadonlySet<string>,
-): T[] {
-  const first: T[] = [];
-  const rest: T[] = [];
-  for (const it of items) (followedIds.has(it.id) ? first : rest).push(it);
-  return [...first, ...rest];
+  return [...scores.values()].sort((a, b) => b.score - a.score).map((entry) => entry.item);
 }
 
 /** Appends a page, dropping ids already shown. */

@@ -13,7 +13,7 @@ import {
 import { rateLimitDelaySeconds } from "../src/lib/subtitles/autosync/sub-source-contract.ts";
 
 const providerContext = {
-  userAgent: "Harbor-Test",
+  userAgent: "Frame-Test",
   subdlApiKey: "subdl-secret",
   subsourceApiKey: "subsource-secret",
 };

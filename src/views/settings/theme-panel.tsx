@@ -101,8 +101,6 @@ function ThemeTab() {
         </p>
         <ColorThemeBody
           activePreset={theme.preset}
-          fontPair={theme.fontPair}
-          customColors={theme.customColors}
           onSelect={(id) =>
             setTheme({
               preset: id,
@@ -111,13 +109,6 @@ function ThemeTab() {
                 getThemeById(theme.preset),
                 getThemeById(id),
               ),
-            })
-          }
-          onSaveCustom={(c) => setTheme({ preset: "custom", customColors: c })}
-          onClearCustom={() =>
-            setTheme({
-              customColors: null,
-              preset: theme.preset === "custom" ? "frame" : theme.preset,
             })
           }
         />

@@ -265,7 +265,7 @@ impl SpotifyState {
         connection.account = status.username;
         connection.error = status.error;
         // Spotify only issues tokens to a registered app, and a new app may add at most a
-        // handful of listeners. Harbor ships no client id: each listener brings their own.
+        // handful of listeners. Frame ships no client id: each listener brings their own.
         if status.connected {
             connection.detail = status.account_type;
         } else {
@@ -301,7 +301,7 @@ impl SpotifyState {
         let previous = self.remote.read().clone();
         *self.remote.write() = chosen.clone();
         // Handing playback somewhere else has to silence where it was, or the old device keeps
-        // playing to an empty room while Harbor shows the song running somewhere new.
+        // playing to an empty room while Frame shows the song running somewhere new.
         if let Some(old) = previous.filter(|old| Some(old) != chosen.as_ref()) {
             let _ = devices::set_paused(self, &old, true).await;
         }
@@ -355,7 +355,7 @@ impl SpotifyState {
 
 fn http_client() -> reqwest::Client {
     reqwest::Client::builder()
-        .user_agent(concat!("Harbor/", env!("CARGO_PKG_VERSION"), " (music)"))
+        .user_agent(concat!("Frame/", env!("CARGO_PKG_VERSION"), " (music)"))
         .build()
         .unwrap_or_else(|_| reqwest::Client::new())
 }

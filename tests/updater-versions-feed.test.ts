@@ -7,7 +7,7 @@ const { releasesFromFeed, versionFromRelease } = await import("../src/lib/update
 const body = (version: string) =>
   [
     "&lt;h2&gt;Downloads&lt;/h2&gt;",
-    `&lt;td&gt;&lt;a href=&quot;https://github.com/crazyrabbit0/harbor/releases/download/v${version}/Harbor_${version}_x64-setup.exe&quot;&gt;setup&lt;/a&gt;&lt;/td&gt;`,
+    `&lt;td&gt;&lt;a href=&quot;https://github.com/abdallahkattriah-sketch/frame/releases/download/v${version}/Harbor_${version}_x64-setup.exe&quot;&gt;setup&lt;/a&gt;&lt;/td&gt;`,
     "&lt;h2&gt;Changes&lt;/h2&gt;",
     "&lt;h3&gt;Fixes&lt;/h3&gt;",
     "&lt;ul&gt;",
@@ -19,7 +19,7 @@ const body = (version: string) =>
 const entry = (version: string, updated: string) => `  <entry>
     <id>tag:github.com,2008:Repository/1409069088/v${version}</id>
     <updated>${updated}</updated>
-    <title>Harbor ${version}</title>
+    <title>Frame ${version}</title>
     <content type="html">${body(version)}</content>
   </entry>`;
 
@@ -39,7 +39,7 @@ test("reads versions, dates, installers and changes from the releases feed", () 
   assert.equal(latest?.date, "2026-10-18");
   assert.equal(
     latest?.assets?.["windows-x86_64"],
-    "https://github.com/crazyrabbit0/harbor/releases/download/v0.9.212/Harbor_0.9.212_x64-setup.exe",
+    "https://github.com/abdallahkattriah-sketch/frame/releases/download/v0.9.212/Harbor_0.9.212_x64-setup.exe",
   );
   assert.equal(
     latest?.notes,

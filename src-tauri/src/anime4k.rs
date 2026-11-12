@@ -75,7 +75,7 @@ pub async fn anime4k_download(app: tauri::AppHandle, force: bool) -> Result<Stri
     let dir = shaders_dir(&app)?;
     std::fs::create_dir_all(&dir).map_err(|e| format!("create dir: {}", e))?;
     let client = reqwest::Client::builder()
-        .user_agent("Harbor")
+        .user_agent("Frame")
         .build()
         .map_err(|e| e.to_string())?;
     for (remote, local) in FILES {

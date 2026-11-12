@@ -1,4 +1,4 @@
-import { HarborMark } from "@/components/icons/harbor-mark";
+import { FrameMark } from "@/components/icons/frame-mark";
 
 export function DeviceScene() {
   return (
@@ -40,7 +40,7 @@ export function DeviceScene() {
           className="harbor-hop absolute grid h-[24px] w-[24px] place-items-center rounded-[5px] bg-ink text-canvas"
           style={{ left: 48, top: 49 }}
         >
-          <HarborMark className="h-[15px] w-[15px]" />
+          <FrameMark className="h-[15px] w-[15px]" />
         </span>
       </span>
     </span>

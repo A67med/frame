@@ -1,6 +1,6 @@
 import { ChevronDown, ExternalLink } from "lucide-react";
 import { useEffect, useId, useRef, type RefObject } from "react";
-import { HarborMark } from "@/components/icons/harbor-mark";
+import { FrameMark } from "@/components/icons/frame-mark";
 import {
   dismissExternalLinkMenu,
   hasExternalLinkAlternateDestination,
@@ -20,7 +20,7 @@ export type ExternalLinkSplitButtonProps = {
 
 function ActionIcon({ action }: { action: ExternalLinkDestinationPreference }) {
   return action === "harbor" ? (
-    <HarborMark className="h-4 w-4 shrink-0" />
+    <FrameMark className="h-4 w-4 shrink-0" />
   ) : (
     <ExternalLink size={16} className="shrink-0" />
   );

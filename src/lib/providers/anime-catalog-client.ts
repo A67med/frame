@@ -119,7 +119,7 @@ export function createAnimeCatalogClient(
 }
 
 export const animeCatalogRequest = createAnimeCatalogClient({
-  // Midnight doesn't send CORS headers. Native Harbor uses its HTTP bridge;
-  // Harbor Web uses the explicitly allowed same-origin proxy.
+  // Midnight doesn't send CORS headers. Native Frame uses its HTTP bridge;
+  // Frame Web uses the explicitly allowed same-origin proxy.
   fallbackFetch: async (...args) => (await import("../safe-fetch")).safeFetch(...args),
 });

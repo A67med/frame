@@ -75,8 +75,8 @@ mod tests {
     #[test]
     fn a_description_with_a_space_reaches_the_server_quoted() {
         assert_eq!(
-            quoted("sink_properties", "Harbor Broadcast"),
-            "sink_properties=device.description=\"Harbor Broadcast\""
+            quoted("sink_properties", "Frame Broadcast"),
+            "sink_properties=device.description=\"Frame Broadcast\""
         );
     }
 }

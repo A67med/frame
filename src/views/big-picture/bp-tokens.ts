@@ -407,7 +407,7 @@ export const BP_TOKENS = `
   /* Top bar and hint bar, so the chrome keeps pace with the content. The tab
      rules are scoped under [data-bp-top-bar] so the shared [data-bp-chip] accent
      fill on see-alls and filter chips is not caught. The brand mark and wordmark
-     are reached structurally because HarborMark forwards only className: the
+     are reached structurally because FrameMark forwards only className: the
      first child of the brand column is the mark, the second is the wordmark. */
   [data-bp-root]:not([data-bp-tv]) [data-bp-top-bar] .col-start-1 > :first-child {
     height: calc(clamp(28px, 3.4vh, 44px) * var(--bp-up));

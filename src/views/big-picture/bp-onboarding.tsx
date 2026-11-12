@@ -153,7 +153,7 @@ function BpOnboardLeave({
         </div>
 
         {/* Its own row, and never the default. This is the only path other than
-            the last screen that marks Harbor onboarded, and the desktop modal's
+            the last screen that marks Frame onboarded, and the desktop modal's
             close button doing it silently on step two is the bug being fixed. */}
         <div
           data-bp-row
@@ -183,7 +183,7 @@ export type BpOnboardingGate = {
   resumeIndex: number;
   /** Finish later. This session only, and the next launch resumes in place. */
   suspend: () => void;
-  /** Mark Harbor onboarded. Only the last screen and Do not show this again. */
+  /** Mark Frame onboarded. Only the last screen and Do not show this again. */
   complete: () => void;
 };
 

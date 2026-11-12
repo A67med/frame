@@ -2,9 +2,9 @@ use std::sync::LazyLock;
 use std::time::Duration;
 
 const AGENT: &str = concat!(
-    "Harbor/",
+    "Frame/",
     env!("CARGO_PKG_VERSION"),
-    " ( https://github.com/crazyrabbit0/harbor )"
+    " ( https://github.com/abdallahkattriah-sketch/frame )"
 );
 const REQUEST_TIMEOUT: Duration = Duration::from_secs(6);
 
@@ -50,7 +50,7 @@ mod tests {
 
     #[test]
     fn the_user_agent_identifies_harbor_and_carries_a_contact() {
-        assert!(AGENT.starts_with("Harbor/"));
-        assert!(AGENT.contains("https://github.com/crazyrabbit0/harbor"));
+        assert!(AGENT.starts_with("Frame/"));
+        assert!(AGENT.contains("https://github.com/abdallahkattriah-sketch/frame"));
     }
 }

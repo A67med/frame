@@ -591,16 +591,16 @@ const settings: Record<string, string> = {
   "Hero carousel, Top 10, Trending, In Theaters, per-service rails.":
     "Carrossel principal, Top 10, Em Alta, Nos Cinemas, faixas por serviço.",
   Updates: "Atualizações",
-  "Harbor checks harbor.site for new versions and installs them in place.":
-    "O Harbor verifica harbor.site em busca de novas versões e as instala no local.",
+  "Frame checks harbor.site for new versions and installs them in place.":
+    "O Frame verifica harbor.site em busca de novas versões e as instala no local.",
   "Backup & restore": "Backup e restauração",
   "Export your entire Frame setup to a single file, then restore it on a new computer or keep it as a backup.":
     "Exporte toda a sua configuração do Frame para um único arquivo, depois restaure em outro computador ou guarde como backup.",
   Privacy: "Privacidade",
   "System tray": "Bandeja do sistema",
   "Stremio install links": "Links de instalação do Stremio",
-  "Harbor catches stremio:// install links so the configure-and-install flow stays inside the app.":
-    "O Harbor captura links de instalação stremio:// para que o fluxo de configurar e instalar permaneça dentro do app.",
+  "Frame catches stremio:// install links so the configure-and-install flow stays inside the app.":
+    "O Frame captura links de instalação stremio:// para que o fluxo de configurar e instalar permaneça dentro do app.",
   "Discord Rich Presence": "Discord Rich Presence",
   "Let your Discord friends see what you are watching, with the show poster and a live progress bar.":
     "Deixe seus amigos do Discord verem o que você está assistindo, com o pôster do título e uma barra de progresso ao vivo.",
@@ -1288,11 +1288,11 @@ const settings: Record<string, string> = {
   "Step zoom in to crop baked-in black bars (Zoom mode).":
     "Aumentar o zoom para cortar as barras pretas embutidas (modo Zoom).",
   Screenshot: "Captura de tela",
-  "Save the current frame (video only, no subtitles) as a PNG to Pictures/Harbor.":
-    "Salvar o quadro atual (somente vídeo, sem legendas) como PNG em Pictures/Harbor.",
+  "Save the current frame (video only, no subtitles) as a PNG to Pictures/Frame.":
+    "Salvar o quadro atual (somente vídeo, sem legendas) como PNG em Pictures/Frame.",
   "Record GIF": "Gravar GIF",
-  "Start or stop recording a GIF of the video (no subtitles). Saves to Pictures/Harbor.":
-    "Iniciar ou parar a gravação de um GIF do vídeo (sem legendas). Salva em Imagens/Harbor.",
+  "Start or stop recording a GIF of the video (no subtitles). Saves to Pictures/Frame.":
+    "Iniciar ou parar a gravação de um GIF do vídeo (sem legendas). Salva em Imagens/Frame.",
   "Seek back": "Retroceder",
   "Jump back by the Back seek step set under Behavior.":
     "Volta pelo intervalo de retrocesso definido em Comportamento.",
@@ -1500,8 +1500,8 @@ const settings: Record<string, string> = {
   "My library": "Minha biblioteca",
   Anticipated: "Mais aguardados",
   "Custom calendar": "Calendário personalizado",
-  "Harbor checks harbor.site for new versions and installs them in place. Nothing installs until you choose to, and a dismissed update never nags you again.":
-    "O Harbor verifica o harbor.site em busca de novas versões e as instala no local. Nada é instalado até você decidir, e uma atualização dispensada nunca mais incomoda.",
+  "Frame checks harbor.site for new versions and installs them in place. Nothing installs until you choose to, and a dismissed update never nags you again.":
+    "O Frame verifica o harbor.site em busca de novas versões e as instala no local. Nada é instalado até você decidir, e uma atualização dispensada nunca mais incomoda.",
   "Frame checks its GitHub releases for new versions and installs them in place. Nothing installs until you choose to, and a dismissed update never nags you again.":
     "O Frame verifica o GitHub em busca de novas versões e as instala no local. Nada é instalado até você decidir, e uma atualização dispensada nunca mais incomoda.",
   "Library, watch progress, and addon collection sync from this account.":
@@ -1515,8 +1515,8 @@ const settings: Record<string, string> = {
   "Your color": "Sua cor",
   "Used for your cursor in Watch Together, your draw color, and your name pill in chat.":
     "Usado para o seu cursor no Assistir Juntos, sua cor de desenho e o selo com seu nome no chat.",
-  "Harbor catches stremio:// install links so the configure-and-install flow stays inside the app. Every install also syncs to your Stremio account, so the official app remains the canonical home for your library.":
-    "O Harbor intercepta links de instalação stremio:// para que o fluxo de configurar e instalar permaneça dentro do app. Toda instalação também sincroniza com sua conta Stremio, então o app oficial continua sendo a fonte principal da sua biblioteca.",
+  "Frame catches stremio:// install links so the configure-and-install flow stays inside the app. Every install also syncs to your Stremio account, so the official app remains the canonical home for your library.":
+    "O Frame intercepta links de instalação stremio:// para que o fluxo de configurar e instalar permaneça dentro do app. Toda instalação também sincroniza com sua conta Stremio, então o app oficial continua sendo a fonte principal da sua biblioteca.",
   "Let your Discord friends see what you are watching, with the show poster and a live progress bar. Desktop only, and only your own Discord client is involved (nothing touches a Frame server).":
     "Deixe seus amigos do Discord verem o que você está assistindo, com o pôster da série e uma barra de progresso ao vivo. Apenas no desktop, e só o seu próprio cliente do Discord é envolvido (nada passa por um servidor do Frame).",
   "Saved {d} from Frame {a}.": "Salvo {d} do Frame {a}.",
@@ -1855,14 +1855,14 @@ const settings: Record<string, string> = {
   "Get beta updates": "Receber atualizações beta",
   "Receive early builds with the newest fixes before they reach the stable release. Betas can be rough around the edges; switch this off to return to stable at the next update.":
     "Receba builds antecipadas com as correções mais recentes antes de chegarem à versão estável. Betas podem ter arestas; desative para voltar ao estável na próxima atualização.",
-  "Catch stremio:// install links inside Harbor":
-    "Capturar links de instalação stremio:// dentro do Harbor",
-  "Harbor's in-app installer animates the manifest install and keeps you in context. Anything Harbor installs is also synced to your Stremio account, so the official app stays the canonical library. Turn this off and Stremio becomes the only handler for stremio:// links; Harbor still installs anything you trigger from inside the app (Configure & install, paste, drag-and-drop).":
-    "O instalador integrado do Harbor anima a instalação do manifesto e mantém você no contexto. Tudo que o Harbor instala também é sincronizado com sua conta Stremio, então o app oficial continua sendo a biblioteca principal. Desative isso e o Stremio se torna o único responsável pelos links stremio://; o Harbor ainda instala tudo que você acionar dentro do app (Configurar e instalar, colar, arrastar e soltar).",
-  "Heads up: if Stremio is also installed, Windows may ask which app to use the first time a stremio:// link fires. Pick Harbor to make it stick.":
-    "Atenção: se o Stremio também estiver instalado, o Windows pode perguntar qual app usar na primeira vez que um link stremio:// for acionado. Escolha o Harbor para fixar a escolha.",
-  "stremio:// links now open in the Stremio app. Harbor will only install when you trigger it from inside Harbor.":
-    "links stremio:// agora abrem no app Stremio. O Harbor só instalará quando você acioná-lo de dentro do Harbor.",
+  "Catch stremio:// install links inside Frame":
+    "Capturar links de instalação stremio:// dentro do Frame",
+  "Frame's in-app installer animates the manifest install and keeps you in context. Anything Frame installs is also synced to your Stremio account, so the official app stays the canonical library. Turn this off and Stremio becomes the only handler for stremio:// links; Frame still installs anything you trigger from inside the app (Configure & install, paste, drag-and-drop).":
+    "O instalador integrado do Frame anima a instalação do manifesto e mantém você no contexto. Tudo que o Frame instala também é sincronizado com sua conta Stremio, então o app oficial continua sendo a biblioteca principal. Desative isso e o Stremio se torna o único responsável pelos links stremio://; o Frame ainda instala tudo que você acionar dentro do app (Configurar e instalar, colar, arrastar e soltar).",
+  "Heads up: if Stremio is also installed, Windows may ask which app to use the first time a stremio:// link fires. Pick Frame to make it stick.":
+    "Atenção: se o Stremio também estiver instalado, o Windows pode perguntar qual app usar na primeira vez que um link stremio:// for acionado. Escolha o Frame para fixar a escolha.",
+  "stremio:// links now open in the Stremio app. Frame will only install when you trigger it from inside Frame.":
+    "links stremio:// agora abrem no app Stremio. O Frame só instalará quando você acioná-lo de dentro do Frame.",
   "Checking harbor.site for a newer build.":
     "Verificando harbor.site em busca de uma build mais recente.",
   "Checking GitHub for a newer build.": "Verificando GitHub em busca de uma build mais recente.",

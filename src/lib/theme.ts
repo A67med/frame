@@ -26,6 +26,7 @@ function escapeGeneratedHtml(value: string): string {
 
 export type ThemePresetId =
   | "frame"
+  | "amoled"
   | "cool-grey"
   | "nord"
   | "stremio"
@@ -149,6 +150,32 @@ export const THEME_PRESETS: Record<ThemePresetId, ThemePreset> = {
     cardStyle: "flat",
     buttonStyle: "flat",
     bokeh: true,
+    fontPair: "general-sans",
+  },
+  // True black for OLED screens, taken from Amoled.framestyle.
+  amoled: {
+    id: "amoled",
+    name: "Amoled",
+    blurb: "True black for OLED screens, with an electric mint accent.",
+    swatch: ["#000000", "#0a0a0a", "#2ee6c5"],
+    tokens: {
+      "--color-canvas": "#000000",
+      "--color-surface": "#0a0a0a",
+      "--color-elevated": "#161616",
+      "--color-raised": "#222222",
+      "--color-ink": "#f4f4f5",
+      "--color-ink-muted": "#b8b8bd",
+      "--color-ink-subtle": "#8e8e94",
+      "--color-edge": "#2e2e2e8c",
+      "--color-edge-soft": "#2e2e2e40",
+      "--color-accent": "#2ee6c5",
+      "--color-accent-soft": "#2ee6c52e",
+      "--color-danger": "#ff5c6c",
+    },
+    layout: "dracula",
+    cardStyle: "flat",
+    buttonStyle: "flat",
+    bokeh: false,
     fontPair: "general-sans",
   },
   "cool-grey": {
@@ -351,7 +378,7 @@ export const THEME_PRESETS: Record<ThemePresetId, ThemePreset> = {
 const elegantFinCss = `@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap");
 
 /* ==========================================================================
-   ElegantFin for Harbor  (after lscambo13's ElegantFin Jellyfin theme)
+   ElegantFin for Frame  (after lscambo13's ElegantFin Jellyfin theme)
    Dark navy glass, one purple accent, 1em rounded cards, white shine-sweep,
    Inter 425 body / 600 headings, calm 125ms motion, hairline + blur structure.
    Injected raw into <style id="harbor-theme-css"> so !important + any selector wins.
@@ -1952,9 +1979,28 @@ export function isKnownPreset(id: string): boolean {
   return getThemeById(id) !== null;
 }
 
-const CYCLE_THEME_IDS: ThemePresetId[] = (Object.keys(THEME_PRESETS) as ThemePresetId[]).filter(
-  (id) => id !== "crunch",
-);
+/**
+ * The themes the selector offers, in order. Every other preset stays defined because
+ * layouts and shared styles reference them, but a saved choice of one falls back to
+ * Default when settings load. Royal's id is "tokyo-night" for backward compatibility.
+ */
+export const SELECTABLE_THEME_IDS = [
+  "frame",
+  "stremio",
+  "tokyo-night",
+  "velvet",
+  "amoled",
+] as const;
+
+export function isSelectableTheme(id: string): boolean {
+  return (SELECTABLE_THEME_IDS as readonly string[]).includes(id);
+}
+
+export function selectableThemes(): ThemePreset[] {
+  return SELECTABLE_THEME_IDS.map((id) => getThemeById(id)).filter((t): t is ThemePreset => !!t);
+}
+
+const CYCLE_THEME_IDS = SELECTABLE_THEME_IDS as readonly string[] as ThemePresetId[];
 
 export function nextColorTheme(current: string): ThemePresetId {
   const i = CYCLE_THEME_IDS.indexOf(current as ThemePresetId);

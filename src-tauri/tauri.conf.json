@@ -1,8 +1,8 @@
 {
   "$schema": "https://schema.tauri.app/config/2",
   "productName": "Frame",
-  "version": "0.1.0",
-  "identifier": "app.harbor",
+  "version": "0.2.0",
+  "identifier": "io.github.abdallahkattriah-sketch.frame",
   "build": {
     "beforeDevCommand": "pnpm dev",
     "devUrl": "http://localhost:1420",
@@ -43,10 +43,13 @@
   "bundle": {
     "active": true,
     "category": "Video",
+    "publisher": "Frame",
+    "copyright": "Copyright (c) 2026 Frame contributors. Based on Harbor, MIT License.",
+    "shortDescription": "A personal desktop media app for movies and TV",
     "fileAssociations": [
       {
         "ext": ["mkv", "mp4", "avi", "mov", "webm", "m4v"],
-        "name": "HarborVideo",
+        "name": "FrameVideo",
         "description": "Video file",
         "role": "Viewer"
       }
@@ -119,14 +122,14 @@
     "deep-link": {
       "mobile": [],
       "desktop": {
-        "schemes": ["harbor", "stremio"]
+        "schemes": ["frame", "stremio"]
       }
     },
     "updater": {
       "endpoints": [
         "https://github.com/abdallahkattriah-sketch/frame/releases/latest/download/latest.json"
       ],
-      "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IENGQjBCRjA2QTY2QTY4MTIKUldRU2FHcW1Ccit3ejNyaDBkRFhQOXNpUXBNcUcycWJ0aGRhRjIyTWVvVWJxUzNtNm5hZUdiRXIK",
+      "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IDcyNzM0QzQ5MjdDNzkxOUUKUldTZWtjY25TVXh6Y3BVMi9ObUJDWVVRelVucVpkaDlaMFNidlZzUjBNUzZ4MEFLeFUvcndWREMK",
       "windows": {
         "installMode": "passive"
       }

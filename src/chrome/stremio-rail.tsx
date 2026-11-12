@@ -2,7 +2,7 @@ import { usePreviewNavCustomization } from "@/lib/theme-preview";
 import { useContextMenu } from "@/lib/context-menu";
 import { Lock, Monitor } from "lucide-react";
 import { useState, type ReactNode } from "react";
-import { HarborMark } from "@/components/icons/harbor-mark";
+import { FrameMark } from "@/components/icons/frame-mark";
 import { AccountMenu } from "@/chrome/account-menu/account-menu";
 import { useAvailableNavItems, applyNavCustomization } from "@/chrome/nav-items";
 import type { NavItemId } from "@/chrome/nav-items";
@@ -64,7 +64,7 @@ export function StremioRail() {
           {customMark ? (
             <img src={customMark} alt="" draggable={false} className="h-10 w-10 object-contain" />
           ) : (
-            <HarborMark className="h-10 w-10" />
+            <FrameMark className="h-10 w-10" />
           )}
         </div>
         <nav

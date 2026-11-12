@@ -49,7 +49,7 @@ function harness(responses = []) {
       SIMKL_APP_NAME: "harbor-test",
       SIMKL_APP_VERSION: "test",
       SIMKL_CLIENT_ID: "test-client",
-      SIMKL_USER_AGENT: "Harbor/Test",
+      SIMKL_USER_AGENT: "Frame/Test",
     },
     [path.join(root, "activities/gate.ts")]: { currentActivitiesAll: async () => "unchanged" },
     [path.join(root, "ids.ts")]: { simklTargetIds: (value) => value },

@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import snip404 from "@/assets/snip404.svg";
-import { HarborMark } from "@/components/icons/harbor-mark";
+import { FrameMark } from "@/components/icons/frame-mark";
 import { openErrorReportIssue } from "@/lib/bug-report";
 import { loadStartupCrashReport, startupCrashToHarborError } from "@/lib/startup-crash";
 import { isStaleTauriListenerError } from "@/lib/tauri-unlisten";
@@ -180,19 +180,12 @@ export function ErrorView() {
         data-tauri-drag-region
         className="pointer-events-none absolute start-5 top-4 z-10 flex select-none items-center gap-1 text-ink sm:start-7 sm:top-5"
       >
-        <HarborMark className="h-6 w-6 shrink-0 sm:h-7 sm:w-7" />
+        <FrameMark className="h-6 w-6 shrink-0 sm:h-7 sm:w-7" />
         <span
           className="font-display text-[24px] font-medium leading-none tracking-tight sm:text-[28px]"
           style={{ transform: "translateY(1px)" }}
         >
-          Harb
-          <span
-            className="inline-block"
-            style={{ transform: "rotate(7deg)", transformOrigin: "50% 65%" }}
-          >
-            o
-          </span>
-          r
+          Frame
         </span>
       </div>
 

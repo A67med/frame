@@ -546,8 +546,8 @@ const audit: Record<string, string> = {
     "Pencarian OpenSubtitles bawaan Frame, aktif secara default. Jika Anda menginstal addon OpenSubtitles, fitur ini otomatis dinonaktifkan agar hasil tidak pernah terduplikasi.",
   "Frame's full video engine. Plays anything you throw at it.":
     "Mesin video lengkap Frame. Dapat memutar apa pun.",
-  "Harbor's in-app installer animates the manifest install and keeps you in context. Anything Harbor installs is also synced to your Stremio account, so the official app stays the canonical library. Turn this off and Stremio becomes the only handler for stremio:// links; Harbor still installs anything you trigger from inside the app (Configure & install, paste, drag-and-drop).":
-    "Penginstal dalam aplikasi Harbor menampilkan animasi pemasangan manifes tanpa mengalihkan Anda dari halaman saat ini. Apa pun yang diinstal Harbor juga disinkronkan ke akun Stremio Anda, sehingga aplikasi resmi tetap menjadi perpustakaan acuan. Nonaktifkan opsi ini agar Stremio menjadi satu-satunya penangan tautan stremio://; Harbor tetap menginstal apa pun yang Anda picu dari dalam aplikasi (Konfigurasikan & instal, tempel, seret dan lepas).",
+  "Frame's in-app installer animates the manifest install and keeps you in context. Anything Frame installs is also synced to your Stremio account, so the official app stays the canonical library. Turn this off and Stremio becomes the only handler for stremio:// links; Frame still installs anything you trigger from inside the app (Configure & install, paste, drag-and-drop).":
+    "Penginstal dalam aplikasi Frame menampilkan animasi pemasangan manifes tanpa mengalihkan Anda dari halaman saat ini. Apa pun yang diinstal Frame juga disinkronkan ke akun Stremio Anda, sehingga aplikasi resmi tetap menjadi perpustakaan acuan. Nonaktifkan opsi ini agar Stremio menjadi satu-satunya penangan tautan stremio://; Frame tetap menginstal apa pun yang Anda picu dari dalam aplikasi (Konfigurasikan & instal, tempel, seret dan lepas).",
   "Frame's own menus and labels. Subtitle languages come later, and you can change both in Settings.":
     "Menu dan label Frame sendiri. Bahasa subtitle ditentukan nanti, dan keduanya dapat Anda ubah di Pengaturan.",
   "Frame, from a public domain frame": "Frame, dari cuplikan domain publik",
@@ -1254,8 +1254,8 @@ const audit: Record<string, string> = {
   "Start a room first.": "Buat ruang terlebih dahulu.",
   "Start anyway ({n} still loading)": "Mulai saja ({n} masih dimuat)",
   "Start of manga": "Awal manga",
-  "Start or stop recording a GIF of the video (no subtitles). Saves to Pictures/Harbor.":
-    "Mulai atau hentikan perekaman GIF video (tanpa subtitle). Disimpan ke Pictures/Harbor.",
+  "Start or stop recording a GIF of the video (no subtitles). Saves to Pictures/Frame.":
+    "Mulai atau hentikan perekaman GIF video (tanpa subtitle). Disimpan ke Pictures/Frame.",
   "Start over": "Mulai dari awal",
   "Start playback": "Mulai pemutaran",
   "Start recording": "Mulai merekam",

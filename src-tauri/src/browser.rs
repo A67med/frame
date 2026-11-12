@@ -92,7 +92,7 @@ pub async fn browser_open(app: AppHandle, url: String) -> Result<(), String> {
     let init_script = format!("{}\n{}", CHROME_INIT_SCRIPT, STREMIO_CAPTURE_SCRIPT);
     #[cfg(not(target_os = "linux"))]
     let init_script = CHROME_INIT_SCRIPT.to_string();
-    // Creating WebView2 inside the UI event loop can deadlock all Harbor windows.
+    // Creating WebView2 inside the UI event loop can deadlock all Frame windows.
     tauri::async_runtime::spawn_blocking(move || -> Result<(), String> {
         eprintln!(
             "[browser] building {} at ({:.0}, {:.0}) size {:.0}x{:.0}",
@@ -101,7 +101,7 @@ pub async fn browser_open(app: AppHandle, url: String) -> Result<(), String> {
         #[allow(unused_mut)]
         let mut builder =
             WebviewWindowBuilder::new(&app_for_window, BROWSER_LABEL, WebviewUrl::External(parsed))
-                .title("Harbor Browser")
+                .title("Frame Browser")
                 .inner_size(target_w, target_h)
                 .position(target_x, target_y)
                 .resizable(true)

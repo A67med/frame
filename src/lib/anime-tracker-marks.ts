@@ -18,11 +18,11 @@ export type AnimeMarkOptions = {
   anilist: boolean;
   mal: boolean;
   simkl: boolean;
-  /** Every row of the series and whether Harbor still shows it watched, for picking the rewind point. */
+  /** Every row of the series and whether Frame still shows it watched, for picking the rewind point. */
   watchedRows?: Array<{ row: Row; watched: boolean }>;
 };
 
-/** Highest entry number Harbor still shows watched below `below`, or 0 when none is. */
+/** Highest entry number Frame still shows watched below `below`, or 0 when none is. */
 async function lastWatchedBelow(
   metaId: string,
   kitsuId: number,

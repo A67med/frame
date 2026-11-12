@@ -70,17 +70,17 @@ function manifest() {
     notes: "Test fixes",
     platforms: {
       "windows-x86_64": {
-        url: "https://example.test/0.9.123/Harbor.exe",
+        url: "https://example.test/0.9.123/Frame.exe",
         signature: "signed-test-artifact",
       },
       "darwin-aarch64": {
-        url: "https://example.test/0.9.123/Harbor.app.tar.gz",
+        url: "https://example.test/0.9.123/Frame.app.tar.gz",
         signature: "signed-mac-artifact",
       },
     },
     installer: {
       "windows-x86_64": {
-        url: "https://example.test/0.9.123/Harbor-installer.exe",
+        url: "https://example.test/0.9.123/Frame-installer.exe",
         signature: "signed-test-installer",
         payloadVersion: 9123,
         size: 2048,
@@ -301,7 +301,7 @@ function harness(
       },
       "@/lib/config/endpoints": {
         HARBOR_API_BASE: "https://example.test",
-        HARBOR_RELEASES_URL: "https://github.com/crazyrabbit0/harbor/releases",
+        HARBOR_RELEASES_URL: "https://github.com/abdallahkattriah-sketch/frame/releases",
       },
       "@/lib/i18n": { t: (s: string) => s },
       "./channel": channel,
@@ -407,7 +407,7 @@ test("account requests use native-aware transport and retry with the refreshed t
     },
     "@/lib/config/endpoints": {
       HARBOR_API_BASE: "https://example.test",
-      HARBOR_RELEASES_URL: "https://github.com/crazyrabbit0/harbor/releases",
+      HARBOR_RELEASES_URL: "https://github.com/abdallahkattriah-sketch/frame/releases",
     },
     "@/lib/safe-fetch": {
       safeFetch: async (url: string, options: { headers: unknown; signal: unknown }) => {
@@ -469,7 +469,7 @@ test("verification distinguishes rejected sessions from network failures without
   }
 });
 
-test("experimental access recognizes only the approved Harbor account badges", () => {
+test("experimental access recognizes only the approved Frame account badges", () => {
   let author: { badges?: Array<{ name: string }> } | null = null;
   const access = load<ExperimentalAccess>(
     "src/lib/updater/experimental-access.ts",
@@ -748,7 +748,7 @@ test("missing native platform opens the download site instead of another archite
     await h.updater.openManualDownload();
     assert.deepEqual(
       h.calls.manualUrls,
-      ["https://github.com/crazyrabbit0/harbor/releases"],
+      ["https://github.com/abdallahkattriah-sketch/frame/releases"],
       platform,
     );
   }
@@ -763,7 +763,7 @@ test("manual download uses the native platform rather than the WebView user agen
 test("manual Apple Silicon download keeps the matching DMG conversion", async () => {
   const h = harness({ beta: true, platform: "darwin-aarch64" });
   await h.updater.openManualDownload();
-  assert.deepEqual(h.calls.manualUrls, ["https://example.test/0.9.123/Harbor.dmg"]);
+  assert.deepEqual(h.calls.manualUrls, ["https://example.test/0.9.123/Frame.dmg"]);
 });
 
 test("unknown device and failed manifest do not choose an installer", async () => {
@@ -774,7 +774,7 @@ test("unknown device and failed manifest do not choose an installer", async () =
     await h.updater.openManualDownload();
     assert.deepEqual(
       h.calls.manualUrls,
-      ["https://github.com/crazyrabbit0/harbor/releases"],
+      ["https://github.com/abdallahkattriah-sketch/frame/releases"],
       failure,
     );
   }

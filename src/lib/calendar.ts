@@ -507,7 +507,7 @@ function desktopNotifyBody(item: CalendarItem): string {
 
 async function fetchPosterBytes(url: string): Promise<number[] | undefined> {
   try {
-    // A same-origin app asset (e.g. the Harbor icon) lives inside the webview's
+    // A same-origin app asset (e.g. the Frame icon) lives inside the webview's
     // own bundle — safeFetchBytes's native-fetch routing is for external CDNs
     // and can't reach it, so read it with a plain same-origin fetch instead.
     const res = url.startsWith("/")

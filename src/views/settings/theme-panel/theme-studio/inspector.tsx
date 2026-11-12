@@ -4,7 +4,7 @@ import type { CodeLang } from "@/components/code-editor";
 import { useT } from "@/lib/i18n";
 import {
   DEFAULT_CUSTOM_COLORS,
-  THEME_PRESETS,
+  selectableThemes,
   type ChromeConfig,
   type ThemeButtonStyle,
   type ThemeCardStyle,
@@ -52,7 +52,7 @@ export function Inspector({
   const t = useT();
 
   const shuffle = () => {
-    const list = Object.values(THEME_PRESETS);
+    const list = selectableThemes();
     if (list.length) onSeed(list[Math.floor(Math.random() * list.length)]);
   };
 

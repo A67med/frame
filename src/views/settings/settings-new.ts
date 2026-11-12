@@ -2,21 +2,15 @@ import { useSyncExternalStore } from "react";
 
 const NEW_BADGE_RESET_GENERATION = 1;
 
-const NEW_SECTIONS = new Set(["library", "badges", "theme", "tv", "plugins", "bigPicture"]);
+const NEW_SECTIONS = new Set(["library", "badges", "theme"]);
 const NEW_SETTINGS = new Set([
-  "plugins:use-plugins",
-  "plugins:outside-tab",
-  "plugins:poster-languages",
-  "plugins:poster-quality",
   "library:award-tab",
   "library:top-10",
   "theme:hero-video",
   "theme:drag-anywhere",
   "theme:liquid-glass",
-  "tv:subtitle-look",
   "mpv:buffer-size",
   "home:prefer-episode-still",
-  "bigPicture:display",
   "player:separate-display",
   "player:cover-taskbar",
 ]);

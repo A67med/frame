@@ -8,7 +8,7 @@ import {
   useState,
   type ReactNode,
 } from "react";
-import { applyTheme, isKnownPreset, nextColorTheme } from "@/lib/theme";
+import { applyTheme, isSelectableTheme, nextColorTheme } from "@/lib/theme";
 import { applyAppIcon } from "@/lib/app-icon";
 import { getCustomThemes, subscribeCustomThemes } from "@/lib/custom-themes";
 import { loadBgImage, saveBgImage } from "@/lib/theme-storage";
@@ -449,7 +449,7 @@ export function SettingsProvider({
       }).then(track);
       void listen<string>("harbor://set-theme", (e) => {
         const id = e.payload;
-        if (!id || (!isKnownPreset(id) && !id.startsWith("user:"))) return;
+        if (!id || (!isSelectableTheme(id) && !id.startsWith("user:"))) return;
         setSettings((s) => ({ ...s, theme: { ...s.theme, preset: id as typeof s.theme.preset } }));
       }).then(track);
     });

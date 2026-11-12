@@ -191,7 +191,7 @@ export function usePosterChain(
 // the 123.x runtime shipped on debloated Windows builds) fail to size `aspect-ratio`
 // grid items, collapsing every poster card to 0px height so artwork never shows.
 // The padding-top hack works identically on every engine.
-// https://github.com/harborstremio/harbor/issues/403
+// upstream issue 403
 const ASPECT_PAD: Record<Ratio, string> = {
   portrait: "150%", // 3 / 2
   landscape: "56.25%", // 9 / 16

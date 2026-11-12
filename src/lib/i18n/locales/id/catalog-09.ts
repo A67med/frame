@@ -737,8 +737,8 @@ const catalog: Record<string, string> = {
     "Mulai di sini. Pilihan yang dimiliki hampir semua orang.",
   "Start import": "Mulai impor",
   "Start of manga":
-    "Mulai atau hentikan perekaman GIF video (tanpa subtitle). Disimpan ke Pictures/Harbor.",
-  "Start or stop recording a GIF of the video (no subtitles). Saves to Pictures/Harbor.":
+    "Mulai atau hentikan perekaman GIF video (tanpa subtitle). Disimpan ke Pictures/Frame.",
+  "Start or stop recording a GIF of the video (no subtitles). Saves to Pictures/Frame.":
     "Mulai dari awal",
   "Start over": "Mulai pemutaran",
   "Start playback": "Mulai merekam",

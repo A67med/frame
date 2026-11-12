@@ -2,7 +2,7 @@ import { usePreviewNavCustomization } from "@/lib/theme-preview";
 import { useContextMenu } from "@/lib/context-menu";
 import { ChevronDown, ChevronUp, Lock } from "lucide-react";
 import { useEffect, useRef, useState, type ReactNode } from "react";
-import { HarborMark } from "@/components/icons/harbor-mark";
+import { FrameMark } from "@/components/icons/frame-mark";
 import { ProfileChip } from "@/chrome/sidebar/profile-chip";
 import { useT } from "@/lib/i18n";
 import { useSettings } from "@/lib/settings";
@@ -87,7 +87,7 @@ export function Sidebar() {
                   className={`h-9 w-9 shrink-0 object-contain ${collapsed ? "" : "lg:h-10 lg:w-10"}`}
                 />
               ) : (
-                <HarborMark className={`h-9 w-9 shrink-0 ${collapsed ? "" : "lg:h-10 lg:w-10"}`} />
+                <FrameMark className={`h-9 w-9 shrink-0 ${collapsed ? "" : "lg:h-10 lg:w-10"}`} />
               )}
             </span>
           )}
@@ -112,19 +112,7 @@ export function Sidebar() {
                   transform: "translateY(1px)",
                 }}
               >
-                Harb
-                <img
-                  src="/kids/wheel.png"
-                  alt="o"
-                  draggable={false}
-                  className="inline-block h-[0.92em] w-auto"
-                  style={{
-                    transform: "translateY(0.08em)",
-                    marginLeft: "-5px",
-                    marginRight: "-5px",
-                  }}
-                />
-                r
+                Frame
               </span>
             ) : (
               <span
@@ -136,14 +124,7 @@ export function Sidebar() {
                   transform: "translateY(2px)",
                 }}
               >
-                Harb
-                <span
-                  className="inline-block"
-                  style={{ transform: "rotate(7deg)", transformOrigin: "50% 65%" }}
-                >
-                  o
-                </span>
-                r
+                Frame
               </span>
             ))}
         </div>

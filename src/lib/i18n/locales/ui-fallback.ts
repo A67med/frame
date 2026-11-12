@@ -1,5 +1,55 @@
 // Newly introduced UI copy remains usable until each locale provides an override.
 const uiFallback: Record<string, string> = {
+  "Following 1 person.": "Following 1 person.",
+  "Paste an invite link from someone hosting a room to join them.":
+    "Paste an invite link from someone hosting a room to join them.",
+  "People you follow: {names}": "People you follow: {names}",
+  "Worked with {name}": "Worked with {name}",
+  "Nobody on TMDB matches {query}.": "Nobody on TMDB matches {query}.",
+  "The people you follow shape For You in Radar.": "The people you follow shape For You in Radar.",
+  "Following reads people and credits from TMDB. Add your TMDB key to use it.":
+    "Following reads people and credits from TMDB. Add your TMDB key to use it.",
+  "People you follow": "People you follow",
+  "Latest from people you follow": "Latest from people you follow",
+  "TMDB lists no recent or upcoming titles for them.":
+    "TMDB lists no recent or upcoming titles for them.",
+  "Recently released": "Recently released",
+  "TMDB didn't answer for {n} of them, so this list may be incomplete.":
+    "TMDB didn't answer for {n} of them, so this list may be incomplete.",
+  "People you might like": "People you might like",
+  "Who the people you follow have worked with.": "Who the people you follow have worked with.",
+  "Directors and actors from what's trending this week.":
+    "Directors and actors from what's trending this week.",
+  "Nothing new to recommend right now.": "Nothing new to recommend right now.",
+  "Follow people, rate titles or add to your watchlist to get recommendations.":
+    "Follow people, rate titles or add to your watchlist to get recommendations.",
+  "Because of {title}": "Because of {title}",
+  "Matches your genres": "Matches your genres",
+  "For You": "For You",
+  "Picked from who you follow and what you watch, rate and save.":
+    "Picked from who you follow and what you watch, rate and save.",
+  "Trending / Popular": "Trending / Popular",
+  "What everyone is watching right now, from TMDB.":
+    "What everyone is watching right now, from TMDB.",
+  "TMDB lists nothing here yet.": "TMDB lists nothing here yet.",
+  "Digital Releases": "Digital Releases",
+  "Digital release dates from the Blu-ray.com calendar.":
+    "Digital release dates from the Blu-ray.com calendar.",
+  "This calendar isn't connected yet. Frame only shows digital dates from Blu-ray.com, so nothing is listed here until it can read them.":
+    "This calendar isn't connected yet. Frame only shows digital dates from Blu-ray.com, so nothing is listed here until it can read them.",
+  "Open the calendar on Blu-ray.com": "Open the calendar on Blu-ray.com",
+  "Actors and directors worth a look. Open one for their filmography.":
+    "Actors and directors worth a look. Open one for their filmography.",
+  "Upcoming / New Releases": "Upcoming / New Releases",
+  "Movies and series by their actual release date.":
+    "Movies and series by their actual release date.",
+  "Follow actors and directors to shape what you see here.":
+    "Follow actors and directors to shape what you see here.",
+  "Radar reads titles and people from TMDB. Add your TMDB key to use it.":
+    "Radar reads titles and people from TMDB. Add your TMDB key to use it.",
+  "Your Stremio profile": "Your Stremio profile",
+  "Sign in to Stremio to use your profile here. Frame works without it too.":
+    "Sign in to Stremio to use your profile here. Frame works without it too.",
   "Big Picture display": "Big Picture display",
   "Which monitor Big Picture opens on at startup.":
     "Which monitor Big Picture opens on at startup.",

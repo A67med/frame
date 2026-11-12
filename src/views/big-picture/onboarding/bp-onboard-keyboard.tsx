@@ -10,7 +10,7 @@ const FLUSH = { paddingInline: 0, marginInline: 0, containIntrinsicSize: "auto 7
 
 /**
  * The shared BpKeyboard is lowercase only and its symbol page carries no A-Z
- * and no underscore, which makes a Stremio password and a Harbor username
+ * and no underscore, which makes a Stremio password and a Frame username
  * physically untypeable. Credentials need a shift layer, so onboarding ships
  * one rather than deferring the whole fallback.
  */

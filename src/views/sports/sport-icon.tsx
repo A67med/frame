@@ -1,5 +1,5 @@
 import type { SVGProps } from "react";
-// Original Harbor vectors. Editable individual SVGs and the artboard live in assets/sports/icons.
+// Original Frame vectors. Editable individual SVGs and the artboard live in assets/sports/icons.
 export const SPORT_ICON_PATHS = {
   soccer:
     '<circle cx="16" cy="16" r="12"/><path d="m16 10 5.7 4-2.2 6.5h-7L10.3 14Z" fill="currentColor" stroke="none"/><path d="M16 10V6m5.7 8 4.3-1.5m-6.5 8 3 4.5m-10-4.5-3 4.5m.8-11L6 12.5"/><path d="m12 5 4 2 4-2M27 10l-2 4 3 3M25 24l-5 1-1 3M13 28l-1-3-5-1M4 17l3-3-2-4" fill="currentColor" stroke="none"/>',

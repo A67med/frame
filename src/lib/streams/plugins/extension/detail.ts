@@ -48,7 +48,7 @@ export type CapstanDetail = {
   cast: string[];
   /** Other items the same provider offers, already addressed by their own ids. */
   recommendations: Meta[];
-  /** An id the rest of Harbor can resolve this title by, or null when the provider named none. */
+  /** An id the rest of Frame can resolve this title by, or null when the provider named none. */
   canonicalId: string | null;
   /** What the provider said it returned. A catalogue can only guess this from the provider's
    * declared types, and that guess is the first type it lists, so this is the one to trust. */
@@ -164,7 +164,7 @@ function recommendationsOf(
 const IMDB_ID_RX = /^tt\d{5,}$/;
 const TMDB_ID_RX = /^\d+$/;
 
-/** The id the rest of Harbor can resolve this title by, when the provider named one. The anime
+/** The id the rest of Frame can resolve this title by, when the provider named one. The anime
  * schemes are deliberately not read: the path that consumes them is still closed to a native
  * addon, so an id handed to it would go nowhere. */
 export function canonicalIdOf(syncIds: unknown, type: MetaType): string | null {

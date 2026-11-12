@@ -3,96 +3,68 @@ import assert from "node:assert/strict";
 // @ts-expect-error Node test types are intentionally outside the browser-only tsconfig.
 import test from "node:test";
 import {
+  addDays,
   appendUnique,
-  discoverParams,
-  pickRadarDate,
-  prioritizeFollowed,
-  type RawReleaseDates,
+  inReleaseWindow,
+  localIsoDay,
+  rankByLists,
+  releaseWindowParams,
 } from "../src/lib/radar/release-dates.ts";
 
-const NOW = Date.UTC(2026, 9, 25, 12);
+const NOW = new Date(2026, 9, 25, 12).getTime();
 
-const raw: RawReleaseDates = {
-  results: [
-    {
-      iso_3166_1: "EG",
-      release_dates: [
-        { release_date: "2026-11-12T00:00:00.000Z", type: 3 },
-        { release_date: "2026-08-01T00:00:00.000Z", type: 3 },
-        { release_date: "2026-12-20T00:00:00.000Z", type: 4 },
-      ],
-    },
-    {
-      iso_3166_1: "US",
-      release_dates: [
-        { release_date: "2026-11-05T00:00:00.000Z", type: 3 },
-        { release_date: "2026-10-01T00:00:00.000Z", type: 4 },
-      ],
-    },
-    { iso_3166_1: "FR", release_dates: [{ release_date: "2026-11-01T00:00:00.000Z", type: 2 }] },
-  ],
-};
-
-test("Coming Soon takes the region's next theatrical date", () => {
-  assert.deepEqual(pickRadarDate(raw, "coming", "EG", NOW), {
-    date: "2026-11-12",
-    kind: "theatrical",
-    region: "EG",
-  });
+test("today is the local calendar day, even just before and after midnight", () => {
+  assert.equal(localIsoDay(new Date(2026, 9, 25, 0, 1).getTime()), "2026-10-25");
+  assert.equal(localIsoDay(new Date(2026, 9, 25, 23, 59).getTime()), "2026-10-25");
 });
 
-test("Newly Released takes the region's latest past theatrical date", () => {
-  assert.deepEqual(pickRadarDate(raw, "new", "EG", NOW), {
-    date: "2026-08-01",
-    kind: "theatrical",
-    region: "EG",
-  });
+test("adding days stays on the calendar across month ends", () => {
+  assert.equal(addDays("2026-10-31", 1), "2026-11-01");
+  assert.equal(addDays("2026-03-01", -1), "2026-02-28");
 });
 
-test("Digital dates come only from digital releases", () => {
-  assert.deepEqual(pickRadarDate(raw, "digital", "EG", NOW), {
-    date: "2026-12-20",
-    kind: "digital",
-    region: "EG",
-  });
+test("upcoming lists start tomorrow and have no upper limit", () => {
+  const params = releaseWindowParams("upcoming", "movie", NOW);
+  assert.equal(params["primary_release_date.gte"], "2026-10-26");
+  assert.equal(params["primary_release_date.lte"], undefined);
+  assert.equal(params.region, undefined);
 });
 
-test("without a regional date the earliest other country is labelled with its code", () => {
-  assert.deepEqual(pickRadarDate(raw, "coming", "DE", NOW), {
-    date: "2026-11-01",
-    kind: "theatrical",
-    region: "FR",
-  });
+test("new releases filter on the actual release date, not the record's age", () => {
+  const movie = releaseWindowParams("new", "movie", NOW);
+  assert.equal(movie["primary_release_date.lte"], "2026-10-25");
+  assert.equal(movie["primary_release_date.gte"], "2026-08-26");
+  const tv = releaseWindowParams("new", "tv", NOW);
+  assert.equal(tv["first_air_date.lte"], "2026-10-25");
+  assert.equal(tv.with_release_type, undefined);
 });
 
-test("no listed date gives null instead of a guess", () => {
-  assert.equal(pickRadarDate({ results: [] }, "coming", "EG", NOW), null);
-  assert.equal(pickRadarDate(null, "new", "EG", NOW), null);
-  const onlyPremiere = {
-    results: [{ iso_3166_1: "EG", release_dates: [{ release_date: "2026-12-01", type: 1 }] }],
-  };
-  assert.equal(pickRadarDate(onlyPremiere, "coming", "EG", NOW), null);
+test("the release window rejects missing, malformed and out-of-range dates", () => {
+  assert.equal(inReleaseWindow("2026-10-26", "upcoming", NOW), true);
+  assert.equal(inReleaseWindow("2026-10-25", "upcoming", NOW), false);
+  assert.equal(inReleaseWindow("2026-10-25", "new", NOW), true);
+  assert.equal(inReleaseWindow("2026-01-01", "new", NOW), false);
+  assert.equal(inReleaseWindow("", "new", NOW), false);
+  assert.equal(inReleaseWindow("2026", "upcoming", NOW), false);
+  assert.equal(inReleaseWindow(undefined, "upcoming", NOW), false);
 });
 
-test("Coming Soon has no upper date bound and Newly Released is wider than 30 days", () => {
-  const coming = discoverParams("coming", "EG", NOW);
-  assert.equal(coming.region, "EG");
-  assert.equal(coming["release_date.lte"], undefined);
-  assert.equal(coming["release_date.gte"], "2026-10-26");
-  const fresh = discoverParams("new", "EG", NOW);
-  assert.equal(fresh["release_date.lte"], "2026-10-25");
-  assert.ok(fresh["release_date.gte"] < "2026-09-25");
-  assert.equal(discoverParams("digital", "EG", NOW).with_release_type, "4");
-});
-
-test("followed titles move to the front and pages append without duplicates", () => {
-  const items = [{ id: "a" }, { id: "b" }, { id: "c" }];
+test("a title on both lists outranks titles on just one", () => {
+  const a = { id: "a" };
+  const b = { id: "b" };
+  const c = { id: "c" };
   assert.deepEqual(
-    prioritizeFollowed(items, new Set(["c"])).map((m) => m.id),
-    ["c", "a", "b"],
+    rankByLists([
+      [a, b],
+      [c, b],
+    ]).map((m) => m.id)[0],
+    "b",
   );
-  assert.deepEqual(
-    appendUnique(items, [{ id: "b" }, { id: "d" }]).map((m) => m.id),
-    ["a", "b", "c", "d"],
-  );
+});
+
+test("appendUnique keeps order and drops ids already shown", () => {
+  assert.deepEqual(appendUnique([{ id: "a" }], [{ id: "a" }, { id: "b" }]), [
+    { id: "a" },
+    { id: "b" },
+  ]);
 });

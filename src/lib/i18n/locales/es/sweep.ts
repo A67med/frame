@@ -1438,8 +1438,8 @@ const sweep: Record<string, string> = {
   "Saturn Award": "Premio Saturn",
   "Saturn Awards": "Premios Saturn",
   "Save it anyway": "Guardar de todos modos",
-  "Save the last 30 seconds as a video clip with audio, choosing subtitles on or off. Saves to Pictures/Harbor.":
-    "Guarda los últimos 30 segundos como un clip de video con audio y elige si incluir subtítulos. Se guarda en Imágenes/Harbor.",
+  "Save the last 30 seconds as a video clip with audio, choosing subtitles on or off. Saves to Pictures/Frame.":
+    "Guarda los últimos 30 segundos como un clip de video con audio y elige si incluir subtítulos. Se guarda en Imágenes/Frame.",
   "Save video clip": "Guardar clip de video",
   "Save your recovery code": "Guarda tu código de recuperación",
   "Saved {when} from Frame {app}. Your Stremio sign-in stays as is.":

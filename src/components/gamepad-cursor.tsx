@@ -1,4 +1,4 @@
-import { HarborMark } from "@/components/icons/harbor-mark";
+import { FrameMark } from "@/components/icons/frame-mark";
 import type { ControllerCursorId } from "@/lib/gamepad/cursor";
 
 const OUTLINE = "rgba(0,0,0,0.62)";
@@ -19,7 +19,7 @@ export function GamepadCursor({
       <Dot className={className} />
     );
   }
-  if (id === "harbor") return <HarborMark className={className} />;
+  if (id === "harbor") return <FrameMark className={className} />;
   if (id === "arrow") return <Arrow className={className} />;
   if (id === "ring") return <Ring className={className} />;
   return <Dot className={className} />;

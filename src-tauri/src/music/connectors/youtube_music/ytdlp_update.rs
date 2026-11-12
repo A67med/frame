@@ -170,7 +170,7 @@ async fn read_limited(path: &Path, limit: usize) -> Option<Vec<u8>> {
 async fn refresh(directory: &Path, cached: Option<&CachedRelease>) -> Result<PathBuf, ()> {
     let asset_name = platform_asset().ok_or(())?;
     let client = reqwest::Client::builder()
-        .user_agent("Harbor-Music")
+        .user_agent("Frame-Music")
         .connect_timeout(Duration::from_secs(3))
         .timeout(UPDATE_TIMEOUT)
         .redirect(reqwest::redirect::Policy::custom(|attempt| {

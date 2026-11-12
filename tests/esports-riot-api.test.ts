@@ -245,7 +245,7 @@ test("an unrecognizable or empty schedule is reported, not shown as nothing sche
   );
 });
 
-test("schedule rows carry Harbor's match shape, league name first for the rail filter", () => {
+test("schedule rows carry Frame's match shape, league name first for the rail filter", () => {
   const [match] = parseRiotSchedule(schedule(valEvent()), "valorant", now);
   assert.equal(match.id, "113475181156537362");
   assert.equal(match.game, "valorant");

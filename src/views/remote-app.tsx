@@ -26,7 +26,7 @@ import {
 } from "react";
 import { CastIcon } from "@/components/player/cast-icon";
 import { HarborLoader } from "@/components/harbor-loader";
-import { HarborMark } from "@/components/icons/harbor-mark";
+import { FrameMark } from "@/components/icons/frame-mark";
 import type { CastDeviceInfo } from "@/lib/cast";
 import { useKeyboardNavigation } from "@/lib/keyboard-navigation";
 import { useRemoteClient } from "@/lib/remote/use-remote-client";
@@ -585,7 +585,7 @@ function RemoteBody({
           className="flex h-11 shrink-0 items-center gap-2 rounded-full bg-white/[0.08] px-3 text-ink shadow-[inset_0_0_0_1px_rgba(255,255,255,0.08)] active:bg-white/[0.14]"
         >
           <ChevronLeft size={18} strokeWidth={1.8} />
-          <HarborMark className="h-5 w-5" />
+          <FrameMark className="h-5 w-5" />
         </button>
 
         <button

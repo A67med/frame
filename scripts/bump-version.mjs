@@ -34,21 +34,13 @@ function nextVersion() {
 }
 
 function setVersion(version) {
-  for (const path of [
-    "package.json",
-    "src-tauri/tauri.conf.json",
-    "installer/package.json",
-    "installer/src-tauri/tauri.conf.json",
-  ]) {
+  for (const path of ["package.json", "src-tauri/tauri.conf.json"]) {
     replaceOnce(path, /"version": "[^"]+"/, `"version": "${version}"`);
   }
-  for (const path of ["src-tauri/Cargo.toml", "installer/src-tauri/Cargo.toml"]) {
+  for (const path of ["src-tauri/Cargo.toml"]) {
     replaceOnce(path, /^version = "[^"]+"/m, `version = "${version}"`);
   }
-  for (const [path, name] of [
-    ["src-tauri/Cargo.lock", "harbor"],
-    ["installer/src-tauri/Cargo.lock", "harbor-setup"],
-  ]) {
+  for (const [path, name] of [["src-tauri/Cargo.lock", "frame"]]) {
     replaceOnce(
       path,
       new RegExp(`name = "${name}"\\nversion = "[^"]+"`),
@@ -57,7 +49,7 @@ function setVersion(version) {
   }
   const date = new Date().toISOString().slice(0, 10);
   replaceOnce(
-    "flatpak/site.harbor.Harbor.metainfo.xml",
+    "flatpak/io.github.abdallahkattriah_sketch.Frame.metainfo.xml",
     /<release version="[^"]+" date="[^"]+"\s*\/>/,
     `<release version="${version}" date="${date}" />`,
   );

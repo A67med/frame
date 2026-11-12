@@ -24,7 +24,7 @@ test("a torrent url pointed at a hosted streaming server is recognised", () => {
   assert.equal(isHostedTorrentServerUrl(`http://192.168.1.50:11470/${HASH}/2`), true);
 });
 
-test("Harbor's own engine and ordinary direct links are left alone", () => {
+test("Frame's own engine and ordinary direct links are left alone", () => {
   assert.equal(isHostedTorrentServerUrl(`http://127.0.0.1:11470/${HASH}/0`), false);
   assert.equal(isHostedTorrentServerUrl(`http://localhost:11470/${HASH}/0`), false);
   assert.equal(isHostedTorrentServerUrl("https://dl.real-debrid.example/d/TOKEN/Movie.mkv"), false);

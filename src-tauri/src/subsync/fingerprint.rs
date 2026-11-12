@@ -114,7 +114,7 @@ async fn decode_window_wav(
     let mut cmd = Command::new(&ff);
     cmd.arg("-hide_banner").arg("-nostats").arg("-y");
     cmd.arg("-user_agent")
-        .arg(url_guard::user_agent(headers).unwrap_or_else(|| "Harbor".into()));
+        .arg(url_guard::user_agent(headers).unwrap_or_else(|| "Frame".into()));
     let blob = url_guard::safe_header_blob(headers);
     if !blob.is_empty() {
         cmd.arg("-headers").arg(blob);

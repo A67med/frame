@@ -219,20 +219,20 @@ mod tests {
         let capture = props(
             "Audio/Sink",
             "harbor_broadcast",
-            "Harbor Broadcast",
+            "Frame Broadcast",
             96_000,
             true,
         );
         assert!(capture.contains("media.class = Audio/Sink"));
         assert!(capture.contains("node.name = harbor_broadcast"));
-        assert!(capture.contains("node.description = \"Harbor Broadcast\""));
+        assert!(capture.contains("node.description = \"Frame Broadcast\""));
         assert!(capture.contains("audio.rate = 96000"));
         assert!(capture.contains("audio.position = [ FL FR ]"));
         assert!(capture.contains("audio.format = F32"));
         let playback = props(
             "Audio/Source",
             "harbor_virtual_mic",
-            "Harbor Virtual Mic",
+            "Frame Virtual Mic",
             48_000,
             false,
         );

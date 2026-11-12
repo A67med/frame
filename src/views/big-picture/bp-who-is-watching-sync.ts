@@ -7,7 +7,7 @@ import { requestSyncPull, useSyncStatus } from "@/lib/profile-sync";
  *
  * It began as a port with setBpWhoSyncPhase / setBpWhoSyncRetry for the engine to call.
  * Nothing ever called them, so the phase was hardcoded "idle" with no writer and the
- * "signing in" and "could not reach Harbor" lines were unreachable strings: a new
+ * "signing in" and "could not reach Frame" lines were unreachable strings: a new
  * television mid-first-pull showed one fabricated Guest tile and invited the user to
  * pick it as though it were their household. The engine publishes a real SyncStatus, so
  * this reads that and the two cannot drift.

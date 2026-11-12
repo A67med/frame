@@ -340,18 +340,18 @@ const catalog: Record<string, string> = {
     "Frame tidak dapat membuka tautan yang menyertakan kredensial tertanam.",
   "Frame caps playlists at 80 MB to stay responsive. Most providers offer a filtered URL with fewer channels.":
     "Frame membatasi daftar putar hingga 80 MB agar tetap responsif. Sebagian besar penyedia menawarkan URL terfilter dengan lebih sedikit saluran.",
-  "Harbor catches stremio:// install links so the configure-and-install flow stays inside the app.":
-    "Harbor menangkap tautan instalasi stremio:// agar alur konfigurasi dan instalasi tetap berlangsung di dalam aplikasi.",
-  "Harbor catches stremio:// install links so the configure-and-install flow stays inside the app. Every install also syncs to your Stremio account, so the official app remains the canonical home for your library.":
-    "Harbor menangkap tautan instalasi stremio:// agar alur konfigurasi dan instalasi tetap berlangsung di dalam aplikasi. Setiap instalasi juga disinkronkan ke akun Stremio Anda, sehingga aplikasi resminya tetap menjadi pusat utama perpustakaan Anda.",
+  "Frame catches stremio:// install links so the configure-and-install flow stays inside the app.":
+    "Frame menangkap tautan instalasi stremio:// agar alur konfigurasi dan instalasi tetap berlangsung di dalam aplikasi.",
+  "Frame catches stremio:// install links so the configure-and-install flow stays inside the app. Every install also syncs to your Stremio account, so the official app remains the canonical home for your library.":
+    "Frame menangkap tautan instalasi stremio:// agar alur konfigurasi dan instalasi tetap berlangsung di dalam aplikasi. Setiap instalasi juga disinkronkan ke akun Stremio Anda, sehingga aplikasi resminya tetap menjadi pusat utama perpustakaan Anda.",
   "Frame checks a few times a day while it's open and lets you know here.":
     "Saat terbuka, Frame memeriksa beberapa kali sehari dan memberi tahu Anda di sini.",
   "Frame checks automatically every few hours.":
     "Frame memeriksa secara otomatis setiap beberapa jam.",
-  "Harbor checks harbor.site for new versions and installs them in place.":
-    "Harbor memeriksa versi baru di harbor.site dan menginstalnya langsung.",
-  "Harbor checks harbor.site for new versions and installs them in place. Nothing installs until you choose to, and a dismissed update never nags you again.":
-    "Harbor memeriksa versi baru di harbor.site dan menginstalnya langsung. Tidak ada yang diinstal sampai Anda memilihnya, dan pembaruan yang diabaikan tidak akan mengganggu Anda lagi.",
+  "Frame checks harbor.site for new versions and installs them in place.":
+    "Frame memeriksa versi baru di harbor.site dan menginstalnya langsung.",
+  "Frame checks harbor.site for new versions and installs them in place. Nothing installs until you choose to, and a dismissed update never nags you again.":
+    "Frame memeriksa versi baru di harbor.site dan menginstalnya langsung. Tidak ada yang diinstal sampai Anda memilihnya, dan pembaruan yang diabaikan tidak akan mengganggu Anda lagi.",
   "Frame checks its GitHub releases for new versions and installs them in place. Nothing installs until you choose to, and a dismissed update never nags you again.":
     "Frame memeriksa versi baru di GitHub dan menginstalnya langsung. Tidak ada yang diinstal sampai Anda memilihnya, dan pembaruan yang diabaikan tidak akan mengganggu Anda lagi.",
   "Frame could not find these": "Frame tidak dapat menemukan item berikut",
@@ -526,8 +526,8 @@ const catalog: Record<string, string> = {
     "Interpolasi frame bawaan Frame. Memperhalus gerakan kamera, paling cocok untuk anime. Memerlukan refresh rate layar yang lebih tinggi daripada frame rate video dan dapat tersendat pada GPU lemah. Lebih ringan daripada SVP.",
   "Frame's full video engine. Plays anything you throw at it.":
     "Mesin video lengkap Frame. Memutar apa pun yang Anda berikan.",
-  "Harbor's in-app installer animates the manifest install and keeps you in context. Anything Harbor installs is also synced to your Stremio account, so the official app stays the canonical library. Turn this off and Stremio becomes the only handler for stremio:// links; Harbor still installs anything you trigger from inside the app (Configure & install, paste, drag-and-drop).":
-    "Penginstal dalam aplikasi Harbor menganimasikan pemasangan manifes dan membuat Anda tetap dalam konteks. Apa pun yang diinstal Harbor juga disinkronkan ke akun Stremio Anda, sehingga aplikasi resmi tetap menjadi perpustakaan utama. Nonaktifkan opsi ini agar Stremio menjadi satu-satunya penangan tautan stremio://; Harbor tetap menginstal apa pun yang Anda picu dari dalam aplikasi (Konfigurasikan & instal, tempel, seret dan lepas).",
+  "Frame's in-app installer animates the manifest install and keeps you in context. Anything Frame installs is also synced to your Stremio account, so the official app stays the canonical library. Turn this off and Stremio becomes the only handler for stremio:// links; Frame still installs anything you trigger from inside the app (Configure & install, paste, drag-and-drop).":
+    "Penginstal dalam aplikasi Frame menganimasikan pemasangan manifes dan membuat Anda tetap dalam konteks. Apa pun yang diinstal Frame juga disinkronkan ke akun Stremio Anda, sehingga aplikasi resmi tetap menjadi perpustakaan utama. Nonaktifkan opsi ini agar Stremio menjadi satu-satunya penangan tautan stremio://; Frame tetap menginstal apa pun yang Anda picu dari dalam aplikasi (Konfigurasikan & instal, tempel, seret dan lepas).",
   "Frame's native player chrome.": "Kontrol pemutar native Frame.",
   "Frame's own bar": "Bilah Frame sendiri",
   "Frame's own community server": "Server komunitas Frame sendiri",
@@ -564,8 +564,8 @@ const catalog: Record<string, string> = {
   "Heads up": "Perhatian",
   "Heads up: Frame was built in English. Multi-language support is partial, so your addons usually catch what Frame's own filters miss. If you speak another language and want to help fill the gaps, the source is open.":
     "Perhatian: Frame dibuat dalam bahasa Inggris. Dukungan multibahasa masih terbatas, jadi addon Anda biasanya dapat menemukan konten yang tidak terjangkau oleh filter Frame. Jika Anda menguasai bahasa lain dan ingin membantu melengkapinya, kode sumbernya terbuka.",
-  "Heads up: if Stremio is also installed, Windows may ask which app to use the first time a stremio:// link fires. Pick Harbor to make it stick.":
-    "Perhatian: jika Stremio juga terinstal, Windows mungkin menanyakan aplikasi mana yang akan digunakan saat tautan stremio:// dibuka untuk pertama kalinya. Pilih Harbor agar menjadi pilihan tetap.",
+  "Heads up: if Stremio is also installed, Windows may ask which app to use the first time a stremio:// link fires. Pick Frame to make it stick.":
+    "Perhatian: jika Stremio juga terinstal, Windows mungkin menanyakan aplikasi mana yang akan digunakan saat tautan stremio:// dibuka untuk pertama kalinya. Pilih Frame agar menjadi pilihan tetap.",
   "Heads up: most IPTV providers cap how many streams an account can run at the same time. If other devices or players are using these credentials, close them and try again.":
     "Perhatian: sebagian besar penyedia IPTV membatasi jumlah stream yang dapat dijalankan satu akun secara bersamaan. Jika perangkat atau pemutar lain menggunakan kredensial ini, tutup lalu coba lagi.",
   "Heads up: this is a large file for peer-to-peer streaming, so it can take a while to start. A 1080p source or a debrid service will load faster.":

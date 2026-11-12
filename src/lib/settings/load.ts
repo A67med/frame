@@ -1,7 +1,7 @@
 import {
   DEFAULT_THEME,
   FONT_PAIRS,
-  isKnownPreset,
+  isSelectableTheme,
   type CustomColors,
   type ThemeSettings,
 } from "@/lib/theme";
@@ -98,11 +98,9 @@ function sanitizeCustomColors(c: unknown): CustomColors | null {
 
 export function sanitizeTheme(t: Partial<ThemeSettings> | undefined): ThemeSettings {
   if (!t) return DEFAULT_THEME;
-  const isBuiltIn =
-    typeof t.preset === "string" && t.preset !== "custom" && isKnownPreset(t.preset);
+  const isBuiltIn = typeof t.preset === "string" && isSelectableTheme(t.preset);
   const isUserPreset = typeof t.preset === "string" && t.preset.startsWith("user:");
   const isPreset = isBuiltIn || isUserPreset;
-  const isCustom = t.preset === "custom";
   const fontOk = typeof t.fontPair === "string" && t.fontPair in FONT_PAIRS;
   const dimOk = typeof t.backgroundDim === "number" && t.backgroundDim >= 0 && t.backgroundDim <= 1;
   const imgOk =
@@ -111,9 +109,7 @@ export function sanitizeTheme(t: Partial<ThemeSettings> | undefined): ThemeSetti
   const customColors = sanitizeCustomColors(t.customColors);
   const preset: ThemeSettings["preset"] = isPreset
     ? (t.preset as ThemeSettings["preset"])
-    : isCustom && customColors
-      ? "custom"
-      : DEFAULT_THEME.preset;
+    : DEFAULT_THEME.preset;
   return {
     preset,
     fontPair: fontOk ? (t.fontPair as ThemeSettings["fontPair"]) : DEFAULT_THEME.fontPair,

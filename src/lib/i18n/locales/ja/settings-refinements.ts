@@ -236,8 +236,8 @@ const settingsRefinements: Record<string, string> = {
   "Email address or Discord handle": "メールアドレスまたは Discord のユーザー名",
   "Enable P2P streaming to run the local engine self-test.":
     "ローカルエンジンの自己診断を実行するには、P2P再生を有効にしてください。",
-  "Enter a full http:// or https:// address, or leave blank to use Harbor's server.":
-    "http:// または https:// で始まる完全なアドレスを入力してください。空欄にすると Harbor のサーバーを使用します。",
+  "Enter a full http:// or https:// address, or leave blank to use Frame's server.":
+    "http:// または https:// で始まる完全なアドレスを入力してください。空欄にすると Frame のサーバーを使用します。",
   "Enter a size of 0 or more.": "0以上のサイズを入力してください。",
   "Enter a whole number of 0 or more.": "0以上の整数を入力してください。",
   "Enter all 4 digits to save this PIN.": "この PIN を保存するには4桁すべて入力してください。",

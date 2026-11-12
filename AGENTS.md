@@ -1,6 +1,14 @@
 # AGENTS.md
 
-Harbor is a cross-platform Stremio client built with Tauri 2, React, TypeScript, Rust and libmpv. The frontend owns the interface and user interactions; Rust owns native integrations, playback, operating-system behavior and performance-sensitive work. Folder-specific notes live in `src/AGENTS.md` (with `src/lib/i18n/`, `src/lib/games/`, `src/lib/music/` and `src/views/big-picture/`), `src-tauri/AGENTS.md` (with `src-tauri/src/games/` and `src-tauri/src/music/`) and `android-extension-compat/AGENTS.md`.
+Frame is a cross-platform desktop media app built with Tauri 2, React, TypeScript, Rust and libmpv, forked from the Harbor Stremio client. The frontend owns the interface and user interactions; Rust owns native integrations, playback, operating-system behavior and performance-sensitive work. Folder-specific notes live in `src/AGENTS.md` (with `src/lib/i18n/`, `src/lib/games/`, `src/lib/music/` and `src/views/big-picture/`), `src-tauri/AGENTS.md` (with `src-tauri/src/games/` and `src-tauri/src/music/`) and `android-extension-compat/AGENTS.md`.
+
+## Frame's identity
+
+- The repository is `abdallahkattriah-sketch/frame` (remote `frame`). Notes below that name `crazyrabbit0/harbor`, `main` or WinGet describe the upstream fork Frame came from, except for `crazyrabbit0/harbor-deps`, which still mirrors the pinned libmpv and ffmpeg builds.
+- The bundle identifier is `io.github.abdallahkattriah-sketch.frame` and the binary is `frame.exe`. `src-tauri/src/legacy_data.rs` copies `app.harbor` data across on first launch, leaving the original.
+- `harbor-*` CSS classes, `data-harbor-*` attributes, `harbor.*` storage keys, `harbor://` internal event names and `HARBOR_*` variables stay on purpose: saved data and user themes depend on them. Only user-facing text and project identity were renamed.
+- The theme selector offers exactly `SELECTABLE_THEME_IDS` (`lib/theme.ts`); other presets stay defined for shared styles, and a saved choice of one falls back to Default. Royal's id is `tokyo-night`.
+- Digital release dates may only come from Blu-ray.com, never TMDB. Radar's Digital Releases section stays an "isn't connected" notice until retrieval from that site is confirmed to be permitted and workable.
 
 ## The fork is the project now
 

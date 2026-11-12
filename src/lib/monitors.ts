@@ -19,7 +19,7 @@ export type MonitorInfo = {
 };
 
 /**
- * A per-mode display choice. `auto` follows Harbor (current behaviour); `explicit`
+ * A per-mode display choice. `auto` follows Frame (current behaviour); `explicit`
  * targets the stored monitor, falling back to auto when it is no longer
  * connected.
  */
@@ -36,7 +36,7 @@ export async function listMonitors(): Promise<MonitorInfo[]> {
 }
 
 /**
- * Move Harbor's main window onto a chosen monitor (used when Open in Big Picture
+ * Move Frame's main window onto a chosen monitor (used when Open in Big Picture
  * should start on a specific screen). Resolves to false when the monitor is gone.
  */
 export async function moveMainToMonitor(monitor: MonitorInfo): Promise<boolean> {

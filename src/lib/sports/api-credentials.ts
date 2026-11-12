@@ -11,7 +11,7 @@ export function subscribeSportsApiCredentials(listener: () => void) {
   };
 }
 
-/** Uses Harbor's device-local credential store; never include this in metadata URLs. */
+/** Uses Frame's device-local credential store; never include this in metadata URLs. */
 export function readSportsApiKey(): string {
   return getSecret(KEY)?.trim() ?? "";
 }

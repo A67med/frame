@@ -267,7 +267,7 @@ mod linux {
 
         #[zbus(property)]
         fn identity(&self) -> &str {
-            "Harbor"
+            "Frame"
         }
 
         #[zbus(property)]
@@ -279,10 +279,10 @@ mod linux {
             }
 
             let candidates = [
-                "Harbor Beta.desktop",
-                "app.harbor.desktop",
-                "harbor.desktop",
-                "site.harbor.Harbor.desktop",
+                "Frame.desktop",
+                "io.github.abdallahkattriah-sketch.frame.desktop",
+                "frame.desktop",
+                "io.github.abdallahkattriah_sketch.Frame.desktop",
             ];
 
             let mut search_dirs: Vec<std::path::PathBuf> = Vec::new();
@@ -308,7 +308,7 @@ mod linux {
                 }
             }
 
-            "app.harbor".to_string()
+            crate::legacy_data::IDENTIFIER.to_string()
         }
 
         #[zbus(property)]

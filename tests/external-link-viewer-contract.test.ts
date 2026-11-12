@@ -58,7 +58,7 @@ test("warning uses a direct main action and an alternate-only menu", () => {
   assert.match(splitSource, /aria-expanded={menuOpen}/);
   assert.match(splitSource, /role="menu"/);
   assert.match(splitSource, /role="menuitem"/);
-  assert.match(splitSource, /<HarborMark/);
+  assert.match(splitSource, /<FrameMark/);
   assert.match(splitSource, /Continue in browser/);
   assert.match(splitSource, /Continue in Frame/);
   assert.match(splitSource, /window\.addEventListener\("pointerdown"/);

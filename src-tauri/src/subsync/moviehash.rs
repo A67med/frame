@@ -89,7 +89,7 @@ async fn http_hash(
     size_hint: u64,
 ) -> Result<MovieHash, String> {
     let client = reqwest::Client::builder()
-        .user_agent("Harbor")
+        .user_agent("Frame")
         .build()
         .map_err(|e| format!("client: {}", e))?;
 

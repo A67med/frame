@@ -45,19 +45,19 @@ fn payload_version(version: &str) -> Result<u64, String> {
             .iter()
             .any(|part| part.is_empty() || !part.bytes().all(|c| c.is_ascii_digit()))
     {
-        return Err("the running Harbor version cannot be used for installer recovery".into());
+        return Err("the running Frame version cannot be used for installer recovery".into());
     }
     let major = parts[0].parse::<u64>().map_err(|e| e.to_string())?;
     let minor = parts[1].parse::<u64>().map_err(|e| e.to_string())?;
     let patch = parts[2].parse::<u64>().map_err(|e| e.to_string())?;
     if minor >= 1_000 || patch >= 1_000 {
-        return Err("the running Harbor version cannot be used for installer recovery".into());
+        return Err("the running Frame version cannot be used for installer recovery".into());
     }
     major
         .checked_mul(1_000_000)
         .and_then(|value| value.checked_add(minor * 1_000))
         .and_then(|value| value.checked_add(patch))
-        .ok_or_else(|| "the running Harbor version cannot be used for installer recovery".into())
+        .ok_or_else(|| "the running Frame version cannot be used for installer recovery".into())
 }
 
 fn ensure_recovery_marker(dest: &Path, version: &str) -> Result<bool, String> {
@@ -68,8 +68,8 @@ fn ensure_recovery_marker(dest: &Path, version: &str) -> Result<bool, String> {
             .map(|_| false)
             .ok_or_else(|| "the existing Harbor install marker is invalid".into());
     }
-    if !dest.join("harbor.exe").is_file() {
-        return Err("the Harbor installation is missing harbor.exe".into());
+    if !dest.join("frame.exe").is_file() {
+        return Err("the Frame installation is missing frame.exe".into());
     }
     let installed_at = std::time::SystemTime::now()
         .duration_since(std::time::UNIX_EPOCH)
@@ -85,13 +85,13 @@ fn ensure_recovery_marker(dest: &Path, version: &str) -> Result<bool, String> {
         .create_new(true)
         .write(true)
         .open(&marker)
-        .map_err(|e| format!("cannot create the Harbor install marker: {e}"))?;
+        .map_err(|e| format!("cannot create the Frame install marker: {e}"))?;
     serde_json::to_writer_pretty(&mut file, &body)
-        .map_err(|e| format!("cannot write the Harbor install marker: {e}"))?;
+        .map_err(|e| format!("cannot write the Frame install marker: {e}"))?;
     file.write_all(b"\n")
-        .map_err(|e| format!("cannot write the Harbor install marker: {e}"))?;
+        .map_err(|e| format!("cannot write the Frame install marker: {e}"))?;
     file.sync_all()
-        .map_err(|e| format!("cannot flush the Harbor install marker: {e}"))?;
+        .map_err(|e| format!("cannot flush the Frame install marker: {e}"))?;
     Ok(true)
 }
 
@@ -371,18 +371,18 @@ fn spawn_setup(
         .stdout(std::process::Stdio::null())
         .stderr(std::process::Stdio::null())
         .spawn()
-        .map_err(|e| format!("could not start Harbor Setup: {}", e))?;
+        .map_err(|e| format!("could not start Frame Setup: {}", e))?;
     let deadline = std::time::Instant::now() + std::time::Duration::from_millis(GRACE_MS);
     while std::time::Instant::now() < deadline {
         match child.try_wait() {
             Ok(Some(status)) => {
                 return Err(format!(
-                    "Harbor Setup stopped straight away with exit code {}",
+                    "Frame Setup stopped straight away with exit code {}",
                     status.code().unwrap_or(-1)
                 ))
             }
             Ok(None) => std::thread::sleep(std::time::Duration::from_millis(POLL_MS)),
-            Err(e) => return Err(format!("could not watch Harbor Setup: {}", e)),
+            Err(e) => return Err(format!("could not watch Frame Setup: {}", e)),
         }
     }
     Ok(())
@@ -437,7 +437,7 @@ pub async fn handoff_launch(app: tauri::AppHandle) -> Result<(), String> {
         return Err("the staged installer is no longer on disk".to_string());
     }
     let target =
-        install_dir().ok_or_else(|| "cannot resolve the Harbor install folder".to_string())?;
+        install_dir().ok_or_else(|| "cannot resolve the Frame install folder".to_string())?;
     let log = setup.with_file_name(LOG_NAME);
     let from = app.package_info().version.to_string();
     let pid = std::process::id();
@@ -515,7 +515,7 @@ mod tests {
     fn bootstraps_a_recoverable_nsis_install() {
         let dest = fixture();
         std::fs::create_dir_all(&dest).unwrap();
-        std::fs::write(dest.join("harbor.exe"), b"test").unwrap();
+        std::fs::write(dest.join("frame.exe"), b"test").unwrap();
 
         assert!(harbor_install_recovery::Transaction::begin(&dest, "0.999.1").is_err());
         assert!(ensure_recovery_marker(&dest, "0.9.124").unwrap());
@@ -538,7 +538,7 @@ mod tests {
     fn refuses_to_replace_an_invalid_marker() {
         let dest = fixture();
         std::fs::create_dir_all(&dest).unwrap();
-        std::fs::write(dest.join("harbor.exe"), b"test").unwrap();
+        std::fs::write(dest.join("frame.exe"), b"test").unwrap();
         std::fs::write(dest.join(MARKER), b"not json").unwrap();
 
         assert!(ensure_recovery_marker(&dest, "0.9.124").is_err());

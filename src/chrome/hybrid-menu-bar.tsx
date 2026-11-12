@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
-import { HarborMark } from "@/components/icons/harbor-mark";
+import { FrameMark } from "@/components/icons/frame-mark";
 import { APP_VERSION } from "@/lib/build-info";
 import { close, openUrl } from "@/lib/window";
 import { toggleWindowFullscreen } from "@/lib/fullscreen-state";
@@ -95,7 +95,7 @@ export function HybridMenuBar() {
 
   return (
     <div data-tauri-drag-region="false" className="flex h-full items-center gap-0.5 ps-3 pe-1">
-      <HarborMark className="me-1.5 h-[15px] w-[15px] shrink-0 text-ink-subtle opacity-45" />
+      <FrameMark className="me-1.5 h-[15px] w-[15px] shrink-0 text-ink-subtle opacity-45" />
       {menus.map((m) => (
         <div key={m.id} className="relative flex h-full items-center">
           <button

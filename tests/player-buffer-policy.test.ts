@@ -65,7 +65,7 @@ test("a fully downloaded local file is reported as cached immediately, not buffe
   );
 });
 
-test("bigger buffer mode increases Harbor defaults and waits for a useful reserve", () => {
+test("bigger buffer mode increases Frame defaults and waits for a useful reserve", () => {
   const settings = {
     mpvQuality: "balanced",
     mpvHwdec: "auto",

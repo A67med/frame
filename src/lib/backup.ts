@@ -21,7 +21,7 @@ const FORMAT = "harbor-backup";
 const VERSION = 1;
 
 export const BACKUP_EXTENSION = "framex";
-/** Extensions the restore picker accepts: Frame's own and Harbor's. */
+/** Extensions the restore picker accepts: Frame's own and Frame's. */
 export const BACKUP_IMPORT_EXTENSIONS = ["framex", "harbx"] as const;
 
 export function backupFileName(date: Date = new Date()): string {

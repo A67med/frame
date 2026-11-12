@@ -27,7 +27,7 @@ function releaseEvidenceOf(track: TrackInfo): string {
   const release = track.release?.trim();
   if (release) return release;
 
-  // Harbor-loaded tracks always carry an evaluated score/confidence. A neutral
+  // Frame-loaded tracks always carry an evaluated score/confidence. A neutral
   // result means the provider exposed no subtitle filename, so the visible
   // fallback title may describe the video and must not be scored as subtitle
   // release evidence. Imported/native tracks without stored analysis can still

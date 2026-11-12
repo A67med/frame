@@ -123,7 +123,6 @@ export type Settings = {
   dlKey: string;
   region: string;
   /** Release region for Radar's dates (ISO 3166-1). */
-  radarRegion: string;
   preferredLanguages: string[];
   requirePreferredLanguage: boolean;
   showImdbBadge: boolean;
@@ -285,7 +284,7 @@ export type Settings = {
   discordShowPartyJoin: boolean;
   discordMusicPresence: boolean;
   playerEngine: "auto" | "html5" | "mpv";
-  /** resize shrinks the Harbor window; native floats the video in its own window. */
+  /** resize shrinks the Frame window; native floats the video in its own window. */
   pipBehavior: "resize" | "native";
   playerShellId: string;
   playerChromeTheme: "auto" | "default" | "stremio";

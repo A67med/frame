@@ -15,7 +15,7 @@ export type BpEnrich = { id: string; detail: TmdbDetail | null; settled: boolean
  *
  * The spotlight enriches the focused card after a 140ms dwell and keeps the
  * result here. Opening that same card then called tmdbDetails again from
- * scratch, so Harbor paid for the prefetch and threw it away one keypress
+ * scratch, so Frame paid for the prefetch and threw it away one keypress
  * later, and the detail page filled in its cast, ratings and tagline half a
  * second after it had already appeared. Reading the map costs nothing and the
  * miss path is unchanged.

@@ -124,8 +124,8 @@ const library: Record<string, string> = {
   "Custom calendar": "自定义日历",
   "Library, watch progress, and addon collection sync from this account.":
     "媒体库、观看进度和插件集合会从此账户同步。",
-  "Harbor catches stremio:// install links so the configure-and-install flow stays inside the app. Every install also syncs to your Stremio account, so the official app remains the canonical home for your library.":
-    "Harbor 会接管 stremio:// 安装链接，让配置和安装流程始终在应用内完成。每次安装也会同步到你的 Stremio 账户，确保官方应用中的媒体库始终为准。",
+  "Frame catches stremio:// install links so the configure-and-install flow stays inside the app. Every install also syncs to your Stremio account, so the official app remains the canonical home for your library.":
+    "Frame 会接管 stremio:// 安装链接，让配置和安装流程始终在应用内完成。每次安装也会同步到你的 Stremio 账户，确保官方应用中的媒体库始终为准。",
   "Saved {d} from Frame {a}.": "已从 Frame {a} 保存 {d}。",
   "Scans your Stremio library and rewrites any item whose shape doesn't match Stremio's exact schema. Safe to run anytime; only items that need fixing get touched.":
     "扫描你的 Stremio 媒体库，并重写结构不符合 Stremio 精确数据规范的项目。可随时安全运行，只会修改需要修复的项目。",
@@ -134,8 +134,8 @@ const library: Record<string, string> = {
   "This replaces your current Frame setup (theme, home layout, settings, addons, profiles, and more) with the {n} saved entries in this file. Your Stremio sign-in stays as is. Frame reloads when it finishes.":
     "这会用该文件中保存的 {n} 个条目替换当前 Frame 配置，包括主题、首页布局、设置、插件、个人资料等。Stremio 登录状态保持不变。完成后 Frame 将重新加载。",
   "Saved {when} from Frame {app}.": "由 Frame {app} 于 {when} 保存。",
-  "Harbor's in-app installer animates the manifest install and keeps you in context. Anything Harbor installs is also synced to your Stremio account, so the official app stays the canonical library. Turn this off and Stremio becomes the only handler for stremio:// links; Harbor still installs anything you trigger from inside the app (Configure & install, paste, drag-and-drop).":
-    "Harbor 的应用内安装器会以动画展示 manifest 安装过程，让你无需离开当前页面。Harbor 安装的所有内容也会同步到你的 Stremio 账户，因此官方应用仍是规范内容库。关闭此选项后，stremio:// 链接将仅由 Stremio 处理；但从 Harbor 内触发的安装仍会由 Harbor 完成，包括“配置并安装”、粘贴和拖放。",
+  "Frame's in-app installer animates the manifest install and keeps you in context. Anything Frame installs is also synced to your Stremio account, so the official app stays the canonical library. Turn this off and Stremio becomes the only handler for stremio:// links; Frame still installs anything you trigger from inside the app (Configure & install, paste, drag-and-drop).":
+    "Frame 的应用内安装器会以动画展示 manifest 安装过程，让你无需离开当前页面。Frame 安装的所有内容也会同步到你的 Stremio 账户，因此官方应用仍是规范内容库。关闭此选项后，stremio:// 链接将仅由 Stremio 处理；但从 Frame 内触发的安装仍会由 Frame 完成，包括“配置并安装”、粘贴和拖放。",
   "A new version is ready to download.": "新版本已可下载。",
   "Save an OMDB key in Library & metadata to enable rating fetches.":
     "在“媒体库与元数据”中保存 OMDB 密钥，以启用评分获取功能。",

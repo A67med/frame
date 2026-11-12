@@ -191,13 +191,13 @@ mod tests {
 
     #[test]
     fn a_renamed_endpoint_is_still_found_through_its_adapter_name() {
-        let render = names(&["Harbor Broadcast (VB-Audio Virtual Cable)"]);
-        let capture = names(&["Harbor Mic (VB-Audio Virtual Cable)"]);
+        let render = names(&["Frame Broadcast (VB-Audio Virtual Cable)"]);
+        let capture = names(&["Frame Mic (VB-Audio Virtual Cable)"]);
         assert_eq!(
             pairs(&render, &capture),
             vec![(
-                "Harbor Broadcast (VB-Audio Virtual Cable)",
-                "Harbor Mic (VB-Audio Virtual Cable)"
+                "Frame Broadcast (VB-Audio Virtual Cable)",
+                "Frame Mic (VB-Audio Virtual Cable)"
             )]
         );
     }

@@ -274,10 +274,10 @@ const playback: Record<string, string> = {
   "Play / pause": "播放/暂停",
   "Toggle playback.": "切换播放或暂停。",
   "Show or hide the playback stats overlay.": "显示或隐藏播放统计信息浮层。",
-  "Save the current frame (video only, no subtitles) as a PNG to Pictures/Harbor.":
-    "将当前帧（仅视频，不含字幕）保存为 PNG 文件，存入 Pictures/Harbor。",
-  "Start or stop recording a GIF of the video (no subtitles). Saves to Pictures/Harbor.":
-    "开始或停止将视频录制为 GIF（不含字幕）。文件会保存到 Pictures/Harbor。",
+  "Save the current frame (video only, no subtitles) as a PNG to Pictures/Frame.":
+    "将当前帧（仅视频，不含字幕）保存为 PNG 文件，存入 Pictures/Frame。",
+  "Start or stop recording a GIF of the video (no subtitles). Saves to Pictures/Frame.":
+    "开始或停止将视频录制为 GIF（不含字幕）。文件会保存到 Pictures/Frame。",
   "Jump back by the Back seek step set under Behavior.": "按“行为”中设置的后退跳转步长向后跳转。",
   "Jump forward by the Forward seek step set under Behavior.":
     "按“行为”中设置的前进跳转步长向前跳转。",
@@ -879,8 +879,8 @@ const playback: Record<string, string> = {
   "Remap stream badges": "重新映射片源标记",
   "Reset subtitle style to defaults": "将字幕样式重置为默认值",
   "Row & player title size": "行与播放器标题字号",
-  "Save the last 30 seconds as a video clip with audio, choosing subtitles on or off. Saves to Pictures/Harbor.":
-    "将最后 30 秒保存为带音频的视频片段，并可选择是否包含字幕。保存到“图片/Harbor”。",
+  "Save the last 30 seconds as a video clip with audio, choosing subtitles on or off. Saves to Pictures/Frame.":
+    "将最后 30 秒保存为带音频的视频片段，并可选择是否包含字幕。保存到“图片/Frame”。",
   "Save video clip": "保存视频片段",
   "Searching works without a key. A key lets Frame line subtitles up with the audio automatically.":
     "无需密钥即可搜索。添加密钥后，Frame 可自动将字幕与音频同步。",

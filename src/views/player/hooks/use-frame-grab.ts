@@ -45,7 +45,7 @@ export function useFrameGrab(params: {
         setToast({
           id: Date.now(),
           kind: "ok",
-          text: t("Screenshot saved to {path}", { path: dir ? "Pictures/Harbor" : "downloads" }),
+          text: t("Screenshot saved to {path}", { path: dir ? "Pictures/Frame" : "downloads" }),
           path: result.path,
         });
       } else {

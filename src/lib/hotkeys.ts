@@ -271,7 +271,7 @@ export const HOTKEYS: HotkeyDef[] = [
     scope: "Player",
     group: "Playback",
     label: "Screenshot",
-    description: "Save the current frame (video only, no subtitles) as a PNG to Pictures/Harbor.",
+    description: "Save the current frame (video only, no subtitles) as a PNG to Pictures/Frame.",
     defaultBinding: "p",
   },
   {
@@ -280,7 +280,7 @@ export const HOTKEYS: HotkeyDef[] = [
     group: "Playback",
     label: "Record GIF",
     description:
-      "Start or stop recording a GIF of the video (no subtitles). Saves to Pictures/Harbor.",
+      "Start or stop recording a GIF of the video (no subtitles). Saves to Pictures/Frame.",
     defaultBinding: "o",
   },
   {
@@ -289,7 +289,7 @@ export const HOTKEYS: HotkeyDef[] = [
     group: "Playback",
     label: "Save video clip",
     description:
-      "Save the last 30 seconds as a video clip with audio, choosing subtitles on or off. Saves to Pictures/Harbor.",
+      "Save the last 30 seconds as a video clip with audio, choosing subtitles on or off. Saves to Pictures/Frame.",
     defaultBinding: "c",
   },
   {

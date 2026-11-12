@@ -16,7 +16,7 @@ const BUG = "h-[clamp(20px,2.6vh,38px)] w-auto max-w-[clamp(56px,7vw,130px)] obj
 type Subject = { band: BpBand; art: BpBandArt | null };
 
 // The subject branch already proxies nothing because a service mark is always
-// https off Harbor's own hosts. A bug can be an addon's self-hosted mark over
+// https off Frame's own hosts. A bug can be an addon's self-hosted mark over
 // plain http, which the WebView refuses as mixed content, so this branch needs
 // the Rust round trip and a failure path or the eyebrow keeps a blank gap.
 function BpBandBug({ src }: { src: string }) {

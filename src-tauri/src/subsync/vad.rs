@@ -176,7 +176,7 @@ async fn decode_pcm(
         .arg("-loglevel")
         .arg("error");
     cmd.arg("-user_agent")
-        .arg(user_agent(headers).unwrap_or_else(|| "Harbor".into()));
+        .arg(user_agent(headers).unwrap_or_else(|| "Frame".into()));
     let blob = safe_header_blob(headers);
     if !blob.is_empty() {
         cmd.arg("-headers").arg(blob);

@@ -21,7 +21,7 @@ type CredentialBinding = {
 
 const CREDENTIAL_TTL_MS = 24 * 60 * 60 * 1000;
 const MAX_CREDENTIAL_BINDINGS = 512;
-const INTERNAL_CREDENTIAL_HEADER = "X-Frame-Subtitle-Credential";
+const INTERNAL_CREDENTIAL_HEADER = "X-Harbor-Subtitle-Credential";
 const credentialBindings = new Map<string, CredentialBinding>();
 
 function isNativeRuntime(): boolean {
@@ -89,7 +89,7 @@ function exactProviderOrigin(kind: SubtitleDownloadAuthKind, rawUrl: string): UR
 
 /**
  * Bind one exact provider key to an opaque process-wide handle. Desktop and
- * mobile keep the key in Rust so a result can move between Harbor WebViews
+ * mobile keep the key in Rust so a result can move between Frame WebViews
  * without serializing the secret. The browser build keeps the same scoped
  * behavior in memory because it has no native process.
  */

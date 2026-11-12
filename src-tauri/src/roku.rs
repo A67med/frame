@@ -10,7 +10,7 @@ HOST: 239.255.255.250:1900\r\n\
 MAN: \"ssdp:discover\"\r\n\
 MX: 2\r\n\
 ST: roku:ecp\r\n\
-USER-AGENT: Harbor/1.0\r\n\r\n";
+USER-AGENT: Frame/1.0\r\n\r\n";
 
 const MEDIA_ASSISTANT_CHANNEL: &str = "782875";
 
@@ -235,7 +235,7 @@ pub async fn load(
     start_time_sec: Option<f64>,
 ) -> Result<(), String> {
     let format = guess_format(&url, content_type.as_deref());
-    let title_str = title.unwrap_or_else(|| "Harbor".into());
+    let title_str = title.unwrap_or_else(|| "Frame".into());
     let channel_id = match locate_media_player_channel(&ecp_base).await {
         Ok(id) => id,
         Err(e) => {

@@ -5,8 +5,8 @@ use std::sync::OnceLock;
 use std::time::Duration;
 
 const VERSION: &str = env!("CARGO_PKG_VERSION");
-const CLIENT_NAME: &str = "Harbor";
-pub const DEVICE_NAME: &str = "Harbor Music";
+const CLIENT_NAME: &str = "Frame";
+pub const DEVICE_NAME: &str = "Frame Music";
 const REQUEST_TIMEOUT: Duration = Duration::from_secs(20);
 const RETRY_CEILING: Duration = Duration::from_secs(4);
 
@@ -15,7 +15,7 @@ fn client() -> Result<&'static reqwest::Client, String> {
     CLIENT
         .get_or_init(|| {
             reqwest::Client::builder()
-                .user_agent(format!("Harbor/{VERSION}"))
+                .user_agent(format!("Frame/{VERSION}"))
                 .connect_timeout(Duration::from_secs(10))
                 .timeout(REQUEST_TIMEOUT)
                 .build()

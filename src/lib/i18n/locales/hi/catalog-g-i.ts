@@ -221,17 +221,17 @@ const catalogGI: Record<string, string> = {
     "Frame ऐसे लिंक नहीं खोल सकता जिनमें क्रेडेंशियल एम्बेड किए गए हों।",
   "Frame caps playlists at 80 MB to stay responsive. Most providers offer a filtered URL with fewer channels.":
     "तेज़ी से काम करते रहने के लिए Frame प्लेलिस्ट को 80 MB तक सीमित रखता है। अधिकतर प्रदाता कम चैनलों वाला फ़िल्टर किया हुआ URL देते हैं।",
-  "Harbor catches stremio:// install links so the configure-and-install flow stays inside the app.":
-    "Harbor stremio:// इंस्टॉल लिंक को सँभालता है, ताकि कॉन्फ़िगर और इंस्टॉल करने की प्रक्रिया ऐप के अंदर ही रहे।",
-  "Harbor catches stremio:// install links so the configure-and-install flow stays inside the app. Every install also syncs to your Stremio account, so the official app remains the canonical home for your library.":
-    "Harbor stremio:// इंस्टॉल लिंक को सँभालता है, ताकि कॉन्फ़िगर और इंस्टॉल करने की प्रक्रिया ऐप के अंदर ही रहे। हर इंस्टॉल आपके Stremio अकाउंट से भी सिंक होता है, इसलिए आधिकारिक ऐप आपकी लाइब्रेरी की मुख्य आधिकारिक जगह बना रहता है।",
+  "Frame catches stremio:// install links so the configure-and-install flow stays inside the app.":
+    "Frame stremio:// इंस्टॉल लिंक को सँभालता है, ताकि कॉन्फ़िगर और इंस्टॉल करने की प्रक्रिया ऐप के अंदर ही रहे।",
+  "Frame catches stremio:// install links so the configure-and-install flow stays inside the app. Every install also syncs to your Stremio account, so the official app remains the canonical home for your library.":
+    "Frame stremio:// इंस्टॉल लिंक को सँभालता है, ताकि कॉन्फ़िगर और इंस्टॉल करने की प्रक्रिया ऐप के अंदर ही रहे। हर इंस्टॉल आपके Stremio अकाउंट से भी सिंक होता है, इसलिए आधिकारिक ऐप आपकी लाइब्रेरी की मुख्य आधिकारिक जगह बना रहता है।",
   "Frame checks a few times a day while it's open and lets you know here.":
     "Frame खुला रहने के दौरान दिन में कुछ बार जाँच करता है और आपको यहाँ सूचित करता है।",
   "Frame checks automatically every few hours.": "Frame हर कुछ घंटों में अपने आप जाँच करता है।",
-  "Harbor checks harbor.site for new versions and installs them in place.":
-    "Harbor नए वर्ज़न के लिए harbor.site की जाँच करता है और उन्हें सीधे इंस्टॉल कर देता है।",
-  "Harbor checks harbor.site for new versions and installs them in place. Nothing installs until you choose to, and a dismissed update never nags you again.":
-    "Harbor नए वर्ज़न के लिए harbor.site की जाँच करता है और उन्हें सीधे इंस्टॉल कर देता है। आपके चुने बिना कुछ भी इंस्टॉल नहीं होता और खारिज किया गया अपडेट आपको फिर कभी परेशान नहीं करता।",
+  "Frame checks harbor.site for new versions and installs them in place.":
+    "Frame नए वर्ज़न के लिए harbor.site की जाँच करता है और उन्हें सीधे इंस्टॉल कर देता है।",
+  "Frame checks harbor.site for new versions and installs them in place. Nothing installs until you choose to, and a dismissed update never nags you again.":
+    "Frame नए वर्ज़न के लिए harbor.site की जाँच करता है और उन्हें सीधे इंस्टॉल कर देता है। आपके चुने बिना कुछ भी इंस्टॉल नहीं होता और खारिज किया गया अपडेट आपको फिर कभी परेशान नहीं करता।",
   "Frame checks its GitHub releases for new versions and installs them in place. Nothing installs until you choose to, and a dismissed update never nags you again.":
     "Frame नए वर्ज़न के लिए GitHub की जाँच करता है और उन्हें सीधे इंस्टॉल कर देता है। आपके चुने बिना कुछ भी इंस्टॉल नहीं होता और खारिज किया गया अपडेट आपको फिर कभी परेशान नहीं करता।",
   "Frame could not find these": "Frame इन्हें नहीं ढूँढ पाया",
@@ -400,8 +400,8 @@ const catalogGI: Record<string, string> = {
     "Frame का बिल्ट-इन फ़्रेम इंटरपोलेशन। यह पैनिंग को सहज बनाता है और एनीमे के लिए सबसे अच्छा है। इसके लिए डिस्प्ले का रिफ़्रेश रेट वीडियो के फ़्रेम रेट से अधिक होना चाहिए और कमज़ोर GPUs पर यह अटक सकता है। SVP से हल्का है।",
   "Frame's full video engine. Plays anything you throw at it.":
     "Frame का पूरा वीडियो इंजन। इसमें जो भी चलाएँ, यह चला देता है।",
-  "Harbor's in-app installer animates the manifest install and keeps you in context. Anything Harbor installs is also synced to your Stremio account, so the official app stays the canonical library. Turn this off and Stremio becomes the only handler for stremio:// links; Harbor still installs anything you trigger from inside the app (Configure & install, paste, drag-and-drop).":
-    "Harbor का इन-ऐप इंस्टॉलर मैनिफ़ेस्ट इंस्टॉल होने का एनिमेशन दिखाता है और आपको वहीं बनाए रखता है। Harbor जो कुछ भी इंस्टॉल करता है, वह आपके Stremio अकाउंट से भी सिंक होता है, इसलिए आधिकारिक ऐप ही आपकी मुख्य लाइब्रेरी बना रहता है। इसे बंद करने पर stremio:// लिंक केवल Stremio में खुलेंगे; ऐप के अंदर से शुरू की गई कोई भी चीज़ Harbor फिर भी इंस्टॉल करेगा (कॉन्फ़िगर & इंस्टॉल करें, पेस्ट, ड्रैग-एंड-ड्रॉप)।",
+  "Frame's in-app installer animates the manifest install and keeps you in context. Anything Frame installs is also synced to your Stremio account, so the official app stays the canonical library. Turn this off and Stremio becomes the only handler for stremio:// links; Frame still installs anything you trigger from inside the app (Configure & install, paste, drag-and-drop).":
+    "Frame का इन-ऐप इंस्टॉलर मैनिफ़ेस्ट इंस्टॉल होने का एनिमेशन दिखाता है और आपको वहीं बनाए रखता है। Frame जो कुछ भी इंस्टॉल करता है, वह आपके Stremio अकाउंट से भी सिंक होता है, इसलिए आधिकारिक ऐप ही आपकी मुख्य लाइब्रेरी बना रहता है। इसे बंद करने पर stremio:// लिंक केवल Stremio में खुलेंगे; ऐप के अंदर से शुरू की गई कोई भी चीज़ Frame फिर भी इंस्टॉल करेगा (कॉन्फ़िगर & इंस्टॉल करें, पेस्ट, ड्रैग-एंड-ड्रॉप)।",
   "Frame's native player chrome.": "Frame के अपने प्लेयर कंट्रोल।",
   "Frame's own bar": "Frame की अपनी पट्टी",
   "Frame's own community server": "Frame का अपना कम्युनिटी सर्वर",
@@ -437,8 +437,8 @@ const catalogGI: Record<string, string> = {
   "Heads up": "ध्यान दें",
   "Heads up: Frame was built in English. Multi-language support is partial, so your addons usually catch what Frame's own filters miss. If you speak another language and want to help fill the gaps, the source is open.":
     "ध्यान दें: Frame मूल रूप से अंग्रेज़ी में बनाया गया था। बहुभाषी सपोर्ट अभी सीमित है, इसलिए Frame के अपने फ़िल्टर से छूटी चीज़ें आम तौर पर आपके ऐडऑन पकड़ लेते हैं। अगर आप कोई दूसरी भाषा जानते हैं और इन कमियों को दूर करने में मदद करना चाहते हैं, तो सोर्स कोड ओपन है।",
-  "Heads up: if Stremio is also installed, Windows may ask which app to use the first time a stremio:// link fires. Pick Harbor to make it stick.":
-    "ध्यान दें: अगर Stremio भी इंस्टॉल है, तो पहली बार कोई stremio:// लिंक खुलने पर Windows पूछ सकता है कि किस ऐप का उपयोग करना है। इसे स्थायी बनाने के लिए Harbor चुनें।",
+  "Heads up: if Stremio is also installed, Windows may ask which app to use the first time a stremio:// link fires. Pick Frame to make it stick.":
+    "ध्यान दें: अगर Stremio भी इंस्टॉल है, तो पहली बार कोई stremio:// लिंक खुलने पर Windows पूछ सकता है कि किस ऐप का उपयोग करना है। इसे स्थायी बनाने के लिए Frame चुनें।",
   "Heads up: most IPTV providers cap how many streams an account can run at the same time. If other devices or players are using these credentials, close them and try again.":
     "ध्यान दें: ज़्यादातर IPTV प्रदाता एक खाते से एक साथ चलने वाली स्ट्रीम की संख्या सीमित रखते हैं। अगर दूसरे डिवाइस या प्लेयर इन लॉगिन विवरणों का उपयोग कर रहे हैं, तो उन्हें बंद करके फिर से कोशिश करें।",
   "Heads up: this is a large file for peer-to-peer streaming, so it can take a while to start. A 1080p source or a debrid service will load faster.":

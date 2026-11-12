@@ -8,7 +8,7 @@ import type { HandoffPayload } from "@/lib/tv-handoff/handoff-protocol";
 /**
  * Turns a delivery from the phone into live state on this TV. The transport
  * hands these up already bound to a claimed client, so the only job here is to
- * put each value where the rest of Harbor reads it. Throwing refuses the step,
+ * put each value where the rest of Frame reads it. Throwing refuses the step,
  * which the phone sees as `applyFailed` and can retry.
  */
 export function useHandoffApply(): (payload: HandoffPayload) => Promise<void> {

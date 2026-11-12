@@ -68,7 +68,7 @@ impl MusicConnector for SpotifyConnector {
         _app: &tauri::AppHandle,
         _track: &MusicTrack,
     ) -> Result<MusicStream, String> {
-        Err("Spotify playback uses Harbor's native Premium session".to_string())
+        Err("Spotify playback uses Frame's native Premium session".to_string())
     }
 
     async fn browse_home(&self, _app: &tauri::AppHandle) -> Result<Vec<MusicCatalogRow>, String> {

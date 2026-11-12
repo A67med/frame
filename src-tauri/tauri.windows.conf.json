@@ -1,8 +1,11 @@
 {
   "bundle": {
+    "externalBin": ["binaries/yt-dlp", "binaries/ffmpeg", "binaries/ffprobe", "binaries/mpv"],
     "resources": {
       "libmpv/libmpv-2.dll": "libmpv-2.dll",
-      "binaries/mpv-x86_64-pc-windows-msvc.exe": "mpv.exe",
+      "vc-runtime/msvcp140.dll": "msvcp140.dll",
+      "vc-runtime/vcruntime140.dll": "vcruntime140.dll",
+      "vc-runtime/vcruntime140_1.dll": "vcruntime140_1.dll",
       "fonts/*": "fonts/"
     }
   }

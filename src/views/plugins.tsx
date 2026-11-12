@@ -34,7 +34,7 @@ function pluginCatalogs(all: BrowseCatalog[]): BrowseCatalog[] {
 export function Plugins({ active = true }: { active?: boolean }) {
   const t = useT();
   const { authKey } = useAuth();
-  const { openSettings, openGrid } = useView();
+  const { openGrid } = useView();
   const contentDrag = useContentDrag();
   const [catalogs, setCatalogs] = useState<BrowseCatalog[]>([]);
   const [loading, setLoading] = useState(true);
@@ -294,7 +294,7 @@ export function Plugins({ active = true }: { active?: boolean }) {
         ) : loading ? (
           <ShelfSkeletons />
         ) : catalogs.length === 0 ? (
-          <EmptyState onOpenPlugins={() => openSettings("plugins")} />
+          <EmptyState />
         ) : shownGroups.length === 0 ? (
           <p className="rounded-2xl border border-dashed border-edge-soft bg-canvas/30 px-6 py-12 text-center text-[13.5px] text-ink-muted">
             {t("Every row is hidden. Use Arrange to bring one back.")}
@@ -360,7 +360,7 @@ function ShelfSkeletons() {
   );
 }
 
-function EmptyState({ onOpenPlugins }: { onOpenPlugins: () => void }) {
+function EmptyState() {
   const t = useT();
   return (
     <div className="flex flex-col items-center gap-4 rounded-2xl border border-dashed border-edge-soft bg-canvas/30 px-8 py-16 text-center">
@@ -371,12 +371,6 @@ function EmptyState({ onOpenPlugins }: { onOpenPlugins: () => void }) {
           {t("Install a plugin that offers rows of its own and they show up here as poster rails.")}
         </p>
       </div>
-      <button
-        onClick={onOpenPlugins}
-        className="flex h-10 items-center gap-2 rounded-full bg-ink px-5 text-[13.5px] font-semibold text-canvas transition-opacity hover:opacity-90"
-      >
-        {t("Manage plugins")}
-      </button>
     </div>
   );
 }

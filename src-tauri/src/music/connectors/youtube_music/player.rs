@@ -14,7 +14,7 @@ pub fn stream_from_player(response: &Value) -> Result<MusicStream, String> {
             .is_some()
         {
             return Err(
-                "YouTube Music offered only an adaptive stream Harbor cannot read yet".to_string(),
+                "YouTube Music offered only an adaptive stream Frame cannot read yet".to_string(),
             );
         }
         return Err("YouTube Music did not return an audio stream".to_string());
@@ -43,7 +43,7 @@ pub fn stream_from_player(response: &Value) -> Result<MusicStream, String> {
     }
     if scrambled || formats.iter().any(is_scrambled) {
         return Err(
-            "YouTube Music returned a scrambled stream that Harbor cannot unlock".to_string(),
+            "YouTube Music returned a scrambled stream that Frame cannot unlock".to_string(),
         );
     }
     Err("YouTube Music did not return a supported audio stream".to_string())
@@ -63,7 +63,7 @@ fn playable(response: &Value) -> Result<(), String> {
         .unwrap_or(status);
     if reason.contains("not a bot") || status == "LOGIN_REQUIRED" {
         return Err(
-            "YouTube Music is rate limiting Harbor, try again in a few minutes".to_string(),
+            "YouTube Music is rate limiting Frame, try again in a few minutes".to_string(),
         );
     }
     Err(format!("YouTube Music will not play this track: {reason}"))

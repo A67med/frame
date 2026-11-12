@@ -23,7 +23,7 @@ function dedupeTitles(name: string, extra: string[]): string[] {
  * Union of a show's known titles (display name + kitsu english / romaji / native
  * / canonical) for anime metas. Consumed by the stream trust filter's anime
  * title-identity gate, which rejects wrong-show results that IMDb-indexer addons
- * inject when Harbor fans the anime request out to a `tt<imdb>:season:episode`
+ * inject when Frame fans the anime request out to a `tt<imdb>:season:episode`
  * query answered by episode NUMBER (e.g. Evangelion S1E1 pulling Stranger
  * Things / Star Wars / Star Trek).
  *

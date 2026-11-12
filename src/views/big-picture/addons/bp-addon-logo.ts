@@ -1,6 +1,6 @@
 // Hot-link only, and that is the whole reason this exists instead of reusing
 // @/components/addon-logo: that module carries fourteen bundled logo files, and
-// Harbor has already had to delete around 627 pieces of third-party artwork
+// Frame has already had to delete around 627 pieces of third-party artwork
 // once. Big Picture resolves a manifest's own logo against the addon's own host
 // and never reaches for a file in this repo. Do not add a bundled fallback here.
 export function bpAddonLogo(

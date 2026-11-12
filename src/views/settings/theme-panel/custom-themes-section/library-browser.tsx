@@ -1,9 +1,7 @@
 import { ChevronLeft } from "../../icons";
 import { useEffect, useState } from "react";
-import { BETA_THEMES } from "@/lib/theme";
 import { getActiveModal, isBackKey } from "@/lib/keyboard-navigation/geometry";
 import { useT } from "@/lib/i18n";
-import { BetaThemesCard, BetaThemesModal } from "./beta-themes-modal";
 import { clearUnseenDownloads } from "@/lib/theme-store";
 import type { StoreTab } from "./community-store/store-tabs";
 import type { LibraryEntry } from "./library-grid";
@@ -45,7 +43,6 @@ export function LibraryBrowser({
     return () => document.removeEventListener("keydown", onKey);
   }, [onClose]);
 
-  const [betaOpen, setBetaOpen] = useState(false);
   const [libQuery, setLibQuery] = useState("");
   const [libCat, setLibCat] = useState<LibCat>("all");
   useEffect(() => {
@@ -135,13 +132,6 @@ export function LibraryBrowser({
                   />
                 </BrowserSection>
               )}
-              {BETA_THEMES.length > 0 && (
-                <BrowserSection title="Beta" subtitle="Experimental 1:1 ports of other apps.">
-                  <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-                    <BetaThemesCard count={BETA_THEMES.length} onClick={() => setBetaOpen(true)} />
-                  </div>
-                </BrowserSection>
-              )}
               {builtIn.length > 0 && (
                 <BrowserSection title="Built-in" subtitle="Ships with Frame. Always available.">
                   <BrowserGrid
@@ -185,12 +175,6 @@ export function LibraryBrowser({
           )}
         </>
       </div>
-      <BetaThemesModal
-        open={betaOpen}
-        activeId={activeId}
-        onActivate={onActivate}
-        onClose={() => setBetaOpen(false)}
-      />
     </div>
   );
 }

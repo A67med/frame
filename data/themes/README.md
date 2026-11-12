@@ -5,7 +5,7 @@ Harbor's Community theme library (Settings > Themes > Community) reads `index.js
 ## Submitting a theme
 
 1. In Harbor, open Settings > Themes, pick your theme and export it as a `.harborstyle` file.
-2. Fork `crazyrabbit0/harbor` and add the file here as `data/themes/<id>.harborstyle`. Use a lowercase id made of letters, digits and dashes.
+2. Fork `abdallahkattriah-sketch/frame` and add the file here as `data/themes/<id>.harborstyle`. Use a lowercase id made of letters, digits and dashes.
 3. Add a cover screenshot as `data/themes/<id>.jpg` (16:10, about 960x600, under 200 KB).
 4. Add an entry to `themes` in `index.json`:
 

@@ -4,7 +4,7 @@ fn settings_file() -> Option<std::path::PathBuf> {
     let base = std::env::var_os("APPDATA")?;
     Some(
         std::path::PathBuf::from(base)
-            .join("app.harbor")
+            .join(crate::legacy_data::IDENTIFIER)
             .join("settings.json"),
     )
 }

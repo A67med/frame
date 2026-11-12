@@ -5,7 +5,7 @@ import type { SetupStepId } from "./setup-wire";
 
 /**
  * The band every step opens with: the real mark of the service on the quay,
- * Harbor's boat on the waterline, and one more piece of that boat for every
+ * Frame's boat on the waterline, and one more piece of that boat for every
  * step the TV has confirmed. `built` is captured at mount so arriving at a
  * later step does not replay pieces the viewer already earned; only a piece
  * that lands while this screen is open is hoisted.

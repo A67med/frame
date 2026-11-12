@@ -17,7 +17,7 @@ export function usePipMode(params: {
   onDetachRef.current = onDetach;
   const onReattachRef = useRef(onReattach);
   onReattachRef.current = onReattach;
-  // Detached moves the live surface into its own window; resize shrinks Harbor itself.
+  // Detached moves the live surface into its own window; resize shrinks Frame itself.
   const detached = settings.pipBehavior === "native";
   const [pipMode, setPipMode] = useState(false);
   const nativeDetached = useRef(false);
@@ -63,7 +63,7 @@ export function usePipMode(params: {
           kickLayout();
         }),
       );
-      // Detached keeps the Harbor window full size, so its chrome stays put and the
+      // Detached keeps the Frame window full size, so its chrome stays put and the
       // player closes back to whatever the viewer was on.
       const onDetachedEntered = makeSafeTauriUnlisten(
         await listen("pip://detached-entered", () => {

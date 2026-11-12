@@ -345,8 +345,7 @@ const settings: Record<string, string> = {
   "Card size": "Kartengröße",
   Cards: "Karten",
   "Catalogs to show": "Anzuzeigende Kataloge",
-  "Catch stremio:// install links inside Harbor":
-    "stremio://-Installationslinks in Harbor abfangen",
+  "Catch stremio:// install links inside Frame": "stremio://-Installationslinks in Frame abfangen",
   Cause: "Ursache",
   "Change…": "Ändern…",
   "Changing the location restarts the engine. Clearing removes all cached stream files right away; anything you reopen will re-fetch.":
@@ -964,16 +963,16 @@ const settings: Record<string, string> = {
   "Hand-tuned colors. Edit them in the section above.":
     "Manuell abgestimmte Farben. Bearbeite sie im Bereich oben.",
   "Frame Relay": "Frame Relay",
-  "Harbor catches stremio:// install links so the configure-and-install flow stays inside the app.":
-    "Harbor fängt Installationslinks mit stremio:// ab, damit Konfiguration und Installation innerhalb der App bleiben.",
-  "Harbor catches stremio:// install links so the configure-and-install flow stays inside the app. Every install also syncs to your Stremio account, so the official app remains the canonical home for your library.":
-    "Harbor fängt stremio://-Installationslinks ab, damit Konfiguration und Installation innerhalb der App bleiben. Jede Installation wird außerdem mit deinem Stremio-Konto synchronisiert, sodass die offizielle App die maßgebliche Zentrale für deine Mediathek bleibt.",
+  "Frame catches stremio:// install links so the configure-and-install flow stays inside the app.":
+    "Frame fängt Installationslinks mit stremio:// ab, damit Konfiguration und Installation innerhalb der App bleiben.",
+  "Frame catches stremio:// install links so the configure-and-install flow stays inside the app. Every install also syncs to your Stremio account, so the official app remains the canonical home for your library.":
+    "Frame fängt stremio://-Installationslinks ab, damit Konfiguration und Installation innerhalb der App bleiben. Jede Installation wird außerdem mit deinem Stremio-Konto synchronisiert, sodass die offizielle App die maßgebliche Zentrale für deine Mediathek bleibt.",
   "Frame checks automatically every few hours.":
     "Frame sucht automatisch alle paar Stunden nach Aktualisierungen.",
-  "Harbor checks harbor.site for new versions and installs them in place.":
-    "Harbor sucht auf harbor.site nach neuen Versionen und installiert sie direkt als Aktualisierung.",
-  "Harbor checks harbor.site for new versions and installs them in place. Nothing installs until you choose to, and a dismissed update never nags you again.":
-    "Harbor sucht auf harbor.site nach neuen Versionen und installiert sie direkt über die vorhandene Version. Es wird nichts installiert, bevor du dich dafür entscheidest, und ein abgelehntes Update wird dir nie wieder angeboten.",
+  "Frame checks harbor.site for new versions and installs them in place.":
+    "Frame sucht auf harbor.site nach neuen Versionen und installiert sie direkt als Aktualisierung.",
+  "Frame checks harbor.site for new versions and installs them in place. Nothing installs until you choose to, and a dismissed update never nags you again.":
+    "Frame sucht auf harbor.site nach neuen Versionen und installiert sie direkt über die vorhandene Version. Es wird nichts installiert, bevor du dich dafür entscheidest, und ein abgelehntes Update wird dir nie wieder angeboten.",
   "Frame checks its GitHub releases for new versions and installs them in place. Nothing installs until you choose to, and a dismissed update never nags you again.":
     "Frame sucht auf GitHub nach neuen Versionen und installiert sie direkt über die vorhandene Version. Es wird nichts installiert, bevor du dich dafür entscheidest, und ein abgelehntes Update wird dir nie wieder angeboten.",
   "Frame curated": "Von Frame kuratiert",
@@ -1017,8 +1016,8 @@ const settings: Record<string, string> = {
   "Frame {version} available": "Frame {version} verfügbar",
   "Frame's built-in frame interpolation. Smooths panning, best on anime. Needs a display refresh rate above the video's frame rate, and can stutter on weak GPUs. Lighter than SVP.":
     "Frames integrierte Zwischenbildberechnung. Sie glättet Kameraschwenks und eignet sich besonders für Anime. Erfordert eine Bildschirmaktualisierungsrate über der Bildrate des Videos und kann auf schwachen GPUs ruckeln. Ressourcenschonender als SVP.",
-  "Harbor's in-app installer animates the manifest install and keeps you in context. Anything Harbor installs is also synced to your Stremio account, so the official app stays the canonical library. Turn this off and Stremio becomes the only handler for stremio:// links; Harbor still installs anything you trigger from inside the app (Configure & install, paste, drag-and-drop).":
-    "Das Harbor-interne Installationsprogramm zeigt die Manifest-Installation animiert an und lässt dich im aktuellen Kontext bleiben. Alles, was Harbor installiert, wird außerdem mit deinem Stremio-Konto synchronisiert, sodass die Mediathek der offiziellen App maßgeblich bleibt. Schalte dies aus, damit nur noch Stremio stremio://-Links verarbeitet; Harbor installiert weiterhin alles, dessen Installation du innerhalb der App auslöst (Konfigurieren und installieren, Einfügen, Drag-and-drop).",
+  "Frame's in-app installer animates the manifest install and keeps you in context. Anything Frame installs is also synced to your Stremio account, so the official app stays the canonical library. Turn this off and Stremio becomes the only handler for stremio:// links; Frame still installs anything you trigger from inside the app (Configure & install, paste, drag-and-drop).":
+    "Das Frame-interne Installationsprogramm zeigt die Manifest-Installation animiert an und lässt dich im aktuellen Kontext bleiben. Alles, was Frame installiert, wird außerdem mit deinem Stremio-Konto synchronisiert, sodass die Mediathek der offiziellen App maßgeblich bleibt. Schalte dies aus, damit nur noch Stremio stremio://-Links verarbeitet; Frame installiert weiterhin alles, dessen Installation du innerhalb der App auslöst (Konfigurieren und installieren, Einfügen, Drag-and-drop).",
   "Frame's native player chrome.": "Frames native Player-Bedienelemente.",
   "Frame's player applies the interpolation itself, embedded like normal playback, and starts SVP Manager in the tray for licensing. Restart playback to apply. If video goes black or won't start, turn this off.":
     "Frames Player wendet die Interpolation direkt wie bei der normalen Wiedergabe an und startet zur Lizenzierung den SVP Manager im Infobereich. Starte die Wiedergabe neu, um die Änderung anzuwenden. Wenn das Video schwarz bleibt oder nicht startet, deaktiviere diese Option.",
@@ -1030,8 +1029,8 @@ const settings: Record<string, string> = {
   "Heads up": "Hinweis",
   "Heads up: Frame was built in English. Multi-language support is partial, so your addons usually catch what Frame's own filters miss. If you speak another language and want to help fill the gaps, the source is open.":
     "Hinweis: Frame wurde auf Englisch entwickelt. Die Unterstützung mehrerer Sprachen ist unvollständig, daher finden deine Add-ons meist das, was Frames eigene Filter übersehen. Wenn du eine andere Sprache sprichst und helfen möchtest, die Lücken zu schließen, ist der Quellcode offen.",
-  "Heads up: if Stremio is also installed, Windows may ask which app to use the first time a stremio:// link fires. Pick Harbor to make it stick.":
-    "Hinweis: Wenn Stremio ebenfalls installiert ist, fragt Windows beim ersten Öffnen eines stremio://-Links möglicherweise, welche App verwendet werden soll. Wähle Harbor, um diese Auswahl beizubehalten.",
+  "Heads up: if Stremio is also installed, Windows may ask which app to use the first time a stremio:// link fires. Pick Frame to make it stick.":
+    "Hinweis: Wenn Stremio ebenfalls installiert ist, fragt Windows beim ersten Öffnen eines stremio://-Links möglicherweise, welche App verwendet werden soll. Wähle Frame, um diese Auswahl beizubehalten.",
   "Heads up: {keys} can load outside scripts or open your player to the network. Only keep these if you know exactly what they do.":
     "Achtung: {keys} kann externe Skripte laden oder deinen Player für das Netzwerk öffnen. Behalte diese nur, wenn du genau weißt, was sie tun.",
   "Health check returns 5xx": "Statusprüfung gibt 5xx zurück",
@@ -1879,8 +1878,8 @@ const settings: Record<string, string> = {
   "Save rule": "Regel speichern",
   "Save sharper frames instead of light thumbnails. They look crisper on the card but take more space, so fewer are kept before the oldest roll off.":
     "Speichert schärfere Einzelbilder statt platzsparender Vorschaubilder. Sie wirken auf der Karte klarer, brauchen aber mehr Speicherplatz. Daher werden weniger behalten, bevor die ältesten entfernt werden.",
-  "Save the current frame (video only, no subtitles) as a PNG to Pictures/Harbor.":
-    "Das aktuelle Einzelbild (nur Video, ohne Untertitel) als PNG unter Bilder/Harbor speichern.",
+  "Save the current frame (video only, no subtitles) as a PNG to Pictures/Frame.":
+    "Das aktuelle Einzelbild (nur Video, ohne Untertitel) als PNG unter Bilder/Frame speichern.",
   "Save the worker source. Copy": "Worker-Quelle speichern. Kopieren",
   "Save the worker source. Copy {code1} from the Frame repo into a new directory as {code2}.":
     "Speichere den Worker-Quellcode. Kopiere {code1} aus dem Frame-Repository in ein neues Verzeichnis namens {code2}.",
@@ -2154,8 +2153,8 @@ const settings: Record<string, string> = {
     "Quadratisches Signet in der Seitenleiste. Transparente PNG- oder SVG-Dateien eignen sich am besten.",
   Stable: "Stabil",
   "Stable selectors": "Stabile Selektoren",
-  "Start or stop recording a GIF of the video (no subtitles). Saves to Pictures/Harbor.":
-    "Aufnahme eines GIFs vom Video starten oder stoppen (ohne Untertitel). Wird unter Bilder/Harbor gespeichert.",
+  "Start or stop recording a GIF of the video (no subtitles). Saves to Pictures/Frame.":
+    "Aufnahme eines GIFs vom Video starten oder stoppen (ohne Untertitel). Wird unter Bilder/Frame gespeichert.",
   "Start server": "Server starten",
   "Start trailers with audio": "Trailer mit Ton starten",
   Starting: "Wird gestartet",
@@ -2748,7 +2747,7 @@ const settings: Record<string, string> = {
   shown: "angezeigt",
   skipped: "übersprungen",
   "skipped {n} anime": "{n} Anime übersprungen",
-  "stremio:// links now open in the Stremio app. Harbor will only install when you trigger it from inside Harbor.":
+  "stremio:// links now open in the Stremio app. Frame will only install when you trigger it from inside Frame.":
     "stremio://-Links werden jetzt in der Stremio-App geöffnet. Harbor führt die Installation nur aus, wenn du sie innerhalb von Harbor startest.",
   "subdomain acts as the access token. There is no login.":
     "Die Subdomain dient als Zugriffstoken. Es gibt keine Anmeldung.",

@@ -431,7 +431,7 @@ pub fn list_monitors() -> Vec<MonitorInfo> {
 
 /// Where a window should open given an explicit choice: the resolved monitor when
 /// the user picked one and it is still connected, else `None` meaning "leave it
-/// where the OS put it" (Automatic / follow Harbor).
+/// where the OS put it" (Automatic / follow Frame).
 #[cfg(windows)]
 pub fn resolve_or_default(saved: Option<&MonitorInfo>) -> Option<ResolvedMonitor> {
     if let Some(s) = saved {

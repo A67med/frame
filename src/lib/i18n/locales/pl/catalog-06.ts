@@ -16,18 +16,18 @@ const catalog06: Record<string, string> = {
     "Frame nie może otwierać linków zawierających dane logowania.",
   "Frame caps playlists at 80 MB to stay responsive. Most providers offer a filtered URL with fewer channels.":
     "Aby zachować płynne działanie, Frame ogranicza rozmiar playlist do 80 MB. Większość dostawców oferuje filtrowany adres URL z mniejszą liczbą kanałów.",
-  "Harbor catches stremio:// install links so the configure-and-install flow stays inside the app.":
-    "Harbor przechwytuje łącza instalacyjne stremio://, dzięki czemu konfiguracja i instalacja odbywają się w aplikacji.",
-  "Harbor catches stremio:// install links so the configure-and-install flow stays inside the app. Every install also syncs to your Stremio account, so the official app remains the canonical home for your library.":
-    "Harbor przechwytuje linki instalacyjne stremio://, dzięki czemu konfiguracja i instalacja odbywają się w aplikacji. Każda instalacja jest również synchronizowana z Twoim kontem Stremio, więc oficjalna aplikacja pozostaje głównym miejscem przechowywania biblioteki.",
+  "Frame catches stremio:// install links so the configure-and-install flow stays inside the app.":
+    "Frame przechwytuje łącza instalacyjne stremio://, dzięki czemu konfiguracja i instalacja odbywają się w aplikacji.",
+  "Frame catches stremio:// install links so the configure-and-install flow stays inside the app. Every install also syncs to your Stremio account, so the official app remains the canonical home for your library.":
+    "Frame przechwytuje linki instalacyjne stremio://, dzięki czemu konfiguracja i instalacja odbywają się w aplikacji. Każda instalacja jest również synchronizowana z Twoim kontem Stremio, więc oficjalna aplikacja pozostaje głównym miejscem przechowywania biblioteki.",
   "Frame checks a few times a day while it's open and lets you know here.":
     "Gdy Frame jest otwarty, sprawdza dostępność kilka razy dziennie i powiadamia o niej tutaj.",
   "Frame checks automatically every few hours.":
     "Frame automatycznie sprawdza dostępność aktualizacji co kilka godzin.",
-  "Harbor checks harbor.site for new versions and installs them in place.":
-    "Harbor sprawdza dostępność nowych wersji w witrynie harbor.site i instaluje je w miejscu bieżącej wersji.",
-  "Harbor checks harbor.site for new versions and installs them in place. Nothing installs until you choose to, and a dismissed update never nags you again.":
-    "Harbor sprawdza w harbor.site dostępność nowych wersji i aktualizuje istniejącą instalację. Nic nie zostanie zainstalowane bez Twojej zgody, a odrzucona aktualizacja nie będzie ponownie wyświetlana.",
+  "Frame checks harbor.site for new versions and installs them in place.":
+    "Frame sprawdza dostępność nowych wersji w witrynie harbor.site i instaluje je w miejscu bieżącej wersji.",
+  "Frame checks harbor.site for new versions and installs them in place. Nothing installs until you choose to, and a dismissed update never nags you again.":
+    "Frame sprawdza w harbor.site dostępność nowych wersji i aktualizuje istniejącą instalację. Nic nie zostanie zainstalowane bez Twojej zgody, a odrzucona aktualizacja nie będzie ponownie wyświetlana.",
   "Frame checks its GitHub releases for new versions and installs them in place. Nothing installs until you choose to, and a dismissed update never nags you again.":
     "Frame sprawdza w GitHub dostępność nowych wersji i aktualizuje istniejącą instalację. Nic nie zostanie zainstalowane bez Twojej zgody, a odrzucona aktualizacja nie będzie ponownie wyświetlana.",
   "Frame could not find these": "Frame nie znalazł tych pozycji",
@@ -197,8 +197,8 @@ const catalog06: Record<string, string> = {
     "Wbudowana w Frame interpolacja klatek. Wygładza panoramy i najlepiej sprawdza się w anime. Wymaga częstotliwości odświeżania ekranu wyższej niż liczba klatek filmu i może zacinać się na słabych układach GPU. Obciąża komputer mniej niż SVP.",
   "Frame's full video engine. Plays anything you throw at it.":
     "Pełny silnik wideo Frame. Odtwarza wszystko, co mu podasz.",
-  "Harbor's in-app installer animates the manifest install and keeps you in context. Anything Harbor installs is also synced to your Stremio account, so the official app stays the canonical library. Turn this off and Stremio becomes the only handler for stremio:// links; Harbor still installs anything you trigger from inside the app (Configure & install, paste, drag-and-drop).":
-    "Instalator w aplikacji Harbor pokazuje animację instalacji manifestu i nie odrywa Cię od bieżącego widoku. Wszystko, co zainstaluje Harbor, jest też synchronizowane z Twoim kontem Stremio, dzięki czemu oficjalna aplikacja pozostaje nadrzędnym źródłem biblioteki. Wyłącz tę opcję, a Stremio stanie się jedyną aplikacją obsługującą łącza stremio://. Harbor nadal będzie instalować wszystko, co uruchomisz z poziomu aplikacji (Skonfiguruj i zainstaluj, wklejanie, przeciąganie i upuszczanie).",
+  "Frame's in-app installer animates the manifest install and keeps you in context. Anything Frame installs is also synced to your Stremio account, so the official app stays the canonical library. Turn this off and Stremio becomes the only handler for stremio:// links; Frame still installs anything you trigger from inside the app (Configure & install, paste, drag-and-drop).":
+    "Instalator w aplikacji Frame pokazuje animację instalacji manifestu i nie odrywa Cię od bieżącego widoku. Wszystko, co zainstaluje Frame, jest też synchronizowane z Twoim kontem Stremio, dzięki czemu oficjalna aplikacja pozostaje nadrzędnym źródłem biblioteki. Wyłącz tę opcję, a Stremio stanie się jedyną aplikacją obsługującą łącza stremio://. Frame nadal będzie instalować wszystko, co uruchomisz z poziomu aplikacji (Skonfiguruj i zainstaluj, wklejanie, przeciąganie i upuszczanie).",
   "Frame's native player chrome.": "Natywny interfejs odtwarzacza Frame.",
   "Frame's own bar": "Własny pasek Frame",
   "Frame's own community server": "Własny serwer społeczności Frame",
@@ -232,8 +232,8 @@ const catalog06: Record<string, string> = {
   "Heads up": "Uwaga",
   "Heads up: Frame was built in English. Multi-language support is partial, so your addons usually catch what Frame's own filters miss. If you speak another language and want to help fill the gaps, the source is open.":
     "Uwaga: Frame został stworzony w języku angielskim. Obsługa wielu języków jest częściowa, dlatego dodatki zwykle znajdują treści pominięte przez własne filtry Frame. Jeśli znasz inny język i chcesz pomóc uzupełnić braki, kod źródłowy jest otwarty.",
-  "Heads up: if Stremio is also installed, Windows may ask which app to use the first time a stremio:// link fires. Pick Harbor to make it stick.":
-    "Uwaga: jeśli aplikacja Stremio jest również zainstalowana, przy pierwszym otwarciu łącza stremio:// system Windows może zapytać, której aplikacji użyć. Wybierz Harbor, aby zapamiętać ten wybór.",
+  "Heads up: if Stremio is also installed, Windows may ask which app to use the first time a stremio:// link fires. Pick Frame to make it stick.":
+    "Uwaga: jeśli aplikacja Stremio jest również zainstalowana, przy pierwszym otwarciu łącza stremio:// system Windows może zapytać, której aplikacji użyć. Wybierz Frame, aby zapamiętać ten wybór.",
   "Heads up: most IPTV providers cap how many streams an account can run at the same time. If other devices or players are using these credentials, close them and try again.":
     "Uwaga: większość dostawców IPTV ogranicza liczbę transmisji, które mogą być jednocześnie odtwarzane na jednym koncie. Jeśli inne urządzenia lub odtwarzacze korzystają z tych danych logowania, zamknij je i spróbuj ponownie.",
   "Heads up: this is a large file for peer-to-peer streaming, so it can take a while to start. A 1080p source or a debrid service will load faster.":

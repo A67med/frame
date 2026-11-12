@@ -337,7 +337,7 @@ mod tests {
         init_tls();
         let events = EdgeTts
             .synthesize(
-                "Harbor Edge text to speech test.",
+                "Frame Edge text to speech test.",
                 "en-US-AvaNeural",
                 "+0%",
                 "en-US",

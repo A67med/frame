@@ -1543,8 +1543,8 @@ const miscB: Record<string, string> = {
     "Daha az yer kaplayan küçük resimler yerine daha net kareler kaydedin. Kartta daha keskin görünürler ancak daha fazla yer kaplarlar. Bu nedenle en eskiler kaldırılmadan önce daha az sayıda kare tutulur.",
   "Save sync": "Kayıtları eşitle",
   "Save the last 30 seconds": "Son 30 saniyeyi kaydet",
-  "Save the last 30 seconds as a video clip with audio, choosing subtitles on or off. Saves to Pictures/Harbor.":
-    "Son 30 saniyeyi sesli bir video klip olarak kaydedin ve altyazıların açık veya kapalı olmasını seçin. Pictures/Harbor klasörüne kaydedilir.",
+  "Save the last 30 seconds as a video clip with audio, choosing subtitles on or off. Saves to Pictures/Frame.":
+    "Son 30 saniyeyi sesli bir video klip olarak kaydedin ve altyazıların açık veya kapalı olmasını seçin. Pictures/Frame klasörüne kaydedilir.",
   "Save video clip": "Video klibi kaydet",
   "Save your recovery code": "Kurtarma kodunuzu kaydedin",
   "Saved .nfo and artwork": "Kaydedilen .nfo ve görseller",

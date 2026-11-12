@@ -1,9 +1,5 @@
 import { AuthModal } from "@/components/auth-modal";
-import { ParentalPinModal } from "@/components/parental-pin-modal";
 import { useT } from "@/lib/i18n";
-import { useSettings } from "@/lib/settings";
-import { verifyProfilePassword } from "@/lib/profile-password";
-import { StatusDot, StatusPicker } from "@/chrome/sidebar/status-control";
 import { AccountMenuPanel } from "./account-menu-panel";
 import { ProfileAvatar, SubtitleText } from "./account-menu-parts";
 import { useAccountMenu } from "./use-account-menu";
@@ -30,31 +26,10 @@ export function AccountMenu({
   triggerClassName?: string;
 }) {
   const t = useT();
-  const { settings } = useSettings();
   const ctrl = useAccountMenu();
-  const {
-    ref,
-    user,
-    activeProfile,
-    author,
-    status,
-    menuOpen,
-    setMenuOpen,
-    statusOpen,
-    toggleStatus,
-    pickStatus,
-    pendingSwitch,
-    setPendingSwitch,
-    selectProfile,
-  } = ctrl;
+  const { ref, user, menuOpen, setMenuOpen } = ctrl;
 
-  const kid = !!activeProfile?.kid;
-  const harborAvatar = settings.harborAvatar?.startsWith("/kids/avatars/")
-    ? null
-    : settings.harborAvatar;
-  const name =
-    activeProfile?.name ?? user?.fullname ?? user?.email?.split("@")[0] ?? t("profile.fallback");
-  const showStatus = !!author && !kid;
+  const name = user?.fullname || user?.email?.split("@")[0] || t("profile.fallback");
 
   const vpos = placement === "up" ? "bottom-full mb-1.5" : "top-full mt-2";
   const hpos =
@@ -71,21 +46,7 @@ export function AccountMenu({
 
   const avatar = (size: "md" | "lg") => (
     <span className="relative inline-flex shrink-0">
-      <ProfileAvatar
-        profile={activeProfile}
-        user={user}
-        fallbackAvatar={harborAvatar}
-        size={size}
-      />
-      {showStatus && (
-        <StatusDot
-          status={status}
-          onActivate={(e) => {
-            e.stopPropagation();
-            toggleStatus();
-          }}
-        />
-      )}
+      <ProfileAvatar user={user} size={size} />
     </span>
   );
 
@@ -108,7 +69,7 @@ export function AccountMenu({
           >
             <div className="truncate text-[14.5px] font-medium tracking-tight text-ink">{name}</div>
             <div className="truncate text-[12px] text-ink-subtle">
-              <SubtitleText active={activeProfile} profiles={ctrl.profiles} user={user} />
+              <SubtitleText user={user} />
             </div>
           </div>
         </button>
@@ -140,16 +101,6 @@ export function AccountMenu({
         </button>
       )}
 
-      {statusOpen && showStatus && (
-        <StatusPicker
-          current={status}
-          collapsed={collapsed}
-          placement={placement}
-          align={align}
-          onPick={pickStatus}
-        />
-      )}
-
       {menuOpen && (
         <AccountMenuPanel
           ctrl={ctrl}
@@ -162,26 +113,6 @@ export function AccountMenu({
       )}
 
       {ctrl.authOpen && <AuthModal onClose={() => ctrl.setAuthOpen(false)} />}
-      {pendingSwitch && activeProfile?.kid?.parentPinHash && (
-        <ParentalPinModal
-          mode={{
-            kind: "unlock",
-            onUnlock: () => {
-              const target = pendingSwitch;
-              setPendingSwitch(null);
-              // The parent PIN clears the kid lock on the profile being LEFT. It proves
-              // nothing about the target, so a target with its own PIN still has to
-              // unlock itself: selectProfile refuses otherwise and the press does
-              // nothing at all.
-              if (target.passwordHash) ctrl.openPicker({ kind: "unlock", profileId: target.id });
-              else selectProfile(target.id);
-            },
-            onCancel: () => setPendingSwitch(null),
-          }}
-          verify={(pin) => verifyProfilePassword(pin, activeProfile.kid!.parentPinHash!)}
-          kids
-        />
-      )}
     </div>
   );
 }

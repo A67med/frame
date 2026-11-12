@@ -161,7 +161,7 @@ function itemActivity(item: LibraryItem): number {
   const t = Math.max(parseMs(item._mtime), parseMs(item.state?.lastWatched));
   const { season, episode } = resolveEpisode(item);
   const entry = readResumeEntry(item._id, season, episode);
-  // Harbor's own resume (and external playback imports) write `harbor.resume` with
+  // Frame's own resume (and external playback imports) write `harbor.resume` with
   // t=Date.now() without touching the Stremio cloud _mtime, so it must join the max
   // instead of being a fallback. Otherwise a same-episode resume after dismiss keeps
   // returning the dismissal-time _mtime and never un-dismisses.
@@ -207,7 +207,7 @@ export function isCwDismissed(item: LibraryItem): boolean {
   const ext = item.external ? dismissed.get(`${item.external}|${item._id}`) : undefined;
   const dismissedAt = Math.max(plain ?? -1, ext ?? -1);
   if (dismissedAt < 0) return false;
-  // Newer progress from any source (Harbor resume, Stremio cloud _mtime/lastWatched,
+  // Newer progress from any source (Frame resume, Stremio cloud _mtime/lastWatched,
   // Trakt paused_at, Simkl watched_at) un-dismisses even when the video_id is unchanged.
   const activity = itemActivity(item);
   if (activity > dismissedAt) return false;

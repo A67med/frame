@@ -8,7 +8,7 @@ import {
   officialBroadcastSource,
 } from "../src/lib/sports/esports-streams.ts";
 
-// Harbor's packaged origin. `useHttpsScheme` is absent from src-tauri/tauri.conf.json, so the
+// Frame's packaged origin. `useHttpsScheme` is absent from src-tauri/tauri.conf.json, so the
 // default http applies and this is the host every real build embeds from. "localhost" and
 // "127.0.0.1" are the only two hosts Twitch special-cases with http plus wildcard ports, so a
 // suite that only passes those two cannot see what a packaged build sees.
@@ -88,7 +88,7 @@ test("Twitch never plays in an iframe, at the packaged origin or anywhere else",
   // MEASURED 2026-09-30 against live endpoints, with parent=tauri.localhost:
   //   player.twitch.tv                      -> frame-ancestors https://tauri.localhost
   //   www.twitch.tv/embed/<channel>/chat    -> frame-ancestors https://tauri.localhost
-  // Harbor loads from http://tauri.localhost, so both are refused in every packaged build.
+  // Frame loads from http://tauri.localhost, so both are refused in every packaged build.
   // One behaviour on every host on purpose: a dev-only iframe path is what hid this bug.
   const stream = { title: "ESL", url: "https://www.twitch.tv/eslcs", platform: "twitch" as const };
   for (const host of [PACKAGED_HOST, "localhost", "127.0.0.1"]) {

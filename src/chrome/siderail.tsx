@@ -54,7 +54,7 @@ export function SideRail() {
   const collapsed = settings.sidebarCollapsed;
 
   const navigate = (item: NavItem) => {
-    if (item.parentalKey && locked && hiddenTabs[item.parentalKey]) {
+    if ((item.pinGated && locked) || (item.parentalKey && locked && hiddenTabs[item.parentalKey])) {
       setPinFor(item.view);
       return;
     }
@@ -192,8 +192,9 @@ export function SideRail() {
             {settingsItem && (
               <SidebarSettingsEntry
                 active={view === settingsItem.view}
+                gated={!!settingsItem.pinGated && locked}
                 collapsed={collapsed}
-                onClick={() => setView(settingsItem.view)}
+                onClick={() => navigate(settingsItem)}
               />
             )}
           </div>

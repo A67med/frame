@@ -1,5 +1,8 @@
+import { useState } from "react";
 import { AuthModal } from "@/components/auth-modal";
+import { ParentalPinModal } from "@/components/parental-pin-modal";
 import { useT } from "@/lib/i18n";
+import { useParental } from "@/lib/parental";
 import { AccountMenuPanel } from "./account-menu-panel";
 import { ProfileAvatar, SubtitleText } from "./account-menu-parts";
 import { useAccountMenu } from "./use-account-menu";
@@ -28,6 +31,13 @@ export function AccountMenu({
   const t = useT();
   const ctrl = useAccountMenu();
   const { ref, user, menuOpen, setMenuOpen } = ctrl;
+  const { locked, unlock } = useParental();
+  const [pinForSettings, setPinForSettings] = useState(false);
+  // Settings is PIN-gated in the navigation; the menu's shortcut to it must not
+  // be a way around parental controls.
+  const openSettings = onOpenSettings
+    ? () => (locked ? setPinForSettings(true) : onOpenSettings())
+    : undefined;
 
   const name = user?.fullname || user?.email?.split("@")[0] || t("profile.fallback");
 
@@ -107,12 +117,25 @@ export function AccountMenu({
           positionClass={positionClass}
           showHeader={trigger !== "row"}
           showSettings={showSettings}
-          onOpenSettings={onOpenSettings}
+          onOpenSettings={openSettings}
           settingsActive={settingsActive}
         />
       )}
 
       {ctrl.authOpen && <AuthModal onClose={() => ctrl.setAuthOpen(false)} />}
+      {pinForSettings && onOpenSettings && (
+        <ParentalPinModal
+          mode={{
+            kind: "unlock",
+            onUnlock: () => {
+              setPinForSettings(false);
+              onOpenSettings();
+            },
+            onCancel: () => setPinForSettings(false),
+          }}
+          verify={unlock}
+        />
+      )}
     </div>
   );
 }

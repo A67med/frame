@@ -1,13 +1,17 @@
 name: Release
 
+# Releases are cut by pushing a v<x.y.z> tag on a commit that is already on main
+# (bump with `node scripts/bump-version.mjs <x.y.z>` first). The workflow never
+# commits or pushes, and it only creates a draft: publishing is a manual step
+# on the release page, after the `release` environment's reviewers approve.
 on:
-  workflow_dispatch:
   push:
-    branches: [main]
-    paths-ignore:
-      - .github/ISSUE_TEMPLATE/**
-      - docs/**
-      - "**/*.md"
+    tags: ["v*.*.*"]
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: Existing release tag to rebuild as a draft (v<x.y.z>)
+        required: true
 
 permissions:
   contents: read
@@ -25,40 +29,41 @@ env:
 
 jobs:
   prepare:
-    name: Pick the release version
+    name: Validate the release tag
     runs-on: ubuntu-24.04
     timeout-minutes: 10
     permissions:
-      contents: write
+      contents: read
     outputs:
-      version: ${{ steps.bump.outputs.version }}
-      sha: ${{ steps.bump.outputs.sha }}
+      version: ${{ steps.check.outputs.version }}
+      sha: ${{ steps.check.outputs.sha }}
     steps:
       - uses: actions/checkout@v6
         with:
           fetch-depth: 0
-          ref: main
+          ref: ${{ github.event.inputs.tag || github.ref }}
 
       - uses: actions/setup-node@v6
         with:
           node-version: 24
 
-      - name: Bump the version past the last release tag
-        id: bump
+      - name: Check the tag, its versions and its branch
+        id: check
         shell: bash
+        env:
+          TAG: ${{ github.event.inputs.tag || github.ref_name }}
         run: |
           set -euo pipefail
-          current="$(node -p "require('./package.json').version")"
-          next="$(node scripts/bump-version.mjs --next)"
-          if [ "$next" != "$current" ]; then
-            node scripts/bump-version.mjs "$next"
-            git config user.name "github-actions[bot]"
-            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-            git commit -am "chore(release): v$next"
-            git push origin HEAD:main
+          sha="$(git rev-parse "refs/tags/$TAG^{commit}")"
+          version="$(node scripts/check-release-version.mjs "$TAG")"
+          # Only reviewed history is released: the tagged commit must be on main.
+          git fetch --no-tags origin main
+          if ! git merge-base --is-ancestor "$sha" origin/main; then
+            echo "::error::$TAG points at $sha, which is not on main."
+            exit 1
           fi
-          echo "version=$next" >> "$GITHUB_OUTPUT"
-          echo "sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+          echo "sha=$sha" >> "$GITHUB_OUTPUT"
 
   flatpak:
     name: Flatpak
@@ -324,11 +329,14 @@ jobs:
           if-no-files-found: warn
 
   publish:
-    name: Publish the release
+    name: Draft the release
     needs: [prepare, build, flatpak]
     if: ${{ !cancelled() && needs.prepare.result == 'success' && needs.build.result == 'success' && needs.flatpak.result == 'success' }}
     runs-on: ubuntu-24.04
     timeout-minutes: 30
+    # Configure required reviewers for this environment in the repository
+    # settings; the job then waits for an owner's approval before it runs.
+    environment: release
     permissions:
       contents: write
     steps:
@@ -372,11 +380,11 @@ jobs:
             [ -n "$previous" ] && echo && echo "**Full changelog**: https://github.com/$GITHUB_REPOSITORY/compare/$previous...v$VERSION"
           } > body.md
           ls -la upload
+          # A draft is invisible to users and to the in-app updater (which reads
+          # releases/latest). The owner reviews the assets and publishes it by hand.
           gh release create "v$VERSION" upload/* \
             --repo "$GITHUB_REPOSITORY" \
-            --target "$SHA" \
+            --verify-tag \
             --title "Frame $VERSION" \
             --notes-file body.md \
-            --latest
-
-  # A release made with GITHUB_TOKEN fires no release event, so WinGet is called from here.
+            --draft

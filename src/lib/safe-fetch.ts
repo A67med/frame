@@ -1,6 +1,7 @@
 import { invoke } from "@tauri-apps/api/core";
 import { fetch as tauriFetchImpl } from "@tauri-apps/plugin-http";
 import { TrackerBlockedError, isBlockedUrl, noteBlocked } from "./privacy/blocklist";
+import { isRetiredHarborHost } from "./config/endpoints";
 import { bridgeOutcome, recordBridge } from "./fetch-bridge-stats";
 import {
   allowDirectHost,
@@ -339,6 +340,8 @@ export function safeFetchBase64(
   maxResponseBytes?: number,
 ): Promise<Base64FetchResult> | null {
   if (!isTauri) return null;
+  const retired = retiredTarget(target);
+  if (retired) return Promise.reject(retired);
   const policyHeaders = new Headers(init?.headers as HeadersInit | undefined);
   if (
     policyHeaders.get(SUBTITLE_PUBLIC_NETWORK_HEADER) === "1" &&
@@ -524,8 +527,32 @@ function webStringFetch(input: string, init?: RequestInit): Promise<Response> {
   return fetch(rewritten.url, rewritten.init);
 }
 
+/**
+ * Harbor's hosted services are gone. A request to one of them can only fail or
+ * leak data to whoever controls the domain later, so it is refused here, for
+ * every caller, before any network access.
+ */
+export class RetiredServiceError extends TypeError {
+  constructor(host: string) {
+    super(`${host} is a retired Harbor service`);
+    this.name = "RetiredServiceError";
+  }
+}
+
+function retiredTarget(target: string | null): RetiredServiceError | null {
+  if (!target) return null;
+  try {
+    const host = new URL(target).hostname;
+    return isRetiredHarborHost(host) ? new RetiredServiceError(host) : null;
+  } catch {
+    return null;
+  }
+}
+
 export const safeFetch: typeof fetch = (input, init) => {
   const target = urlOf(input);
+  const retired = retiredTarget(target);
+  if (retired) return Promise.reject(retired);
   if (isBlockedUrl(target)) {
     noteBlocked();
     let host = target;
@@ -550,6 +577,8 @@ export const safeFetch: typeof fetch = (input, init) => {
 
 export function safeFetchLocal(input: RequestInfo | URL, init?: RequestInit): Promise<Response> {
   const target = urlOf(input);
+  const retired = retiredTarget(target);
+  if (retired) return Promise.reject(retired);
   if (isBlockedUrl(target)) {
     noteBlocked();
     let host = target;
@@ -578,6 +607,8 @@ export function safeFetchLocal(input: RequestInfo | URL, init?: RequestInit): Pr
 
 export const safeFetchStream: typeof fetch = (input, init) => {
   const target = typeof input === "string" ? input : input instanceof URL ? input.href : null;
+  const retired = retiredTarget(target);
+  if (retired) return Promise.reject(retired);
   if (target && isBlockedUrl(target)) {
     noteBlocked();
     return Promise.reject(new TrackerBlockedError(new URL(target).hostname));
@@ -597,6 +628,8 @@ export function safeFetchBytes(
   maxResponseBytes?: number,
 ): Promise<Response> {
   const target = typeof input === "string" ? input : input instanceof URL ? input.href : null;
+  const retired = retiredTarget(target);
+  if (retired) return Promise.reject(retired);
   const policyHeaders = new Headers(init?.headers as HeadersInit | undefined);
   const publicNetworkOnly = policyHeaders.get(SUBTITLE_PUBLIC_NETWORK_HEADER) === "1";
   policyHeaders.delete(SUBTITLE_PUBLIC_NETWORK_HEADER);

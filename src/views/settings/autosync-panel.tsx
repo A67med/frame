@@ -55,7 +55,7 @@ export function AutoSyncPanel() {
   const serverDesc = urlSaved
     ? t("Saved.")
     : storedUrl ||
-      t("Frame uses its own community server. You can point it at a server you run yourself.");
+      t("No community server is set. You can point Frame at a server you run yourself.");
 
   return (
     <div className="hset-form-page">
@@ -138,7 +138,7 @@ export function AutoSyncPanel() {
           label={t("Community sync server")}
           desc={serverDesc}
           tip={t(
-            "Leave blank to use Frame's own community server. Enter a URL to point at your own server instead. Private mode below stops all contact either way.",
+            "Frame has no community server of its own. Enter a URL to use a server you run yourself. Private mode below stops all contact either way.",
           )}
         >
           <button type="button" onClick={openServer} className={ROW_ACTION}>
@@ -159,7 +159,7 @@ export function AutoSyncPanel() {
           onClose={() => setServerOpen(false)}
           title={t("Community sync server")}
           sub={t(
-            "Leave this blank to use Frame's own community server, or enter the address of a server you run yourself.",
+            "Enter the address of a server you run yourself, or leave this blank to keep community lookups off.",
           )}
           actions={
             <>

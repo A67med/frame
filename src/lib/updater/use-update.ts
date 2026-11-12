@@ -216,6 +216,10 @@ export function setExperimentalUpdates(enabled: boolean): boolean {
 }
 
 async function readExperimentalManifest(path = "latest-experimental.json"): Promise<unknown> {
+  // Experimental manifests were only ever served by harbor.site. Without a
+  // configured host there is no experimental build, so report none instead of
+  // requesting a relative URL from the app's own origin.
+  if (!HARBOR_API_BASE) return null;
   // AbortSignal.timeout is unavailable in older supported macOS WebViews.
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), 15_000);

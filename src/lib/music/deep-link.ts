@@ -42,6 +42,8 @@ export function musicDeepLinkUrl(path: string): string {
 }
 
 export function musicBounceUrl(path: string): string {
+  // The bounce page lived on Harbor's web app; without a relay host there is none.
+  if (!HARBOR_RELAY_BASE) return "";
   const url = `${HARBOR_RELAY_BASE}/?${BOUNCE_PARAM}=${path}`;
   return url.length <= MAX_URL ? url : "";
 }

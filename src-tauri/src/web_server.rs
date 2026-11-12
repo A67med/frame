@@ -239,11 +239,51 @@ async fn serve_http(State(state): State<ServeState>, uri: axum::http::Uri) -> Re
     serve_bundled_asset(&state.app, uri.path())
 }
 
+/// Whether a browser page from `origin` may open the remote-control socket.
+/// Browsers always send `Origin` on a WebSocket upgrade and a page cannot
+/// forge it, so this stops any other website (opened in a normal browser on
+/// this machine or the LAN) from driving Frame. Allowed: clients that send no
+/// Origin (native apps), the page this server serves itself (same host and
+/// port), another Frame install (Tauri's app origins, used by Play on LAN),
+/// and the dev frontend.
+fn remote_origin_allowed(origin: Option<&str>, host: Option<&str>) -> bool {
+    let Some(origin) = origin else {
+        return true;
+    };
+    let origin = origin.trim().trim_end_matches('/').to_ascii_lowercase();
+    if matches!(
+        origin.as_str(),
+        "http://tauri.localhost"
+            | "https://tauri.localhost"
+            | "tauri://localhost"
+            | "http://localhost:1420"
+            | "http://127.0.0.1:1420"
+    ) {
+        return true;
+    }
+    let Some(host) = host else {
+        return false;
+    };
+    let host = host.trim().to_ascii_lowercase();
+    origin == format!("http://{host}") || origin == format!("https://{host}")
+}
+
 async fn remote_ws_handler(
     ws: WebSocketUpgrade,
+    headers: HeaderMap,
     State(state): State<ServeState>,
-) -> impl IntoResponse {
+) -> Response<Body> {
+    let origin = headers.get(header::ORIGIN).and_then(|v| v.to_str().ok());
+    let host = headers.get(header::HOST).and_then(|v| v.to_str().ok());
+    if !remote_origin_allowed(origin, host) {
+        eprintln!("[web-serve] refused remote socket from origin {:?}", origin);
+        return Response::builder()
+            .status(StatusCode::FORBIDDEN)
+            .body(Body::from("origin not allowed"))
+            .unwrap_or_default();
+    }
     ws.on_upgrade(move |socket| handle_remote_socket(socket, state))
+        .into_response()
 }
 
 async fn handle_remote_socket(socket: WebSocket, state: ServeState) {
@@ -386,4 +426,31 @@ pub async fn remote_ws_client_count() -> Result<usize, String> {
     };
     let count = state.clients.lock().await.len();
     Ok(count)
+}
+
+#[cfg(test)]
+mod origin_tests {
+    use super::remote_origin_allowed;
+
+    #[test]
+    fn allows_native_clients_same_origin_pages_and_frame_installs() {
+        assert!(remote_origin_allowed(None, Some("192.168.1.20:11471")));
+        assert!(remote_origin_allowed(
+            Some("http://192.168.1.20:11471"),
+            Some("192.168.1.20:11471")
+        ));
+        assert!(remote_origin_allowed(Some("http://tauri.localhost"), None));
+        assert!(remote_origin_allowed(Some("tauri://localhost"), None));
+        assert!(remote_origin_allowed(Some("http://localhost:1420/"), None));
+    }
+
+    #[test]
+    fn refuses_other_websites() {
+        let host = Some("192.168.1.20:11471");
+        assert!(!remote_origin_allowed(Some("https://evil.example"), host));
+        assert!(!remote_origin_allowed(Some("http://192.168.1.20:8080"), host));
+        assert!(!remote_origin_allowed(Some("http://192.168.1.20.evil.example:11471"), host));
+        assert!(!remote_origin_allowed(Some("null"), host));
+        assert!(!remote_origin_allowed(Some("https://evil.example"), None));
+    }
 }

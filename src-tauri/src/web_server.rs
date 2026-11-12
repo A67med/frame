@@ -448,8 +448,14 @@ mod origin_tests {
     fn refuses_other_websites() {
         let host = Some("192.168.1.20:11471");
         assert!(!remote_origin_allowed(Some("https://evil.example"), host));
-        assert!(!remote_origin_allowed(Some("http://192.168.1.20:8080"), host));
-        assert!(!remote_origin_allowed(Some("http://192.168.1.20.evil.example:11471"), host));
+        assert!(!remote_origin_allowed(
+            Some("http://192.168.1.20:8080"),
+            host
+        ));
+        assert!(!remote_origin_allowed(
+            Some("http://192.168.1.20.evil.example:11471"),
+            host
+        ));
         assert!(!remote_origin_allowed(Some("null"), host));
         assert!(!remote_origin_allowed(Some("https://evil.example"), None));
     }

@@ -109,7 +109,8 @@ mod tests {
         let root = &roots()[0];
         assert!(!is_inside_roots(root, &roots()));
         assert!(!is_inside_roots(&root.join("..").join("evil.txt"), &roots()));
-        assert!(!is_inside_roots(&root.join(".").join("x.srt"), &roots()));
+        // `components()` drops interior `.` segments, so this is root/x.srt.
+        assert!(is_inside_roots(&root.join(".").join("x.srt"), &roots()));
         assert!(!is_inside_roots(Path::new("relative/x.srt"), &roots()));
         assert!(!is_inside_roots(&std::env::temp_dir().join("other.srt"), &roots()));
         let sibling = std::env::temp_dir().join(format!("{SUBTITLE_DIR}-evil")).join("x.srt");

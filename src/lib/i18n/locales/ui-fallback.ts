@@ -2324,6 +2324,9 @@ const uiFallback: Record<string, string> = {
   "Forget all": "Forget all",
   "Turning this off stops the local network server, so paired devices lose their connection until you turn it on again.":
     "Turning this off stops the local network server, so paired devices lose their connection until you turn it on again.",
+  "Your library is empty": "Your library is empty",
+  'Titles you add with "Add to Watchlist" and titles you watch show up here, along with your Stremio library once you sign in.':
+    'Titles you add with "Add to Watchlist" and titles you watch show up here, along with your Stremio library once you sign in.',
 };
 
 export default uiFallback;

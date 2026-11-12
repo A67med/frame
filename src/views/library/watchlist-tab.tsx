@@ -268,7 +268,7 @@ export function WatchlistTab({
         <span className="text-[12px] text-ink-muted">{subtitle}</span>
       </div>
       {merged.length === 0 ? (
-        <EmptyWatchlist connected={traktConnected} />
+        <EmptyWatchlist connected={traktConnected} mode={mode} />
       ) : visible.length === 0 ? (
         <p className="rounded-2xl border border-dashed border-edge-soft bg-canvas/30 px-6 py-10 text-center text-[13px] text-ink-muted">
           {tr("No matches for these filters.")}

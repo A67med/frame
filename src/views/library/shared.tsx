@@ -1,4 +1,4 @@
-import { Bookmark, RefreshCw } from "lucide-react";
+import { Bookmark, LibraryBig, RefreshCw } from "lucide-react";
 import type { RefObject } from "react";
 import { type Meta } from "@/lib/cinemeta";
 import { useSettings } from "@/lib/settings";
@@ -310,16 +310,31 @@ export function GroupedGrid<
   );
 }
 
-export function EmptyWatchlist({ connected }: { connected: boolean }) {
+export function EmptyWatchlist({
+  connected,
+  mode = "watchlist",
+}: {
+  connected: boolean;
+  /** The Library tab shows the same list plus what you watched, so it says so. */
+  mode?: "library" | "watchlist";
+}) {
   const t = useT();
+  const library = mode === "library";
+  const Icon = library ? LibraryBig : Bookmark;
   return (
     <div className="flex flex-col items-center gap-3 rounded-2xl border border-dashed border-edge-soft bg-canvas/30 px-8 py-16 text-center">
-      <Bookmark size={28} strokeWidth={1.6} className="text-ink-subtle" />
-      <h2 className="text-[16px] font-semibold text-ink">{t("Your watchlist is empty")}</h2>
+      <Icon size={28} strokeWidth={1.6} className="text-ink-subtle" />
+      <h2 className="text-[16px] font-semibold text-ink">
+        {library ? t("Your library is empty") : t("Your watchlist is empty")}
+      </h2>
       <p className="max-w-md text-[13px] leading-relaxed text-ink-muted">
-        {t(
-          'Right-click any title in Frame or hit "Add to Watchlist" on its detail page to save it here.',
-        )}
+        {library
+          ? t(
+              'Titles you add with "Add to Watchlist" and titles you watch show up here, along with your Stremio library once you sign in.',
+            )
+          : t(
+              'Right-click any title in Frame or hit "Add to Watchlist" on its detail page to save it here.',
+            )}
         {connected
           ? t(" Anything you save also syncs to your Trakt account.")
           : t(" Connect Trakt in Settings to sync this list across devices.")}

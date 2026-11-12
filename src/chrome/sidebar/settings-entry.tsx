@@ -2,11 +2,12 @@ import { Lock, Settings } from "lucide-react";
 import { useT } from "@/lib/i18n";
 
 /**
- * Icon-only Settings control for the bottom utility group of the sidebars,
- * placed directly above the profile control. It always renders, even when
- * the profile control is replaced by the parental lock, so Settings stays
- * reachable. The caller decides what a click does (the parental PIN gate
- * lives in each shell).
+ * Settings control for the bottom utility group of the sidebars, placed
+ * directly above the profile control. Like Big Picture and Collapse, it is
+ * icon-only when the sidebar is collapsed and shows its label when expanded.
+ * It always renders, even when the profile control is replaced by the
+ * parental lock, so Settings stays reachable. The caller decides what a
+ * click does (the parental PIN gate lives in each shell).
  */
 export function SidebarSettingsEntry({
   active,
@@ -30,14 +31,13 @@ export function SidebarSettingsEntry({
     : variant === "rail"
       ? "text-white/35 hover:bg-white/[0.05] hover:text-white/85"
       : "text-ink-subtle hover:bg-elevated/60 hover:text-ink-muted";
+  // Same box as SidebarBigPictureEntry and CollapseToggle, so the three line up.
   const box =
     variant === "rail"
       ? "h-11 w-16 rounded-xl"
-      : collapsed
-        ? "h-9 w-9 rounded-lg"
-        : // Expanded rows inset their icon by px-3; keep this one on the same column.
-          "h-9 w-9 rounded-lg lg:w-auto lg:self-start lg:px-3";
+      : `h-9 gap-2.5 rounded-lg ${collapsed ? "w-9" : "w-full lg:justify-start lg:px-3"}`;
   const size = variant === "rail" ? 26 : 17;
+  const showLabel = variant === "utility" && !collapsed;
 
   return (
     <button
@@ -58,6 +58,11 @@ export function SidebarSettingsEntry({
           </span>
         )}
       </span>
+      {showLabel && (
+        <span data-harbor-sidebar-label className="hidden text-[13px] font-medium lg:inline">
+          {label}
+        </span>
+      )}
     </button>
   );
 }

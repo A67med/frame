@@ -799,9 +799,11 @@ test("channel changes are blocked during verification; external changes invalida
   for (const managed of [false, true]) {
     const h = harness({ managed });
     if (managed) h.updater.setExperimentalUpdates(true);
-    await h.updater.checkForUpdate();
+    // Stable updates start downloading in the background as soon as the check
+    // finds one, so hold that download (or the manual one) in flight here.
     const wait = deferred<void>();
     h.config.downloadWait = wait.promise;
+    await h.updater.checkForUpdate();
     const download = h.updater.downloadUpdate();
     while (h.calls.stage + h.calls.download === 0) await Promise.resolve();
     assert.equal(h.updater.setExperimentalUpdates(false), false);
@@ -809,10 +811,53 @@ test("channel changes are blocked during verification; external changes invalida
     h.channel.writeUpdateChannel(managed ? "stable" : "beta");
     wait.resolve();
     await download;
+    while (h.updater.useUpdate().status === "downloading") await Promise.resolve();
     await h.updater.installUpdate();
     assert.equal(h.updater.useUpdate().status, "idle");
     assert.equal(h.calls.install + h.calls.launch, 0);
   }
+});
+
+async function settle(h: ReturnType<typeof harness>) {
+  for (let i = 0; i < 50 && h.updater.useUpdate().status === "downloading"; i++) {
+    await new Promise((r) => setTimeout(r, 0));
+  }
+}
+
+test("stable updates download in the background but never install on their own", async () => {
+  const h = harness({ managed: false });
+  await h.updater.checkForUpdate();
+  await settle(h);
+  assert.equal(h.calls.download, 1);
+  assert.equal(h.updater.useUpdate().status, "downloaded");
+  assert.equal(h.calls.install + h.calls.launch, 0);
+  // A later check neither re-downloads nor discards the ready update.
+  await h.updater.checkForUpdate();
+  assert.equal(h.calls.download, 1);
+  assert.equal(h.updater.useUpdate().status, "downloaded");
+});
+
+test("a dismissed version is not downloaded in the background", async () => {
+  const h = harness({ managed: false });
+  h.localStorage.setItem("harbor.update.dismissed", "0.9.123");
+  await h.updater.checkForUpdate();
+  await settle(h);
+  assert.equal(h.calls.download, 0);
+  assert.equal(h.updater.useUpdate().status, "available");
+});
+
+test("a failed background download returns to available and is not retried silently", async () => {
+  const h = harness({ managed: false });
+  h.config.signatureFailure = true;
+  await h.updater.checkForUpdate();
+  await settle(h);
+  assert.equal(h.calls.download, 1);
+  assert.equal(h.updater.useUpdate().status, "available");
+  assert.equal(h.updater.useUpdate().error, null);
+  await h.updater.checkForUpdate();
+  await settle(h);
+  assert.equal(h.calls.download, 1, "the same version is not fetched again on its own");
+  assert.equal(h.calls.install, 0);
 });
 
 test("switching after download or during native preparation prevents stale installation", async () => {

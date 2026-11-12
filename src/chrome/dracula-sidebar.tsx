@@ -9,6 +9,7 @@ import { useContextMenu } from "@/lib/context-menu";
 import { NavHiddenTray, NavEditableItem, useNavDrag } from "@/chrome/nav-edit";
 import { useNavEditMode } from "@/chrome/nav-edit-mode";
 import { SidebarBigPictureEntry } from "@/chrome/sidebar/big-picture-entry";
+import { SidebarSettingsEntry } from "@/chrome/sidebar/settings-entry";
 import { ParentalPinModal } from "@/components/parental-pin-modal";
 import { useT } from "@/lib/i18n";
 import { useParental } from "@/lib/parental";
@@ -41,12 +42,16 @@ export function DraculaSidebar() {
     openContextMenu(e, { kind: "nav" });
   };
 
+  const available = useAvailableNavItems();
   const items = applyNavCustomization(
-    useAvailableNavItems(),
+    available,
     usePreviewNavCustomization(settings.navCustomization),
   );
   const primary = items.filter((i) => PRIMARY_IDS.has(i.id));
-  const collections = items.filter((i) => !PRIMARY_IDS.has(i.id));
+  // Settings lives in the bottom utility group, above the profile control.
+  const collections = items.filter((i) => !PRIMARY_IDS.has(i.id) && i.id !== "settings");
+  // Read from the full list so hiding Settings in the nav editor cannot remove it.
+  const settingsItem = available.find((i) => i.id === "settings");
 
   const isVisible = (item: NavItem) => {
     if (item.id === "kids") return false;
@@ -158,6 +163,14 @@ export function DraculaSidebar() {
             <div className={`mb-1 flex flex-col gap-1 ${collapsed ? "items-center" : ""}`}>
               <SidebarBigPictureEntry collapsed={collapsed} />
               <CollapseToggle collapsed={collapsed} />
+              {settingsItem && (
+                <SidebarSettingsEntry
+                  active={view === settingsItem.view}
+                  gated={!!settingsItem.pinGated && locked}
+                  collapsed={collapsed}
+                  onClick={() => go(settingsItem)}
+                />
+              )}
             </div>
             {locked ? (
               <div

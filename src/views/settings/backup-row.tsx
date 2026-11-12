@@ -212,6 +212,9 @@ function ExportPicker({
   const [password, setPassword] = useState("");
   const [confirm, setConfirm] = useState("");
   const [plainConsent, setPlainConsent] = useState(false);
+  // The password and consent controls sit under the section list, often out of
+  // view; an export they block scrolls to them instead of a silent disabled button.
+  const protectRef = useRef<HTMLDivElement>(null);
 
   const allSelected = selected.size === BACKUP_SECTIONS.length;
   const toggle = (key: BackupSectionKey) => {
@@ -235,6 +238,20 @@ function ExportPicker({
   const needsConsent = !encrypting && selectionHasCredentials([...selected]);
   const canExport =
     selected.size > 0 && !passwordShort && !mismatch && (!needsConsent || plainConsent);
+  const tryExport = () => {
+    if (canExport) {
+      onExport([...selected], password);
+      return;
+    }
+    const block = protectRef.current;
+    if (!block) return;
+    block.scrollIntoView({ block: "nearest", behavior: "smooth" });
+    block
+      .querySelector<HTMLInputElement>(
+        passwordShort || mismatch ? "input[type=password]" : "input[type=checkbox]",
+      )
+      ?.focus({ preventScroll: true });
+  };
 
   return (
     <SettingsModal
@@ -246,11 +263,7 @@ function ExportPicker({
       actions={
         <>
           <SButton onClick={onCancel}>{t("Cancel")}</SButton>
-          <SButton
-            variant="primary"
-            disabled={!canExport}
-            onClick={() => onExport([...selected], password)}
-          >
+          <SButton variant="primary" disabled={selected.size === 0} onClick={tryExport}>
             <Download size={16} strokeWidth={2.4} />
             {t("Export {n} sections", { n: selected.size })}
           </SButton>
@@ -314,63 +327,65 @@ function ExportPicker({
         })}
       </div>
 
-      <div className="flex flex-col gap-2 rounded-[10px] border border-edge-soft px-4 py-3">
-        <span className="text-[16.5px] font-medium leading-[24px] text-ink">
-          {t("Password (optional)")}
-        </span>
-        <p className={`max-w-[66ch] ${ROW_DESC}`}>
-          {t(
-            "With a password the file is encrypted, and it cannot be restored without it. Frame cannot recover a forgotten password.",
-          )}
-        </p>
-        <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            placeholder={t("Password")}
-            aria-label={t("Password")}
-            spellCheck={false}
-            autoComplete="new-password"
-            className={TEXT_FIELD}
-          />
-          <input
-            type="password"
-            value={confirm}
-            onChange={(e) => setConfirm(e.target.value)}
-            placeholder={t("Repeat the password")}
-            aria-label={t("Repeat the password")}
-            spellCheck={false}
-            autoComplete="new-password"
-            disabled={!encrypting}
-            className={TEXT_FIELD}
-          />
-        </div>
-        {passwordShort && (
-          <p className="text-[15px] text-danger">
-            {t("Use at least {n} characters.", { n: BACKUP_PASSWORD_MIN_LENGTH })}
+      <div ref={protectRef} className="flex flex-col gap-2">
+        <div className="flex flex-col gap-2 rounded-[10px] border border-edge-soft px-4 py-3">
+          <span className="text-[16.5px] font-medium leading-[24px] text-ink">
+            {t("Password (optional)")}
+          </span>
+          <p className={`max-w-[66ch] ${ROW_DESC}`}>
+            {t(
+              "With a password the file is encrypted, and it cannot be restored without it. Frame cannot recover a forgotten password.",
+            )}
           </p>
-        )}
-        {!passwordShort && mismatch && confirm.length > 0 && (
-          <p className="text-[15px] text-danger">{t("The passwords do not match.")}</p>
+          <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
+            <input
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder={t("Password")}
+              aria-label={t("Password")}
+              spellCheck={false}
+              autoComplete="new-password"
+              className={TEXT_FIELD}
+            />
+            <input
+              type="password"
+              value={confirm}
+              onChange={(e) => setConfirm(e.target.value)}
+              placeholder={t("Repeat the password")}
+              aria-label={t("Repeat the password")}
+              spellCheck={false}
+              autoComplete="new-password"
+              disabled={!encrypting}
+              className={TEXT_FIELD}
+            />
+          </div>
+          {passwordShort && (
+            <p className="text-[15px] text-danger">
+              {t("Use at least {n} characters.", { n: BACKUP_PASSWORD_MIN_LENGTH })}
+            </p>
+          )}
+          {!passwordShort && mismatch && confirm.length > 0 && (
+            <p className="text-[15px] text-danger">{t("The passwords do not match.")}</p>
+          )}
+        </div>
+
+        {needsConsent && (
+          <label className="flex cursor-pointer items-start gap-2.5 rounded-[10px] bg-elevated px-4 py-3">
+            <input
+              type="checkbox"
+              checked={plainConsent}
+              onChange={(e) => setPlainConsent(e.target.checked)}
+              className="mt-[5px] h-4 w-4 shrink-0 accent-ink"
+            />
+            <span className={`max-w-[66ch] ${ROW_DESC}`}>
+              {t(
+                "Save without a password. Settings, addons, Live TV and sign-ins can contain API keys and passwords, and anyone with the file can read them.",
+              )}
+            </span>
+          </label>
         )}
       </div>
-
-      {needsConsent && (
-        <label className="flex cursor-pointer items-start gap-2.5 rounded-[10px] bg-elevated px-4 py-3">
-          <input
-            type="checkbox"
-            checked={plainConsent}
-            onChange={(e) => setPlainConsent(e.target.checked)}
-            className="mt-[5px] h-4 w-4 shrink-0 accent-ink"
-          />
-          <span className={`max-w-[66ch] ${ROW_DESC}`}>
-            {t(
-              "Save without a password. Settings, addons, Live TV and sign-ins can contain API keys and passwords, and anyone with the file can read them.",
-            )}
-          </span>
-        </label>
-      )}
     </SettingsModal>
   );
 }

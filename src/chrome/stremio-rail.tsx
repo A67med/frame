@@ -4,6 +4,7 @@ import { Lock, Monitor } from "lucide-react";
 import { useState, type ReactNode } from "react";
 import { FrameMark } from "@/components/icons/frame-mark";
 import { AccountMenu } from "@/chrome/account-menu/account-menu";
+import { SidebarSettingsEntry } from "@/chrome/sidebar/settings-entry";
 import { useAvailableNavItems, applyNavCustomization } from "@/chrome/nav-items";
 import type { NavItemId } from "@/chrome/nav-items";
 import { NavHiddenTray, NavEditableItem, useNavDrag } from "@/chrome/nav-edit";
@@ -34,12 +35,16 @@ export function StremioRail() {
     settings.theme.preset !== "custom" ? getThemeById(settings.theme.preset) : null;
   const customMark = themePreset?.logo?.mark ?? null;
 
+  const available = useAvailableNavItems();
   const items = applyNavCustomization(
-    useAvailableNavItems(),
+    available,
     usePreviewNavCustomization(settings.navCustomization),
   );
+  // Settings sits above the profile control at the bottom of the rail.
+  const settingsItem = available.find((item) => item.id === "settings");
+  const settingsGated = !!settingsItem?.pinGated && locked;
   const visible = items.filter((item) => {
-    if (item.id === "kids") return false;
+    if (item.id === "kids" || item.id === "settings") return false;
     if (item.view === "vod" && !settings.showPlaylistsTab) return false;
     if (item.hideKey && settings.hideContent[item.hideKey]) return false;
     if (locked && item.parentalKey && hiddenTabs[item.parentalKey]) return false;
@@ -101,6 +106,16 @@ export function StremioRail() {
                 <Monitor size={26} strokeWidth={1.75} />
               </span>
             </button>
+          )}
+          {settingsItem && (
+            <SidebarSettingsEntry
+              variant="rail"
+              active={view === settingsItem.view}
+              gated={settingsGated}
+              onClick={() =>
+                settingsGated ? setPendingPin(settingsItem.view) : setView(settingsItem.view)
+              }
+            />
           )}
           {locked ? (
             <div className="flex h-16 flex-col items-center justify-center gap-1 rounded-xl text-white/35">

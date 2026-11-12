@@ -6,6 +6,7 @@ import { FrameMark } from "@/components/icons/frame-mark";
 import { AccountMenu } from "@/chrome/account-menu/account-menu";
 import { CollapseToggle } from "@/chrome/sidebar/collapse-toggle";
 import { SidebarBigPictureEntry } from "@/chrome/sidebar/big-picture-entry";
+import { SidebarSettingsEntry } from "@/chrome/sidebar/settings-entry";
 import { TogetherButton } from "@/chrome/topbar";
 import {
   useAvailableNavItems,
@@ -66,15 +67,18 @@ export function SideRail() {
     (!item.parentalKey || !locked || !hiddenTabs[item.parentalKey]) &&
     !(item.hideKey && settings.hideContent[item.hideKey]);
 
+  const available = useAvailableNavItems();
   const items = applyNavCustomization(
-    useAvailableNavItems(),
+    available,
     usePreviewNavCustomization(settings.navCustomization),
   );
   const primary = items.filter((item) => PRIMARY_IDS.has(item.id) && isVisible(item));
   const secondary = items.filter(
     (item) => item.id !== "settings" && !PRIMARY_IDS.has(item.id) && isVisible(item),
   );
-  const settingsItem = items.find((item) => item.id === "settings");
+  // Settings sits in the bottom utility group, above the profile control. Read
+  // from the full list so hiding it in the nav editor cannot remove it.
+  const settingsItem = available.find((item) => item.id === "settings");
 
   return (
     <>
@@ -153,23 +157,6 @@ export function SideRail() {
               </nav>
             </>
           )}
-
-          {settingsItem && (
-            <>
-              <GoldRule collapsed={collapsed} />
-              <nav className="flex flex-col gap-0.5">
-                <RailItem
-                  key={settingsItem.id}
-                  itemId={settingsItem.id}
-                  view={settingsItem.view}
-                  label={settingsItem.label}
-                  active={view === settingsItem.view}
-                  collapsed={collapsed}
-                  onClick={() => setView(settingsItem.view)}
-                />
-              </nav>
-            </>
-          )}
         </div>
 
         <div className={`relative flex flex-col gap-2 py-4 ${collapsed ? "px-2" : "px-4"}`}>
@@ -202,6 +189,13 @@ export function SideRail() {
           <div className={`flex flex-col gap-1 ${collapsed ? "items-center" : ""}`}>
             <SidebarBigPictureEntry collapsed={collapsed} />
             <CollapseToggle collapsed={collapsed} />
+            {settingsItem && (
+              <SidebarSettingsEntry
+                active={view === settingsItem.view}
+                collapsed={collapsed}
+                onClick={() => setView(settingsItem.view)}
+              />
+            )}
           </div>
           {!collapsed && (
             <AccountMenu

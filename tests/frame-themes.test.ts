@@ -53,3 +53,15 @@ test("Default.framestyle matches the shipped preset's colors", () => {
   if (!parsed.ok) return;
   assert.deepEqual(parsed.theme.tokens, getThemeById("frame")?.tokens);
 });
+
+test("the Default theme ships a plain canvas, with no wallpaper in code or its .framestyle", () => {
+  const preset = getThemeById("frame");
+  assert.equal(preset?.background, undefined);
+  assert.equal(preset?.bokeh, false);
+  const text = readFileSync("Default.framestyle", "utf8");
+  assert.equal(/^bg-image:/m.test(text), false);
+  assert.equal(text.includes("data:image"), false);
+  const parsed = parseHarborStyle(text);
+  assert.equal(parsed.ok, true);
+  if (parsed.ok) assert.equal(parsed.theme.background?.image, undefined);
+});

@@ -51,3 +51,20 @@ test("every path that changes the preset also resolves the wallpaper", () => {
   assert.match(studio, /const image = nextBackgroundImage\(settings\.theme\.backgroundImage/);
   assert.match(section, /const image = wasActive[\s\S]{0,200}?removeCustomTheme\(id\);/);
 });
+
+test("a stored reference to the retired Default wallpaper reads as no image", async () => {
+  const { isRetiredPresetBackground, storedBackgroundImage } =
+    await import("../src/lib/theme-background.ts");
+  for (const url of [
+    "/assets/frame-default-bg-Bx3k9aQ1.png",
+    "/src/assets/themes/frame-default-bg.png",
+    "http://tauri.localhost/assets/frame-default-bg-abc.png?v=1",
+  ]) {
+    assert.equal(isRetiredPresetBackground(url), true, url);
+    assert.equal(storedBackgroundImage(url), null, url);
+    assert.equal(nextBackgroundImage(url, PLAIN, PLAIN), null, url);
+  }
+  for (const kept of [USER, NOIR.background.image, "/assets/my-frame-default-bg-art.jpg"]) {
+    assert.equal(storedBackgroundImage(kept), kept, kept);
+  }
+});

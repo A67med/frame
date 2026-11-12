@@ -2,7 +2,6 @@ import { kawaiiCss } from "./theme-kawaii";
 import auroraPreview from "@/assets/theme-previews/aurora.png";
 import crunchPreview from "@/assets/theme-previews/crunchy.png";
 import draculaPreview from "@/assets/theme-previews/dracula.png";
-import frameDefaultBg from "@/assets/themes/frame-default-bg.png";
 import forestPreview from "@/assets/theme-previews/forest.png";
 import harborPreview from "@/assets/theme-previews/harbor.png";
 import kawaiiPreview from "@/assets/theme-previews/kawaii.jpg";
@@ -145,11 +144,11 @@ export const THEME_PRESETS: Record<ThemePresetId, ThemePreset> = {
       "--color-accent-soft": "#f3ae692e",
       "--color-danger": "#e06c75",
     },
-    background: { image: frameDefaultBg, dim: 0.35 },
+    // A plain canvas: the default ships no background image and no bokeh.
     layout: "dracula",
     cardStyle: "flat",
     buttonStyle: "flat",
-    bokeh: true,
+    bokeh: false,
     fontPair: "general-sans",
   },
   // True black for OLED screens, taken from Amoled.framestyle.

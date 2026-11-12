@@ -5,7 +5,7 @@ layout: dracula
 card: flat
 button: flat
 font: general-sans
-bokeh: true
+bokeh: false
 swatch: #0c1217, #151f27, #f3ae69
 nav-order: home, discover, catalogs, plugins, movies, shows, kids, anime, manga, ebook, music, games, live, sports, vod, calendar, collections, downloads, addons, library, settings
 nav-hidden: manga, live, ebook, anime, shows, catalogs, calendar, games, kids, sports, vod, collections, downloads, music

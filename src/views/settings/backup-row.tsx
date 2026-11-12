@@ -112,11 +112,11 @@ export function BackupRow() {
     reader.readAsText(file);
   };
 
-  const confirmRestore = () => {
+  const confirmRestore = (includeCustomCode: boolean) => {
     if (!pending) return;
     setApplying(true);
     setRestoreError(null);
-    void applyBackup(pending)
+    void applyBackup(pending, { includeCustomCode })
       .then(() => {
         window.setTimeout(() => window.location.reload(), 280);
       })
@@ -478,10 +478,11 @@ function RestoreConfirm({
   backup: Backup;
   applying: boolean;
   error: RestoreErrorMessage | null;
-  onConfirm: () => void;
+  onConfirm: (includeCustomCode: boolean) => void;
   onCancel: () => void;
 }) {
   const t = useT();
+  const [includeCode, setIncludeCode] = useState(false);
   const when = backup.exportedAt
     ? new Date(backup.exportedAt).toLocaleString()
     : t("an unknown date");
@@ -510,7 +511,7 @@ function RestoreConfirm({
           <SButton disabled={applying} onClick={onCancel}>
             {t("Cancel")}
           </SButton>
-          <SButton variant="primary" disabled={applying} onClick={onConfirm}>
+          <SButton variant="primary" disabled={applying} onClick={() => onConfirm(includeCode)}>
             {applying ? t("Restoring...") : t("Restore and reload")}
           </SButton>
         </>
@@ -531,6 +532,23 @@ function RestoreConfirm({
           </span>
         ))}
       </div>
+
+      {preview.customCode && (
+        <label className="flex cursor-pointer items-start gap-2.5 rounded-[10px] bg-elevated px-4 py-3">
+          <input
+            type="checkbox"
+            checked={includeCode}
+            disabled={applying}
+            onChange={(e) => setIncludeCode(e.target.checked)}
+            className="mt-[5px] h-4 w-4 shrink-0 accent-ink"
+          />
+          <span className={`max-w-[66ch] ${ROW_DESC}`}>
+            {t(
+              "Also restore the custom JavaScript and HTML in this file. That code runs with full access to Frame, so only include it from a backup you made yourself. Left unticked, your current custom code stays.",
+            )}
+          </span>
+        </label>
+      )}
 
       {backup.sections?.includes("iptv") && !backup.sections.includes("iptvCredentials") && (
         <p className={`max-w-[66ch] ${ROW_DESC}`}>

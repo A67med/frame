@@ -2278,6 +2278,8 @@ const uiFallback: Record<string, string> = {
   "Enter the address of a server you run yourself, or leave this blank to keep community lookups off.":
     "Enter the address of a server you run yourself, or leave this blank to keep community lookups off.",
   Unlock: "Unlock",
+  "Also restore the custom JavaScript and HTML in this file. That code runs with full access to Frame, so only include it from a backup you made yourself. Left unticked, your current custom code stays.":
+    "Also restore the custom JavaScript and HTML in this file. That code runs with full access to Frame, so only include it from a backup you made yourself. Left unticked, your current custom code stays.",
 };
 
 export default uiFallback;

@@ -38,6 +38,8 @@ const dataSafety: Record<string, string> = {
     "Frame has no community server of its own. Enter a URL to use a server you run yourself. Private mode below stops all contact either way.",
   "Enter the address of a server you run yourself, or leave this blank to keep community lookups off.":
     "Enter the address of a server you run yourself, or leave this blank to keep community lookups off.",
+  "Also restore the custom JavaScript and HTML in this file. That code runs with full access to Frame, so only include it from a backup you made yourself. Left unticked, your current custom code stays.":
+    "Also restore the custom JavaScript and HTML in this file. That code runs with full access to Frame, so only include it from a backup you made yourself. Left unticked, your current custom code stays.",
 };
 
 export default dataSafety;

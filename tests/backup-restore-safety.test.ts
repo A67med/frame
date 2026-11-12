@@ -142,6 +142,7 @@ test("sectioned backups never remove anything", () => {
     entries: 1,
     replacesWholeSections: false,
     removes: 0,
+    customCode: false,
   });
 });
 
@@ -318,4 +319,46 @@ test("unsupported, truncated and resource-heavy envelopes are refused", async ()
 test("short passwords are refused at export", async () => {
   assert.equal(crypto.backupPasswordProblem("short"), "too-short");
   await assert.rejects(crypto.encryptBackupText("{}", "short"));
+});
+
+test("custom JavaScript and HTML in a backup are not restored unless opted in", async () => {
+  reset();
+  local.set(
+    "harbor.settings.shared",
+    JSON.stringify({ customJs: "window.mine = 1", customHtml: "", volume: 10 }),
+  );
+  const incoming = JSON.stringify({
+    customJs: "window.fromFile = 1",
+    customHtml: "<img src=x onerror=alert(1)>",
+    volume: 80,
+  });
+  const parsed = parseBackup(
+    file({ data: { "harbor.settings.shared": incoming }, sections: ["settings"] }),
+  );
+  assert.equal(parsed.ok, true);
+  if (!parsed.ok) return;
+  assert.equal(backupModule.backupHasCustomCode(parsed.backup), true);
+  assert.equal(previewRestore(parsed.backup).customCode, true);
+
+  await applyBackup(parsed.backup);
+  const kept = JSON.parse(local.get("harbor.settings.shared") ?? "{}");
+  assert.equal(kept.volume, 80, "the rest of the settings are restored");
+  assert.equal(kept.customJs, "window.mine = 1", "the user's own code stays");
+  assert.equal(kept.customHtml, "");
+
+  await applyBackup(parsed.backup, { includeCustomCode: true });
+  const taken = JSON.parse(local.get("harbor.settings.shared") ?? "{}");
+  assert.equal(taken.customJs, "window.fromFile = 1");
+  assert.equal(taken.customHtml, "<img src=x onerror=alert(1)>");
+});
+
+test("backups without custom code report none", () => {
+  const parsed = parseBackup(
+    file({
+      data: { "harbor.settings.shared": JSON.stringify({ customJs: "  ", volume: 1 }) },
+      sections: ["settings"],
+    }),
+  );
+  assert.equal(parsed.ok, true);
+  if (parsed.ok) assert.equal(backupModule.backupHasCustomCode(parsed.backup), false);
 });

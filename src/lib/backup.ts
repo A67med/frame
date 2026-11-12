@@ -541,6 +541,71 @@ function retargetProfileKeys(data: Record<string, string>): Record<string, strin
   return out;
 }
 
+/**
+ * Settings fields whose contents run as code with full access to the app
+ * (CustomCodeMount evaluates customJs and injects customHtml). A restore only
+ * takes them from the file when the user opts in.
+ */
+const CODE_FIELDS = ["customJs", "customHtml"] as const;
+
+function settingsObject(text: string | null | undefined): Record<string, unknown> | null {
+  if (!text) return null;
+  try {
+    const value = JSON.parse(text) as unknown;
+    return value && typeof value === "object" && !Array.isArray(value)
+      ? (value as Record<string, unknown>)
+      : null;
+  } catch {
+    return null;
+  }
+}
+
+function carriesCode(settings: Record<string, unknown> | null): boolean {
+  return (
+    !!settings &&
+    CODE_FIELDS.some((field) => {
+      const value = settings[field];
+      return typeof value === "string" && value.trim() !== "";
+    })
+  );
+}
+
+/** True when the backup's settings carry custom JavaScript or HTML. */
+export function backupHasCustomCode(backup: Backup): boolean {
+  return Object.entries(backup.data).some(
+    ([key, value]) => sectionOf(key) === "settings" && carriesCode(settingsObject(value)),
+  );
+}
+
+/**
+ * Replaces the file's custom JavaScript and HTML with what this install
+ * already has under the same key, so declining the code neither runs the
+ * file's code nor wipes the user's own.
+ */
+function keepLocalCustomCode(data: Record<string, string>): void {
+  for (const [key, value] of Object.entries(data)) {
+    if (sectionOf(key) !== "settings") continue;
+    const incoming = settingsObject(value);
+    if (!carriesCode(incoming) || !incoming) continue;
+    let current: Record<string, unknown> | null = null;
+    try {
+      current = settingsObject(localStorage.getItem(key));
+    } catch {
+      current = null;
+    }
+    for (const field of CODE_FIELDS) {
+      const local = current?.[field];
+      incoming[field] = typeof local === "string" ? local : "";
+    }
+    data[key] = JSON.stringify(incoming);
+  }
+}
+
+export type RestoreOptions = {
+  /** Take custom JavaScript and HTML from the file. Off unless the user opts in. */
+  includeCustomCode?: boolean;
+};
+
 type RestorePlan = {
   /** Entries to write, already retargeted to this install's profiles. */
   data: Record<string, string>;
@@ -551,8 +616,9 @@ type RestorePlan = {
   wipesSections: boolean;
 };
 
-function planRestore(backup: Backup): RestorePlan {
+function planRestore(backup: Backup, options: RestoreOptions = {}): RestorePlan {
   const data = retargetProfileKeys(backup.data);
+  if (!options.includeCustomCode) keepLocalCustomCode(data);
   const localLibrary = data[LOCAL_LIBRARY_KEY] ?? null;
   delete data[LOCAL_LIBRARY_KEY];
 
@@ -591,6 +657,8 @@ export type RestorePreview = {
   replacesWholeSections: boolean;
   /** Existing entries that the restore removes because the file lacks them. */
   removes: number;
+  /** The file's settings carry custom JavaScript or HTML. */
+  customCode: boolean;
 };
 
 /** What a restore would change on this install, computed without writing anything. */
@@ -603,6 +671,7 @@ export function previewRestore(backup: Backup): RestorePreview {
     entries: backupKeyCount(backup),
     replacesWholeSections: plan.wipesSections,
     removes,
+    customCode: backupHasCustomCode(backup),
   };
 }
 
@@ -715,8 +784,11 @@ export type RestoreResult = {
  * entry, the local library or the sign-ins cannot be saved, the touched keys
  * are put back and a BackupRestoreError is thrown instead of reporting success.
  */
-export async function applyBackup(backup: Backup): Promise<RestoreResult> {
-  const plan = planRestore(backup);
+export async function applyBackup(
+  backup: Backup,
+  options: RestoreOptions = {},
+): Promise<RestoreResult> {
+  const plan = planRestore(backup, options);
 
   let safetyCopyPath: string | null = null;
   try {

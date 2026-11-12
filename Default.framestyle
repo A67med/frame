@@ -1,0 +1,25 @@
+# Frame Style
+name: Default
+blurb: Violet on graphite, bold accents. Easy on the eyes.
+layout: dracula
+card: flat
+button: flat
+font: general-sans
+bokeh: true
+swatch: #0c1217, #151f27, #f3ae69
+nav-order: home, discover, catalogs, plugins, movies, shows, kids, anime, manga, ebook, music, games, live, sports, vod, calendar, collections, downloads, addons, library, settings
+nav-hidden: manga, live, ebook, anime, shows, catalogs, calendar, games, kids, sports, vod, collections, downloads, music
+
+@tokens
+--color-canvas: #0c1217
+--color-surface: #151f27
+--color-elevated: #22323d
+--color-raised: #30434f
+--color-ink: #e0e7eb
+--color-ink-muted: #a9bac5
+--color-ink-subtle: #8498a8
+--color-edge: #2939438c
+--color-edge-soft: #29394340
+--color-accent: #f3ae69
+--color-accent-soft: #f3ae692e
+--color-danger: #e06c75

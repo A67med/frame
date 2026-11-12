@@ -289,12 +289,6 @@ export function ServerAddressSection() {
         />
         {lanIp && <AddressRow label={t("On your local network")} url={`http://${lanIp}:${port}`} />}
       </SettingGroup>
-
-      <p className={`max-w-[70ch] ${ROW_DESC}`}>
-        {t(
-          "Looking for Frame in your browser, the phone remote, or the manga reader remote? They moved to the Remotes page.",
-        )}
-      </p>
     </Section>
   );
 }

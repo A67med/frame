@@ -213,11 +213,14 @@ export class LanPairSession {
   private readonly waiting = new Map<string, Waiter>();
   private dead = false;
   private hello: LanTrustHello | null = null;
+  private readonly target: TrustPeerRef;
+  private readonly self: LanSelf | null;
 
-  constructor(
-    private readonly target: TrustPeerRef,
-    private readonly self: LanSelf | null,
-  ) {}
+  // Plain fields rather than parameter properties, so Node's type stripping can load this file in tests.
+  constructor(target: TrustPeerRef, self: LanSelf | null) {
+    this.target = target;
+    this.self = self;
+  }
 
   close(): void {
     this.kill("gone");

@@ -74,6 +74,7 @@ import gameDetails from "./en/game-details";
 import gameAchievements from "./en/game-achievements";
 import settingsRefinements from "./en/settings-refinements";
 import dataSafety from "./en/data-safety";
+import remotePairing from "./en/remote-pairing";
 
 import nytTv from "./en/nyt-tv";
 import curatedLists from "./en/curated-lists";
@@ -442,6 +443,7 @@ const en: Record<string, string> = {
   "mpv.conf": "mpv.conf",
   ...settingsRefinements,
   ...dataSafety,
+  ...remotePairing,
   ...nytTv,
   ...curatedLists,
   ...filmRegistry,

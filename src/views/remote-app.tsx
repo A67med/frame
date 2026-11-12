@@ -30,6 +30,7 @@ import { FrameMark } from "@/components/icons/frame-mark";
 import type { CastDeviceInfo } from "@/lib/cast";
 import { useKeyboardNavigation } from "@/lib/keyboard-navigation";
 import { useRemoteClient } from "@/lib/remote/use-remote-client";
+import { RemotePairScreen } from "@/views/mobile/remote-pair";
 import type {
   RemoteCastDevice,
   RemoteNavKey,
@@ -770,7 +771,17 @@ const DISCONNECT_OVERLAY_MS = 1200;
 
 export function RemoteApp() {
   const t = useT();
-  const { status, snapshot, sendCommand } = useRemoteClient();
+  const {
+    status,
+    snapshot,
+    sendCommand,
+    pairing,
+    requestPairing,
+    submitPairingCode,
+    cancelPairing,
+  } = useRemoteClient();
+  const needsPairing =
+    status === "connected" && pairing.phase !== "paired" && pairing.phase !== "checking";
   const [sheetOpen, setSheetOpen] = useState(false);
   const [wasConnected, setWasConnected] = useState(false);
   const [showDisconnected, setShowDisconnected] = useState(false);
@@ -852,6 +863,13 @@ export function RemoteApp() {
         <div className="flex min-h-0 flex-1 flex-col items-center justify-center bg-black">
           <HarborLoader size="md" caption={t("Connecting")} />
         </div>
+      ) : needsPairing ? (
+        <RemotePairScreen
+          pairing={pairing}
+          onRequest={() => void requestPairing()}
+          onSubmit={(code) => void submitPairingCode(code)}
+          onCancel={cancelPairing}
+        />
       ) : (
         <>
           <div aria-hidden={sheetOpen || undefined} className="flex min-h-0 flex-1 flex-col">

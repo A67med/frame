@@ -279,7 +279,8 @@ function RoyalNavButton({
             className="absolute inset-0 -z-10 rounded-md bg-accent-soft ring-1 ring-[color-mix(in_srgb,var(--color-accent)_22%,transparent)]"
           />
         )}
-        <span className="grid h-[18px] w-[18px] place-items-center [&>*]:!h-[18px] [&>*]:!w-[18px] [&>*]:!p-0 [&_svg]:h-[18px] [&_svg]:w-[18px]">
+        {/* The animated icons nest a 26px glyph box; pin every layer to the 18px cell. */}
+        <span className="grid h-[18px] w-[18px] place-items-center [&>*]:!h-[18px] [&>*]:!w-[18px] [&>*]:!p-0 [&_span]:!inset-0 [&_span]:!h-[18px] [&_span]:!w-[18px] [&_span]:!p-0 [&_svg]:!h-[18px] [&_svg]:!w-[18px]">
           {item.render(active)}
         </span>
         <span className="hidden xl:inline">{label}</span>

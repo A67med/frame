@@ -127,7 +127,7 @@
     },
     "updater": {
       "endpoints": [
-        "https://github.com/abdallahkattriah-sketch/frame/releases/latest/download/latest.json"
+        "https://github.com/A67med/frame/releases/latest/download/latest.json"
       ],
       "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IDcyNzM0QzQ5MjdDNzkxOUUKUldTZWtjY25TVXh6Y3BVMi9ObUJDWVVRelVucVpkaDlaMFNidlZzUjBNUzZ4MEFLeFUvcndWREMK",
       "windows": {

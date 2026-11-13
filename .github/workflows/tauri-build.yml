@@ -1,17 +1,11 @@
 name: Release
 
-# Releases are cut by pushing a v<x.y.z> tag on a commit that is already on main
-# (bump with `node scripts/bump-version.mjs <x.y.z>` first). The workflow never
-# commits or pushes, and it only creates a draft: publishing is a manual step
-# on the release page, after the `release` environment's reviewers approve.
+# Every change merged into main automatically prepares a versioned release commit.
+# The GITHUB_TOKEN push does not start another workflow, avoiding recursion.
+# Installers and updater files are published only after all builds succeed.
 on:
   push:
-    tags: ["v*.*.*"]
-  workflow_dispatch:
-    inputs:
-      tag:
-        description: Existing release tag to rebuild as a draft (v<x.y.z>)
-        required: true
+    branches: [main]
 
 permissions:
   contents: read
@@ -29,45 +23,61 @@ env:
 
 jobs:
   prepare:
-    name: Validate the release tag
+    name: Prepare automatic version on main
     runs-on: ubuntu-24.04
     timeout-minutes: 10
     permissions:
-      contents: read
+      contents: write
     outputs:
       version: ${{ steps.check.outputs.version }}
       sha: ${{ steps.check.outputs.sha }}
+      ready: ${{ steps.check.outputs.ready }}
     steps:
       - uses: actions/checkout@v6
         with:
           fetch-depth: 0
-          ref: ${{ github.event.inputs.tag || github.ref }}
+          ref: main
 
       - uses: actions/setup-node@v6
         with:
           node-version: 24
 
-      - name: Check the tag, its versions and its branch
+      - name: Prepare and commit a consistent release version
         id: check
         shell: bash
-        env:
-          TAG: ${{ github.event.inputs.tag || github.ref_name }}
         run: |
           set -euo pipefail
-          sha="$(git rev-parse "refs/tags/$TAG^{commit}")"
-          version="$(node scripts/check-release-version.mjs "$TAG")"
-          # Only reviewed history is released: the tagged commit must be on main.
-          git fetch --no-tags origin main
-          if ! git merge-base --is-ancestor "$sha" origin/main; then
-            echo "::error::$TAG points at $sha, which is not on main."
-            exit 1
+          git fetch origin main --tags
+          git checkout -B main origin/main
+          # A queued release run with no new user changes must not produce a
+          # second release for the version-only commit made by an earlier run.
+          last_release="$(git tag --list 'v[0-9]*.[0-9]*.[0-9]*' --sort=-v:refname | head -n 1 || true)"
+          if [ -n "$last_release" ] && git merge-base --is-ancestor "$last_release" HEAD; then
+            changed="$(git log --format=%s "$last_release"..HEAD | grep -v '^chore(release): prepare v' || true)"
+            if [ -z "$changed" ]; then
+              echo "ready=false" >> "$GITHUB_OUTPUT"
+              echo "No unreleased application changes; skipping duplicate release."
+              exit 0
+            fi
           fi
+          version="$(node scripts/bump-version.mjs --next)"
+          node scripts/bump-version.mjs "$version"
+          node scripts/check-release-version.mjs "v$version"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add package.json src-tauri/tauri.conf.json src-tauri/Cargo.toml src-tauri/Cargo.lock flatpak/io.github.abdallahkattriah_sketch.Frame.metainfo.xml
+          git commit -m "chore(release): prepare v$version [skip ci]"
+          # Branch-protection rules may require allowing this bot to push;
+          # fail visibly rather than bypassing checks or publishing stale code.
+          git push origin HEAD:main
           echo "version=$version" >> "$GITHUB_OUTPUT"
-          echo "sha=$sha" >> "$GITHUB_OUTPUT"
+          echo "sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+          echo "ready=true" >> "$GITHUB_OUTPUT"
 
   flatpak:
     name: Flatpak
     needs: prepare
+    if: needs.prepare.outputs.ready == 'true'
     uses: ./.github/workflows/flatpak.yml
     with:
       ref: ${{ needs.prepare.outputs.sha }}
@@ -75,6 +85,7 @@ jobs:
   build:
     name: ${{ matrix.platform.name }} (${{ matrix.platform.target }})
     needs: prepare
+    if: needs.prepare.outputs.ready == 'true'
     runs-on: ${{ matrix.platform.runner }}
     timeout-minutes: 120
     strategy:
@@ -329,14 +340,11 @@ jobs:
           if-no-files-found: warn
 
   publish:
-    name: Draft the release
+    name: Publish the release
     needs: [prepare, build, flatpak]
-    if: ${{ !cancelled() && needs.prepare.result == 'success' && needs.build.result == 'success' && needs.flatpak.result == 'success' }}
+    if: ${{ !cancelled() && needs.prepare.outputs.ready == 'true' && needs.build.result == 'success' && needs.flatpak.result == 'success' }}
     runs-on: ubuntu-24.04
     timeout-minutes: 30
-    # Configure required reviewers for this environment in the repository
-    # settings; the job then waits for an owner's approval before it runs.
-    environment: release
     permissions:
       contents: write
     steps:
@@ -380,11 +388,11 @@ jobs:
             [ -n "$previous" ] && echo && echo "**Full changelog**: https://github.com/$GITHUB_REPOSITORY/compare/$previous...v$VERSION"
           } > body.md
           ls -la upload
-          # A draft is invisible to users and to the in-app updater (which reads
-          # releases/latest). The owner reviews the assets and publishes it by hand.
+          # gh creates the tag at the verified build commit automatically.
+          # No manual tags, draft approvals, or installer uploads are required.
           gh release create "v$VERSION" upload/* \
             --repo "$GITHUB_REPOSITORY" \
-            --verify-tag \
+            --target "$SHA" \
             --title "Frame $VERSION" \
             --notes-file body.md \
-            --draft
+            --latest

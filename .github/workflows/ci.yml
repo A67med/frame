@@ -114,9 +114,12 @@ jobs:
             BASE_SHA="$(git rev-list --max-parents=0 "$GITHUB_SHA")"
           fi
 
+          # Every native build input: the app crate (its vendor/ crates live
+          # inside it), each path dependency outside it, and this workflow.
           if git diff --quiet "$BASE_SHA" "$GITHUB_SHA" -- \
             src-tauri \
             harbor-core \
+            harbor-install-recovery \
             .github/workflows/ci.yml; then
             echo "changed=false" >> "$GITHUB_OUTPUT"
           else
@@ -152,6 +155,7 @@ jobs:
         with:
           workspaces: |
             harbor-core
+            harbor-install-recovery
             src-tauri
 
       - name: Check Tauri application
@@ -172,3 +176,7 @@ jobs:
         run: |
           mkdir -p "$HARBOR_GAME_TEST_ROOT"
           cargo test --manifest-path src-tauri/Cargo.toml
+
+      - name: Test install recovery
+        if: steps.native-changes.outputs.changed == 'true'
+        run: cargo test --manifest-path harbor-install-recovery/Cargo.toml --locked

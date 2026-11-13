@@ -87,11 +87,11 @@ const catalogSU: Record<string, string> = {
     "हल्के थंबनेल के बजाय ज़्यादा शार्प फ़्रेम सेव करें। वे कार्ड पर अधिक स्पष्ट दिखते हैं, लेकिन ज़्यादा जगह लेते हैं, इसलिए सबसे पुराने हटने से पहले कम फ़्रेम ही रखे जाते हैं।",
   "Save status": "स्थिति सेव करें",
   "Save sync": "सिंक सेव करें",
-  "Save the current frame (video only, no subtitles) as a PNG to Pictures/Harbor.":
-    "मौजूदा फ़्रेम को PNG के रूप में Pictures/Harbor में सेव करें (सिर्फ़ वीडियो, सबटाइटल नहीं)।",
+  "Save the current frame (video only, no subtitles) as a PNG to Pictures/Frame.":
+    "मौजूदा फ़्रेम को PNG के रूप में Pictures/Frame में सेव करें (सिर्फ़ वीडियो, सबटाइटल नहीं)।",
   "Save the last 30 seconds": "पिछले 30 सेकंड सेव करें",
-  "Save the last 30 seconds as a video clip with audio, choosing subtitles on or off. Saves to Pictures/Harbor.":
-    "सबटाइटल चालू या बंद चुनकर पिछले 30 सेकंड को ऑडियो सहित वीडियो क्लिप के रूप में सेव करें। यह Pictures/Harbor में सेव होगा।",
+  "Save the last 30 seconds as a video clip with audio, choosing subtitles on or off. Saves to Pictures/Frame.":
+    "सबटाइटल चालू या बंद चुनकर पिछले 30 सेकंड को ऑडियो सहित वीडियो क्लिप के रूप में सेव करें। यह Pictures/Frame में सेव होगा।",
   "Save the worker source. Copy": "वर्कर सोर्स सेव करें। कॉपी करें",
   "Save the worker source. Copy {code1} from the Frame repo into a new directory as {code2}.":
     "वर्कर सोर्स सेव करें। Frame रेपो से {code1} कॉपी करके नई डायरेक्टरी में {code2} नाम से रखें।",
@@ -1196,8 +1196,8 @@ const catalogSU: Record<string, string> = {
   "Start here. The ones almost everyone has.": "यहाँ से शुरू करें। ये लगभग सभी के पास होते हैं।",
   "Start import": "इंपोर्ट शुरू करें",
   "Start of manga": "मंगा की शुरुआत",
-  "Start or stop recording a GIF of the video (no subtitles). Saves to Pictures/Harbor.":
-    "वीडियो की GIF रिकॉर्डिंग शुरू या बंद करें (सबटाइटल के बिना)। Pictures/Harbor में सेव होती है।",
+  "Start or stop recording a GIF of the video (no subtitles). Saves to Pictures/Frame.":
+    "वीडियो की GIF रिकॉर्डिंग शुरू या बंद करें (सबटाइटल के बिना)। Pictures/Frame में सेव होती है।",
   "Start over": "फिर से शुरू करें",
   "Start playback": "प्लेबैक शुरू करें",
   "Start recording": "रिकॉर्डिंग शुरू करें",
@@ -2898,8 +2898,8 @@ const catalogSU: Record<string, string> = {
   stars: "स्टार्स",
   stats: "आँकड़े",
   "stremio:// link": "stremio:// लिंक",
-  "stremio:// links now open in the Stremio app. Harbor will only install when you trigger it from inside Harbor.":
-    "stremio:// लिंक अब Stremio ऐप में खुलते हैं। Harbor इसे तभी इंस्टॉल करेगा, जब आप Harbor के अंदर से इंस्टॉल करना शुरू करेंगे।",
+  "stremio:// links now open in the Stremio app. Frame will only install when you trigger it from inside Frame.":
+    "stremio:// लिंक अब Stremio ऐप में खुलते हैं। Frame इसे तभी इंस्टॉल करेगा, जब आप Frame के अंदर से इंस्टॉल करना शुरू करेंगे।",
   "stremio://… or https://…/manifest.json": "stremio://… या https://…/manifest.json",
   "stub files": "स्टब फ़ाइलें",
   "study, character, quote": "अध्ययन, पात्र, उद्धरण",

@@ -1,0 +1,58 @@
+name: Dependency Audit
+
+# Fails on any known vulnerability that is not listed below. Each ignored
+# advisory needs a major-version upgrade that has not landed yet; remove its
+# line in the change that upgrades the crate.
+on:
+  pull_request:
+    paths:
+      - package.json
+      - pnpm-lock.yaml
+      - "**/Cargo.toml"
+      - "**/Cargo.lock"
+      - .github/workflows/dependency-audit.yml
+  schedule:
+    - cron: "17 6 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  javascript:
+    name: JavaScript (production dependencies)
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v6
+      - uses: pnpm/action-setup@v5
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 24
+      - name: Audit
+        run: pnpm audit --prod --audit-level high
+
+  rust:
+    name: Rust
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v6
+      - uses: taiki-e/install-action@v2
+        with:
+          tool: cargo-audit
+      - name: Audit harbor-core and install recovery
+        run: |
+          cargo audit --file harbor-core/Cargo.lock
+          cargo audit --file harbor-install-recovery/Cargo.lock
+      - name: Audit the Tauri application
+        # zip 4 -> 9: RUSTSEC-2026-0367/0368/0369/0429 (direct and tauri-plugin-updater)
+        # quick-xml < 0.41: RUSTSEC-2026-0194/0195 (transitive)
+        # libsqlite3-sys < 0.39 via rusqlite 0.32: RUSTSEC-2026-0459
+        # rsa 0.9 via vendored librespot-core: RUSTSEC-2023-0071 (no fixed 0.9 release)
+        run: >
+          cargo audit --file src-tauri/Cargo.lock
+          --ignore RUSTSEC-2026-0367 --ignore RUSTSEC-2026-0368
+          --ignore RUSTSEC-2026-0369 --ignore RUSTSEC-2026-0429
+          --ignore RUSTSEC-2026-0194 --ignore RUSTSEC-2026-0195
+          --ignore RUSTSEC-2026-0459 --ignore RUSTSEC-2023-0071

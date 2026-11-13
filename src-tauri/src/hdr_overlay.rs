@@ -60,11 +60,11 @@ pub async fn hdr_overlay_open(app: AppHandle, stage_id: String) -> Result<(), St
     }
     let app_clone = app.clone();
     // WebView2 creation must not run inside the UI event loop: it can deadlock
-    // that loop, including the tray and every other Harbor window.
+    // that loop, including the tray and every other Frame window.
     tauri::async_runtime::spawn_blocking(move || -> Result<(), String> {
         let url = WebviewUrl::App(format!("index.html?harbor-overlay=1&stageId={stage_id}").into());
         let builder = WebviewWindowBuilder::new(&app_clone, HDR_OVERLAY_LABEL, url)
-            .title("Harbor HDR")
+            .title("Frame HDR")
             .resizable(false)
             .decorations(false)
             .skip_taskbar(true)
@@ -76,7 +76,7 @@ pub async fn hdr_overlay_open(app: AppHandle, stage_id: String) -> Result<(), St
             let main = app_clone
                 .get_webview_window("main")
                 .ok_or_else(|| "main missing".to_string())?;
-            // An owned window stays above Harbor, not above unrelated applications.
+            // An owned window stays above Frame, not above unrelated applications.
             builder
                 .transparent(true)
                 .parent(&main)

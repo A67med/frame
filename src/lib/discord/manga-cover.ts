@@ -8,7 +8,7 @@
  *
  * When the source cover is not Discord-fetchable we resolve the title's cover
  * from AniList instead: a public third-party HTTPS image, cached per title.
- * Nothing is routed through a Harbor server.
+ * Nothing is routed through a Frame server.
  *
  * A common title can match the wrong series, so a candidate is only accepted
  * when its title or a synonym equals the searched title; when several entries

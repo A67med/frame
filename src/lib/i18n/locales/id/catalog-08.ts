@@ -536,11 +536,11 @@ const catalog: Record<string, string> = {
     "Simpan frame yang lebih tajam, bukan thumbnail ringan. Tampilannya lebih tajam di kartu, tetapi memerlukan lebih banyak ruang, sehingga lebih sedikit yang disimpan sebelum yang terlama dihapus.",
   "Save status": "Simpan status",
   "Save sync": "Simpan sinkronisasi",
-  "Save the current frame (video only, no subtitles) as a PNG to Pictures/Harbor.":
-    "Simpan frame saat ini (video saja, tanpa subtitle) sebagai PNG ke Pictures/Harbor.",
+  "Save the current frame (video only, no subtitles) as a PNG to Pictures/Frame.":
+    "Simpan frame saat ini (video saja, tanpa subtitle) sebagai PNG ke Pictures/Frame.",
   "Save the last 30 seconds": "Simpan 30 detik terakhir",
-  "Save the last 30 seconds as a video clip with audio, choosing subtitles on or off. Saves to Pictures/Harbor.":
-    "Simpan 30 detik terakhir sebagai klip video dengan audio, dengan pilihan subtitle aktif atau nonaktif. Disimpan ke Pictures/Harbor.",
+  "Save the last 30 seconds as a video clip with audio, choosing subtitles on or off. Saves to Pictures/Frame.":
+    "Simpan 30 detik terakhir sebagai klip video dengan audio, dengan pilihan subtitle aktif atau nonaktif. Disimpan ke Pictures/Frame.",
   "Save the worker source. Copy": "Simpan sumber worker. Salin",
   "Save the worker source. Copy {code1} from the Frame repo into a new directory as {code2}.":
     "Simpan sumber worker. Salin {code1} dari repo Frame ke direktori baru sebagai {code2}.",

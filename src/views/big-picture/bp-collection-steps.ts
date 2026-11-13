@@ -15,7 +15,7 @@ import {
 
 export type BpCollectionSource = "all" | "mine" | "community" | "tvdb" | "tmdb";
 
-// "community" stays in the type so a saved choice still parses, but Harbor's
+// "community" stays in the type so a saved choice still parses, but Frame's
 // shared collections server is gone, so it is not offered and fetches nothing.
 export const BP_COLLECTION_SOURCES: BpCollectionSource[] = ["all", "mine", "tmdb", "tvdb"];
 

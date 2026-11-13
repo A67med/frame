@@ -65,7 +65,7 @@ fn device_name() -> String {
     std::env::var("HOSTNAME")
         .ok()
         .filter(|s| !s.trim().is_empty())
-        .unwrap_or_else(|| "Harbor".to_string())
+        .unwrap_or_else(|| "Frame".to_string())
 }
 
 fn platform() -> &'static str {

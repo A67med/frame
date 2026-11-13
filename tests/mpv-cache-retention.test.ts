@@ -17,7 +17,7 @@ test("mpv still writes its demuxer cache to a directory on disk", () => {
   assert.match(mpv, /set_property\("cache-on-disk", "yes"\)/);
 });
 
-test("every unbounded on-disk cache Harbor writes has a sweeper", () => {
+test("every unbounded on-disk cache Frame writes has a sweeper", () => {
   assert.match(prune, /pub fn sweep_mpv_cache\(dir: PathBuf\) -> u64/);
   assert.match(prune, /const MPV_CACHE_MAX_AGE: Duration/);
   assert.match(lib, /temp_prune::sweep_mpv_cache\(base\.join\("mpv-cache"\)\)/);

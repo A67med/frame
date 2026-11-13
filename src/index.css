@@ -3615,7 +3615,7 @@ html[data-theme-card="crunch"] header.fixed.top-0.z-\[60\].h-20 > div {
   gap: 0.25rem;
 }
 
-html[data-theme-card="crunch"] header.fixed.top-0.z-\[60\].h-20 button[aria-label="Harbor home"] {
+html[data-theme-card="crunch"] header.fixed.top-0.z-\[60\].h-20 button[aria-label="Frame home"] {
   color: var(--color-accent);
   padding-right: 0.75rem;
 }

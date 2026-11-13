@@ -5,7 +5,7 @@ import { useContextMenu } from "@/lib/context-menu";
 import { NavHiddenTray, NavEditableItem, NavEditClose, useNavDrag } from "@/chrome/nav-edit";
 import { useNavEditMode } from "@/chrome/nav-edit-mode";
 import { Search } from "@/components/icons/search-icon";
-import { HarborMark } from "@/components/icons/harbor-mark";
+import { FrameMark } from "@/components/icons/frame-mark";
 import { TogetherButton } from "@/chrome/topbar";
 import { useT } from "@/lib/i18n";
 import { useSearch } from "@/lib/search-context";
@@ -101,7 +101,7 @@ export function CinematicOverlay() {
             {customMark ? (
               <img src={customMark} alt="" draggable={false} className="h-7 w-7 object-contain" />
             ) : (
-              <HarborMark className="h-7 w-7" />
+              <FrameMark className="h-7 w-7" />
             )}
             {themePreset?.id === "crunch" && (
               <span className="font-display text-[22px] font-bold leading-none text-ink">

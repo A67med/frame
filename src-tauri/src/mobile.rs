@@ -80,6 +80,7 @@ pub fn run() {
         .invoke_handler(tauri::generate_handler![
             lan_ip,
             crate::save_text_file,
+            crate::text_files::save_text_file_as,
             crate::harbor_take_pending_file,
             crate::harbor_set_webview_memory_low,
             crate::harbor_set_webview_visible,
@@ -91,6 +92,7 @@ pub fn run() {
             settings_store::settings_write,
             settings_store::secrets_read,
             settings_store::secrets_write,
+            settings_store::backup_save_safety_copy,
             media_server::media_server_request,
             http_fetch::harbor_fetch,
             http_fetch::harbor_upload,

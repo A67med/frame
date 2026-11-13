@@ -1,13 +1,17 @@
 name: Release
 
+# Releases are cut by pushing a v<x.y.z> tag on a commit that is already on main
+# (bump with `node scripts/bump-version.mjs <x.y.z>` first). The workflow never
+# commits or pushes, and it only creates a draft: publishing is a manual step
+# on the release page, after the `release` environment's reviewers approve.
 on:
-  workflow_dispatch:
   push:
-    branches: [main]
-    paths-ignore:
-      - .github/ISSUE_TEMPLATE/**
-      - docs/**
-      - "**/*.md"
+    tags: ["v*.*.*"]
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: Existing release tag to rebuild as a draft (v<x.y.z>)
+        required: true
 
 permissions:
   contents: read
@@ -25,40 +29,41 @@ env:
 
 jobs:
   prepare:
-    name: Pick the release version
+    name: Validate the release tag
     runs-on: ubuntu-24.04
     timeout-minutes: 10
     permissions:
-      contents: write
+      contents: read
     outputs:
-      version: ${{ steps.bump.outputs.version }}
-      sha: ${{ steps.bump.outputs.sha }}
+      version: ${{ steps.check.outputs.version }}
+      sha: ${{ steps.check.outputs.sha }}
     steps:
       - uses: actions/checkout@v6
         with:
           fetch-depth: 0
-          ref: main
+          ref: ${{ github.event.inputs.tag || github.ref }}
 
       - uses: actions/setup-node@v6
         with:
           node-version: 24
 
-      - name: Bump the version past the last release tag
-        id: bump
+      - name: Check the tag, its versions and its branch
+        id: check
         shell: bash
+        env:
+          TAG: ${{ github.event.inputs.tag || github.ref_name }}
         run: |
           set -euo pipefail
-          current="$(node -p "require('./package.json').version")"
-          next="$(node scripts/bump-version.mjs --next)"
-          if [ "$next" != "$current" ]; then
-            node scripts/bump-version.mjs "$next"
-            git config user.name "github-actions[bot]"
-            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-            git commit -am "chore(release): v$next"
-            git push origin HEAD:main
+          sha="$(git rev-parse "refs/tags/$TAG^{commit}")"
+          version="$(node scripts/check-release-version.mjs "$TAG")"
+          # Only reviewed history is released: the tagged commit must be on main.
+          git fetch --no-tags origin main
+          if ! git merge-base --is-ancestor "$sha" origin/main; then
+            echo "::error::$TAG points at $sha, which is not on main."
+            exit 1
           fi
-          echo "version=$next" >> "$GITHUB_OUTPUT"
-          echo "sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+          echo "sha=$sha" >> "$GITHUB_OUTPUT"
 
   flatpak:
     name: Flatpak
@@ -146,19 +151,6 @@ jobs:
           node-version: 22
           cache: pnpm
 
-      - name: Set up Pokémon engine SDK
-        uses: actions/setup-dotnet@v5
-        with:
-          dotnet-version: "10.0.401"
-
-      - name: Build Pokémon engine and corresponding source bundle
-        run: node tools/pokemon-engine/build.mjs --fetch-source "${{ runner.temp }}/harbor-pokemon-source" --output src-tauri/resources/pokemon-engine --artifacts "${{ runner.temp }}/harbor-pokemon-build"
-
-      # .NET loads this LTTng tracing provider only when present; linuxdeploy fails on its missing liblttng-ust.
-      - name: Drop the optional .NET tracing provider (Linux)
-        if: contains(matrix.platform.runner, 'ubuntu')
-        run: rm -f src-tauri/resources/pokemon-engine/libcoreclrtraceptprovider.so
-
       - name: Install JS deps
         run: pnpm install --frozen-lockfile
 
@@ -174,6 +166,10 @@ jobs:
       - name: Fetch mpv (Windows x64)
         if: matrix.platform.target == 'x86_64-pc-windows-msvc'
         run: pnpm run setup:mpv
+
+      - name: Copy the Visual C++ runtime (Windows x64)
+        if: matrix.platform.target == 'x86_64-pc-windows-msvc'
+        run: pnpm run setup:vcruntime
 
       - name: Fetch external binaries
         run: pnpm run setup:binaries
@@ -255,6 +251,10 @@ jobs:
           tauriScript: pnpm tauri
           args: --target ${{ matrix.platform.target }} ${{ steps.sign.outputs.config }} ${{ steps.macos-libraries.outputs.config }}
 
+      - name: Check the Windows installer has every required file
+        if: contains(matrix.platform.runner, 'windows')
+        run: node scripts/verify-windows-bundle.mjs
+
       - name: Build Linux system packages
         if: contains(matrix.platform.runner, 'ubuntu')
         env:
@@ -329,11 +329,14 @@ jobs:
           if-no-files-found: warn
 
   publish:
-    name: Publish the release
+    name: Draft the release
     needs: [prepare, build, flatpak]
     if: ${{ !cancelled() && needs.prepare.result == 'success' && needs.build.result == 'success' && needs.flatpak.result == 'success' }}
     runs-on: ubuntu-24.04
     timeout-minutes: 30
+    # Configure required reviewers for this environment in the repository
+    # settings; the job then waits for an owner's approval before it runs.
+    environment: release
     permissions:
       contents: write
     steps:
@@ -360,7 +363,7 @@ jobs:
             -o -name '*.deb' -o -name '*.AppImage' \) -exec cp {} upload/ \;
           # latest.json carries each signature inline, so the .sig files are read here and never published.
           find artifacts -type f \( -name '*-setup.exe.sig' -o -name 'Frame_*.app.tar.gz.sig' -o -name 'Frame_*.AppImage.sig' \) -exec cp {} sigs/ \;
-          cp artifacts/Harbor-flatpak-x86_64/Harbor.flatpak "upload/Frame_${VERSION}_x86_64.flatpak"
+          cp artifacts/Frame-flatpak-x86_64/Frame.flatpak "upload/Frame_${VERSION}_x86_64.flatpak"
           previous="$(git tag --list 'v*' --sort=-v:refname | grep -vx "v$VERSION" | head -n 1 || true)"
           node scripts/release-notes.mjs "${previous:-$(git rev-list --max-parents=0 HEAD | tail -n 1)}" "$SHA" > notes.md
           node scripts/updater-manifest.mjs "$VERSION" upload sigs notes.md
@@ -377,18 +380,11 @@ jobs:
             [ -n "$previous" ] && echo && echo "**Full changelog**: https://github.com/$GITHUB_REPOSITORY/compare/$previous...v$VERSION"
           } > body.md
           ls -la upload
+          # A draft is invisible to users and to the in-app updater (which reads
+          # releases/latest). The owner reviews the assets and publishes it by hand.
           gh release create "v$VERSION" upload/* \
             --repo "$GITHUB_REPOSITORY" \
-            --target "$SHA" \
+            --verify-tag \
             --title "Frame $VERSION" \
             --notes-file body.md \
-            --latest
-
-  # A release made with GITHUB_TOKEN fires no release event, so WinGet is called from here.
-  winget:
-    name: WinGet
-    needs: [prepare, publish]
-    uses: ./.github/workflows/winget.yml
-    with:
-      tag: v${{ needs.prepare.outputs.version }}
-    secrets: inherit
+            --draft

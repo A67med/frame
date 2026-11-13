@@ -239,8 +239,8 @@ const settingsRefinements: Record<string, string> = {
   "Email address or Discord handle": "Indirizzo email o identificativo Discord",
   "Enable P2P streaming to run the local engine self-test.":
     "Attiva lo streaming P2P per eseguire l’autotest del motore locale.",
-  "Enter a full http:// or https:// address, or leave blank to use Harbor's server.":
-    "Inserisci un indirizzo completo http:// o https://, oppure lascia vuoto per usare il server di Harbor.",
+  "Enter a full http:// or https:// address, or leave blank to use Frame's server.":
+    "Inserisci un indirizzo completo http:// o https://, oppure lascia vuoto per usare il server di Frame.",
   "Enter a size of 0 or more.": "Inserisci una dimensione pari o superiore a 0.",
   "Enter a whole number of 0 or more.": "Inserisci un numero intero pari o superiore a 0.",
   "Enter all 4 digits to save this PIN.": "Inserisci tutte le 4 cifre per salvare questo PIN.",

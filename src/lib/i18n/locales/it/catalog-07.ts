@@ -350,11 +350,11 @@ const catalog07: Record<string, string> = {
     "Salva fotogrammi più nitidi invece di miniature leggere. Sulle schede risultano più definiti, ma occupano più spazio, quindi ne vengono conservati meno e i più vecchi vengono eliminati.",
   "Save status": "Salva lo stato",
   "Save sync": "Salva la sincronizzazione",
-  "Save the current frame (video only, no subtitles) as a PNG to Pictures/Harbor.":
-    "Salva il fotogramma corrente (solo video, senza sottotitoli) come PNG in Immagini/Harbor.",
+  "Save the current frame (video only, no subtitles) as a PNG to Pictures/Frame.":
+    "Salva il fotogramma corrente (solo video, senza sottotitoli) come PNG in Immagini/Frame.",
   "Save the last 30 seconds": "Salva gli ultimi 30 secondi",
-  "Save the last 30 seconds as a video clip with audio, choosing subtitles on or off. Saves to Pictures/Harbor.":
-    "Salva gli ultimi 30 secondi come clip video con audio, scegliendo se includere o meno i sottotitoli. La clip viene salvata in Immagini/Harbor.",
+  "Save the last 30 seconds as a video clip with audio, choosing subtitles on or off. Saves to Pictures/Frame.":
+    "Salva gli ultimi 30 secondi come clip video con audio, scegliendo se includere o meno i sottotitoli. La clip viene salvata in Immagini/Frame.",
   "Save the worker source. Copy": "Salva il codice sorgente del worker. Copia",
   "Save the worker source. Copy {code1} from the Frame repo into a new directory as {code2}.":
     "Salva il codice sorgente del worker. Copia {code1} dal repository di Frame in una nuova directory con il nome {code2}.",

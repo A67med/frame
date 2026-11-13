@@ -582,16 +582,16 @@ const settings: Record<string, string> = {
   "Hero carousel, Top 10, Trending, In Theaters, per-service rails.":
     "ヒーローカルーセル、トップ10、トレンド、劇場公開中、サービス別レール。",
   Updates: "アップデート",
-  "Harbor checks harbor.site for new versions and installs them in place.":
-    "Harborはharbor.siteで新しいバージョンを確認し、そのまま上書きインストールします。",
+  "Frame checks harbor.site for new versions and installs them in place.":
+    "Frameはharbor.siteで新しいバージョンを確認し、そのまま上書きインストールします。",
   "Backup & restore": "バックアップと復元",
   "Export your entire Frame setup to a single file, then restore it on a new computer or keep it as a backup.":
     "Frameの設定一式を1つのファイルにエクスポートし、新しいパソコンで復元したり、バックアップとして保管したりできます。",
   Privacy: "プライバシー",
   "System tray": "システムトレイ",
   "Stremio install links": "Stremioインストールリンク",
-  "Harbor catches stremio:// install links so the configure-and-install flow stays inside the app.":
-    "Harborがstremio://インストールリンクを処理し、設定からインストールまでアプリ内で完了できるようにします。",
+  "Frame catches stremio:// install links so the configure-and-install flow stays inside the app.":
+    "Frameがstremio://インストールリンクを処理し、設定からインストールまでアプリ内で完了できるようにします。",
   "Discord Rich Presence": "Discord Rich Presence",
   "Let your Discord friends see what you are watching, with the show poster and a live progress bar.":
     "視聴中の作品を、ポスターとリアルタイムの進行状況バー付きでDiscordのフレンドに表示します。",
@@ -1270,11 +1270,11 @@ const settings: Record<string, string> = {
   "Step zoom in to crop baked-in black bars (Zoom mode).":
     "段階的にズームインして、映像に焼き込まれた黒帯をクロップします（ズームモード）。",
   Screenshot: "スクリーンショット",
-  "Save the current frame (video only, no subtitles) as a PNG to Pictures/Harbor.":
-    "現在のフレームを動画のみ（字幕なし）のPNGとしてPictures/Harborに保存します。",
+  "Save the current frame (video only, no subtitles) as a PNG to Pictures/Frame.":
+    "現在のフレームを動画のみ（字幕なし）のPNGとしてPictures/Frameに保存します。",
   "Record GIF": "GIFを録画",
-  "Start or stop recording a GIF of the video (no subtitles). Saves to Pictures/Harbor.":
-    "動画のGIF録画（字幕なし）を開始または停止します。Pictures/Harborに保存されます。",
+  "Start or stop recording a GIF of the video (no subtitles). Saves to Pictures/Frame.":
+    "動画のGIF録画（字幕なし）を開始または停止します。Pictures/Frameに保存されます。",
   "Seek back": "早戻し",
   "Jump back by the Back seek step set under Behavior.":
     "「動作」で設定した巻き戻し幅だけ戻ります。",
@@ -1482,8 +1482,8 @@ const settings: Record<string, string> = {
   "My library": "マイライブラリ",
   Anticipated: "期待作",
   "Custom calendar": "カスタムカレンダー",
-  "Harbor checks harbor.site for new versions and installs them in place. Nothing installs until you choose to, and a dismissed update never nags you again.":
-    "Harborはharbor.siteで新しいバージョンを確認し、アプリをそのまま更新します。選択するまで何もインストールされず、一度スキップした更新が再び表示されることもありません。",
+  "Frame checks harbor.site for new versions and installs them in place. Nothing installs until you choose to, and a dismissed update never nags you again.":
+    "Frameはharbor.siteで新しいバージョンを確認し、アプリをそのまま更新します。選択するまで何もインストールされず、一度スキップした更新が再び表示されることもありません。",
   "Frame checks its GitHub releases for new versions and installs them in place. Nothing installs until you choose to, and a dismissed update never nags you again.":
     "FrameはGitHubで新しいバージョンを確認し、アプリをそのまま更新します。選択するまで何もインストールされず、一度スキップした更新が再び表示されることもありません。",
   "Library, watch progress, and addon collection sync from this account.":
@@ -1497,8 +1497,8 @@ const settings: Record<string, string> = {
   "Your color": "あなたのカラー",
   "Used for your cursor in Watch Together, your draw color, and your name pill in chat.":
     "「一緒に観る」でのカーソル、描画色、チャットの名前ラベルに使われます。",
-  "Harbor catches stremio:// install links so the configure-and-install flow stays inside the app. Every install also syncs to your Stremio account, so the official app remains the canonical home for your library.":
-    "Harborがstremio://インストールリンクを処理するため、設定からインストールまでアプリ内で完結します。インストール内容は毎回Stremioアカウントにも同期されるため、公式アプリが引き続きライブラリの基準となります。",
+  "Frame catches stremio:// install links so the configure-and-install flow stays inside the app. Every install also syncs to your Stremio account, so the official app remains the canonical home for your library.":
+    "Frameがstremio://インストールリンクを処理するため、設定からインストールまでアプリ内で完結します。インストール内容は毎回Stremioアカウントにも同期されるため、公式アプリが引き続きライブラリの基準となります。",
   "Let your Discord friends see what you are watching, with the show poster and a live progress bar. Desktop only, and only your own Discord client is involved (nothing touches a Frame server).":
     "番組ポスターとリアルタイムの進捗バー付きで、視聴中の作品をDiscordのフレンドに表示します。デスクトップ版のみ対応し、ご自身のDiscordクライアントだけを使用します（Frameサーバーには一切接続しません）。",
   "Saved {d} from Frame {a}.": "Frame {a}から{d}を保存しました。",
@@ -1834,13 +1834,13 @@ const settings: Record<string, string> = {
   "Get beta updates": "ベータ版の更新を受け取る",
   "Receive early builds with the newest fixes before they reach the stable release. Betas can be rough around the edges; switch this off to return to stable at the next update.":
     "安定版のリリース前に、最新の修正を含む先行ビルドを受け取ります。ベータ版は動作が不安定な場合があります。オフにすると、次回の更新時に安定版へ戻ります。",
-  "Catch stremio:// install links inside Harbor": "stremio://インストールリンクをHarbor内で開く",
-  "Harbor's in-app installer animates the manifest install and keeps you in context. Anything Harbor installs is also synced to your Stremio account, so the official app stays the canonical library. Turn this off and Stremio becomes the only handler for stremio:// links; Harbor still installs anything you trigger from inside the app (Configure & install, paste, drag-and-drop).":
-    "Harborのアプリ内インストーラーでは、マニフェストのインストールがアニメーションで表示され、そのまま操作を続けられます。HarborでインストールしたものはStremioアカウントにも同期されるため、公式アプリのライブラリが常に正となります。オフにすると、stremio://リンクはStremioのみで開かれます。Harbor内から実行したインストールは引き続きHarborで行われます（「設定してインストール」、貼り付け、ドラッグ＆ドロップ）。",
-  "Heads up: if Stremio is also installed, Windows may ask which app to use the first time a stremio:// link fires. Pick Harbor to make it stick.":
-    "注意: Stremioもインストールされている場合、stremio://リンクを初めて開く際に、使用するアプリをWindowsが確認することがあります。Harborを選ぶと、以後もHarborで開きます。",
-  "stremio:// links now open in the Stremio app. Harbor will only install when you trigger it from inside Harbor.":
-    "stremio://リンクはStremioアプリで開くようになりました。Harborでインストールされるのは、Harbor内から実行した場合のみです。",
+  "Catch stremio:// install links inside Frame": "stremio://インストールリンクをFrame内で開く",
+  "Frame's in-app installer animates the manifest install and keeps you in context. Anything Frame installs is also synced to your Stremio account, so the official app stays the canonical library. Turn this off and Stremio becomes the only handler for stremio:// links; Frame still installs anything you trigger from inside the app (Configure & install, paste, drag-and-drop).":
+    "Frameのアプリ内インストーラーでは、マニフェストのインストールがアニメーションで表示され、そのまま操作を続けられます。FrameでインストールしたものはStremioアカウントにも同期されるため、公式アプリのライブラリが常に正となります。オフにすると、stremio://リンクはStremioのみで開かれます。Frame内から実行したインストールは引き続きFrameで行われます（「設定してインストール」、貼り付け、ドラッグ＆ドロップ）。",
+  "Heads up: if Stremio is also installed, Windows may ask which app to use the first time a stremio:// link fires. Pick Frame to make it stick.":
+    "注意: Stremioもインストールされている場合、stremio://リンクを初めて開く際に、使用するアプリをWindowsが確認することがあります。Frameを選ぶと、以後もFrameで開きます。",
+  "stremio:// links now open in the Stremio app. Frame will only install when you trigger it from inside Frame.":
+    "stremio://リンクはStremioアプリで開くようになりました。Frameでインストールされるのは、Frame内から実行した場合のみです。",
   "Checking harbor.site for a newer build.": "harbor.siteで新しいビルドを確認しています。",
   "Checking GitHub for a newer build.": "GitHubで新しいビルドを確認しています。",
   "Downloading {pct}%": "ダウンロード中 {pct}%",

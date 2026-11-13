@@ -1,5 +1,5 @@
 import { APP_VERSION } from "@/lib/build-info";
-import { HARBOR_API_BASE } from "@/lib/config/endpoints";
+import { HARBOR_REPO_URL } from "@/lib/config/endpoints";
 
 export const SIMKL_API_BASE = "https://api.simkl.com";
 export const SIMKL_CLIENT_ID =
@@ -10,4 +10,4 @@ export const WATCHED_RATIO = 0.85;
 export const SIMKL_WATCHED_RATIO = 0.9;
 export const SIMKL_APP_NAME = "harbor";
 export const SIMKL_APP_VERSION = APP_VERSION;
-export const SIMKL_USER_AGENT = `Frame/${APP_VERSION} (+${HARBOR_API_BASE})`;
+export const SIMKL_USER_AGENT = `Frame/${APP_VERSION} (+${HARBOR_REPO_URL})`;

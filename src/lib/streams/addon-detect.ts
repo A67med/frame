@@ -32,7 +32,7 @@ export function isStatusOnlyAddon(addon: Pick<Addon, "manifest" | "transportUrl"
 }
 
 /**
- * Stremio's Local Files addon: the Stremio app hosts it on loopback (/local-addon). Harbor
+ * Stremio's Local Files addon: the Stremio app hosts it on loopback (/local-addon). Frame
  * serves local files from its own library, so the addon can never answer here and querying
  * it only surfaces a spurious failure.
  */

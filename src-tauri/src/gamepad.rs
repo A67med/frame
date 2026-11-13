@@ -93,7 +93,7 @@ fn map_axis(a: Axis) -> Option<&'static str> {
 }
 
 fn frontend_axis_value(axis: &str, value: f32) -> f32 {
-    // gilrs treats up as positive, while the browser Gamepad API and Harbor's
+    // gilrs treats up as positive, while the browser Gamepad API and Frame's
     // frontend mapping treat up as negative.
     match axis {
         "ly" | "ry" => -value,

@@ -2,7 +2,9 @@ import { safeFetch } from "@/lib/safe-fetch";
 import type { SkipSegment } from "./types";
 import { HARBOR_API_BASE } from "@/lib/config/endpoints";
 
-const CORPUS_URL = `${HARBOR_API_BASE}/updates/ad-segments.json`;
+// The signed corpus was served by harbor.site; with no configured host the
+// lookup is skipped and skip-intro keeps its other sources.
+const CORPUS_URL = HARBOR_API_BASE ? `${HARBOR_API_BASE}/updates/ad-segments.json` : "";
 const CORPUS_PUBKEY = "yszDA2+G0Rtep39h67iuhl8+5pCQkM+O4D4pMnpg4Ks=";
 
 type CorpusEntry = {

@@ -26,14 +26,7 @@ import { importForeignTheme } from "@/lib/theme-import";
 import { isHarborStyleName, parseHarborStyle, serializeHarborStyle } from "@/lib/harborstyle";
 import { useSettings } from "@/lib/settings";
 import { pushActivityHint } from "@/lib/discord/activity-hint";
-import {
-  FEATURED_CUSTOM_THEMES,
-  getThemeById,
-  TEMPLATE_THEMES,
-  THEME_PRESETS,
-  type ActiveThemeId,
-  type ThemePreset,
-} from "@/lib/theme";
+import { getThemeById, selectableThemes, type ActiveThemeId, type ThemePreset } from "@/lib/theme";
 import { useT } from "@/lib/i18n";
 
 export function CustomThemesSection({
@@ -293,28 +286,12 @@ export function CustomThemesSection({
   );
 }
 
-const PROMOTE_TO_FEATURED = new Set(["crunch"]);
-const PROMOTE_TO_BUILTIN = new Set(["velvet"]);
-
 function buildEntries(userThemes: CustomTheme[]): LibraryEntry[] {
-  const list: LibraryEntry[] = [];
-  for (const t of Object.values(THEME_PRESETS)) {
-    list.push({
-      theme: t,
-      category: PROMOTE_TO_FEATURED.has(t.id) ? "Featured" : "Built-in",
-      removable: false,
-    });
-  }
-  for (const t of FEATURED_CUSTOM_THEMES) {
-    list.push({ theme: t as ThemePreset, category: "Featured", removable: false });
-  }
-  for (const t of TEMPLATE_THEMES) {
-    list.push({
-      theme: t as ThemePreset,
-      category: PROMOTE_TO_BUILTIN.has(t.id) ? "Built-in" : "Template",
-      removable: false,
-    });
-  }
+  const list: LibraryEntry[] = selectableThemes().map((theme) => ({
+    theme,
+    category: "Built-in",
+    removable: false,
+  }));
   for (const t of userThemes) {
     list.push({ theme: t as ThemePreset, category: "Yours", removable: true });
   }

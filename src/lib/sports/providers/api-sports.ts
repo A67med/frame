@@ -379,7 +379,7 @@ export function createApiSportsProvider(options: {
 const apiSports = createApiSportsProvider({
   getKey: readSportsApiKey,
   fetch: (url, init) => {
-    // Credentials go only to the provider, never Harbor's generic web proxy or a redirect target.
+    // Credentials go only to the provider, never Frame's generic web proxy or a redirect target.
     const request = { ...init, credentials: "omit" as const, redirect: "error" as const };
     return typeof window !== "undefined" && "__TAURI_INTERNALS__" in window
       ? nativeFetch(url, { ...request, maxRedirections: 0 })

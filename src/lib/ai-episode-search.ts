@@ -1,6 +1,6 @@
 import { AiSearchError, extractJsonArray, friendlyAiError } from "./ai-search";
 import { DEFAULT_AI_MODEL, migrateModelId, supportsSampling } from "./ai-models";
-import { HARBOR_API_BASE } from "@/lib/config/endpoints";
+import { HARBOR_REPO_URL } from "@/lib/config/endpoints";
 
 const OPENROUTER = "https://openrouter.ai/api/v1/chat/completions";
 const GROQ = "https://api.groq.com/openai/v1/chat/completions";
@@ -31,7 +31,7 @@ export async function aiFindEpisodes(
     "Content-Type": "application/json",
   };
   if (!isGroq) {
-    headers["HTTP-Referer"] = HARBOR_API_BASE;
+    headers["HTTP-Referer"] = HARBOR_REPO_URL;
     headers["X-Title"] = "Frame";
   }
   const resolved = migrateModelId(model.trim()) || DEFAULT_AI_MODEL;

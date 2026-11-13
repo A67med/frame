@@ -6,9 +6,9 @@ pub const CABLE_SOURCE: &str = "harbor_virtual_mic";
 #[allow(dead_code)]
 pub const CABLE_GROUP: &str = "harbor_cable";
 #[allow(dead_code)]
-pub const CABLE_SINK_LABEL: &str = "Harbor Broadcast";
-pub const CABLE_MIC_LABEL: &str = "Harbor Virtual Mic";
-pub const CABLE_MONITOR_LABEL: &str = "Monitor of Harbor Broadcast";
+pub const CABLE_SINK_LABEL: &str = "Frame Broadcast";
+pub const CABLE_MIC_LABEL: &str = "Frame Virtual Mic";
+pub const CABLE_MONITOR_LABEL: &str = "Monitor of Frame Broadcast";
 #[allow(dead_code)]
 pub const CABLE_RATE: u32 = 48_000;
 pub const CABLE_RATE_MIN: u32 = 8_000;

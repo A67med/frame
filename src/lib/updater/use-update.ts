@@ -216,6 +216,10 @@ export function setExperimentalUpdates(enabled: boolean): boolean {
 }
 
 async function readExperimentalManifest(path = "latest-experimental.json"): Promise<unknown> {
+  // Experimental manifests were only ever served by harbor.site. Without a
+  // configured host there is no experimental build, so report none instead of
+  // requesting a relative URL from the app's own origin.
+  if (!HARBOR_API_BASE) return null;
   // AbortSignal.timeout is unavailable in older supported macOS WebViews.
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), 15_000);
@@ -236,7 +240,7 @@ async function readExperimentalManifest(path = "latest-experimental.json"): Prom
 
 export async function checkForUpdate(manual = false): Promise<void> {
   if (!IS_TAURI) return;
-  // The downloaded update package always installs to the real Harbor install
+  // The downloaded update package always installs to the real Frame install
   // location regardless of this build's identifier, so in dev it would silently
   // update and relaunch the user's separately installed release build instead
   // of this one. Never check for updates from a dev build.
@@ -361,6 +365,7 @@ export async function checkForUpdate(manual = false): Promise<void> {
       dismissed,
       panelOpen: manual || dismissed !== update.version,
     });
+    if (dismissed !== update.version) void downloadInBackground(update.version);
   } catch (e) {
     if (currentRequest(request, selected)) {
       set({
@@ -535,6 +540,38 @@ export async function downloadUpdate(): Promise<void> {
   } catch (e) {
     set({ status: "error", error: String(e) });
     if (!currentRequest(request, selected)) clearStagedUpdate();
+  }
+}
+
+/** Versions whose background download failed this session; never retried silently. */
+const backgroundDownloadFailed = new Set<string>();
+
+function connectionSavesData(): boolean {
+  try {
+    const connection = (navigator as Navigator & { connection?: { saveData?: boolean } })
+      .connection;
+    return connection?.saveData === true;
+  } catch {
+    return false;
+  }
+}
+
+/**
+ * Fetches a signed stable update as soon as it is found, so it is ready when
+ * the user chooses to install. Installing and restarting still wait for the
+ * user. Skipped for versions the user dismissed, on Data Saver connections,
+ * and for a version whose background download already failed this session;
+ * a failure returns quietly to "available" so the manual button still works.
+ */
+async function downloadInBackground(version: string): Promise<void> {
+  if (backgroundDownloadFailed.has(version) || connectionSavesData()) return;
+  if (state.status !== "available" || state.version !== version || state.handoff) return;
+  await downloadUpdate();
+  // downloadUpdate() changes the shared state; read it again after the await.
+  const after: UpdateState = state;
+  if (after.status === "error" && after.version === version) {
+    backgroundDownloadFailed.add(version);
+    set({ status: "available", error: null, progress: 0, downloadedBytes: 0, totalBytes: 0 });
   }
 }
 

@@ -613,7 +613,7 @@ const catalog: Record<string, string> = {
   Catalogs: "Katalog",
   "Catalogs & metadata": "Katalog & metadata",
   "Catalogs to show": "Katalog yang ditampilkan",
-  "Catch stremio:// install links inside Harbor": "Tangani tautan pemasangan stremio:// di Harbor",
+  "Catch stremio:// install links inside Frame": "Tangani tautan pemasangan stremio:// di Frame",
   Categories: "Kategori",
   Cause: "Tujuan",
   "Celebrated actors": "Aktor ternama",

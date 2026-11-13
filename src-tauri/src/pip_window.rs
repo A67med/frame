@@ -28,7 +28,7 @@ mod win {
         let title = String::from_utf16_lossy(&title_buf[..title_len as usize]);
         let is_mpv = class_name == "mpv"
             || class_name.starts_with("mpv ")
-            || (class_name.is_empty() && title.starts_with("Harbor"));
+            || (class_name.is_empty() && title.starts_with("Frame"));
         if is_mpv {
             (*(lparam.0 as *mut Vec<isize>)).push(hwnd.0 as isize);
         }
@@ -154,11 +154,11 @@ async fn ensure_pip_window(app: &AppHandle) -> Result<(), String> {
     }
     let app_clone = app.clone();
     // WebView2 creation must not run inside the UI event loop: it can deadlock that loop,
-    // including the tray and every other Harbor window.
+    // including the tray and every other Frame window.
     tauri::async_runtime::spawn_blocking(move || -> Result<(), String> {
         let url = WebviewUrl::App("index.html?harbor-video-pip=1".into());
         let builder = WebviewWindowBuilder::new(&app_clone, PIP_LABEL, url)
-            .title("Harbor")
+            .title("Frame")
             .inner_size(480.0, 270.0)
             .min_inner_size(240.0, 135.0)
             .resizable(true)
@@ -166,7 +166,7 @@ async fn ensure_pip_window(app: &AppHandle) -> Result<(), String> {
             .skip_taskbar(true)
             .shadow(false)
             .visible(false)
-            // Deliberately unowned. An owned window only floats above Harbor, and this
+            // Deliberately unowned. An owned window only floats above Frame, and this
             // has to stay above whatever the viewer switches to.
             .always_on_top(true);
         // transparent() needs macos-private-api, so only Windows sets it here. The mac
@@ -290,7 +290,7 @@ pub async fn pip_window_exit(
     Ok(())
 }
 
-/// Restore floating playback to Harbor and reveal its existing main window.
+/// Restore floating playback to Frame and reveal its existing main window.
 #[tauri::command]
 pub async fn pip_window_restore(app: AppHandle, state: tauri::State<'_, PipWindowState>) -> Result<(), String> {
     pip_window_exit(app.clone(), state).await?;

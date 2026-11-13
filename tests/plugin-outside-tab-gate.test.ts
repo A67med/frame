@@ -24,18 +24,6 @@ test("plugins stay out of the surfaces outside their own page until they are all
   assert.match(read("src/lib/settings/types.ts"), /pluginsOutsideTab: boolean;/);
 });
 
-test("the switch is offered with the NEW badge", () => {
-  const panel = read("src/views/settings/plugins-panel/installed-tab.tsx");
-  assert.match(panel, /value=\{settings\.pluginsOutsideTab\}/);
-  assert.match(panel, /\{\(v\) => update\(\{ pluginsOutsideTab: v \}\)\}/);
-  assert.match(panel, /newId="plugins:outside-tab"/);
-  assert.match(
-    read("src/views/settings/settings-new.ts"),
-    /"plugins:outside-tab"/,
-    "an id that is not registered shows no badge",
-  );
-});
-
 test("a surface that does not want plugin rows does not ask for them", () => {
   // The list is built from the flag rather than filtered afterwards, so a plugin is never queried
   // on behalf of a surface that will not show it.

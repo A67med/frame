@@ -3,7 +3,7 @@ import { createPortal } from "react-dom";
 import { useGamepads, type GamepadInfo } from "@/lib/gamepad/store";
 import { useT } from "@/lib/i18n";
 import { useSettings } from "@/lib/settings";
-import { ControllerSvg, detectLayout } from "@/views/settings/controllers-panel/controller-svg";
+import { ControllerSvg, detectLayout } from "@/components/controller-art/controller-svg";
 
 const SHOW_MS = 4200;
 

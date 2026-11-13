@@ -1,14 +1,9 @@
 import letterboxdLogo from "@/assets/addon-logos/letterboxd.png";
-import stremioLogo from "@/assets/stremio.png";
 import type { SectionId } from "./shared";
 
 export type TabEntry = { id: string; label: string; icon: string; img?: string };
 
 export const SECTION_TABS: Partial<Record<SectionId, TabEntry[]>> = {
-  account: [
-    { id: "you", label: "Your profile", icon: "UserRound" },
-    { id: "stremio", label: "Stremio", icon: "Play", img: stremioLogo },
-  ],
   player: [
     { id: "play", label: "Play", icon: "PlayStart" },
     { id: "engine", label: "Engine", icon: "Cpu" },
@@ -56,10 +51,6 @@ export const SECTION_TABS: Partial<Record<SectionId, TabEntry[]>> = {
     { id: "engine", label: "Engine", icon: "TorrentEngine" },
     { id: "server", label: "Server", icon: "TorrentServer" },
   ],
-  plugins: [
-    { id: "plugins", label: "Plugins", icon: "Puzzle" },
-    { id: "repositories", label: "Repositories", icon: "Package" },
-  ],
   library: [
     { id: "home", label: "Home", icon: "House" },
     { id: "cards", label: "Cards", icon: "LayoutGrid" },
@@ -82,28 +73,10 @@ export const SECTION_TABS: Partial<Record<SectionId, TabEntry[]>> = {
     { id: "rules", label: "Custom rules", icon: "BadgeRules" },
     { id: "packs", label: "Packs", icon: "Package" },
   ],
-  hotkeys: [
-    { id: "keys", label: "Shortcuts", icon: "Keyboard" },
-    { id: "behaviour", label: "Behaviour", icon: "KeyboardBehavior" },
-  ],
-  controllers: [
-    { id: "setup", label: "Setup", icon: "Gamepad2" },
-    { id: "mapping", label: "Buttons & sticks", icon: "Joystick" },
-  ],
-  tv: [
-    { id: "devices", label: "Devices", icon: "Cast" },
-    { id: "look", label: "Look", icon: "TvAppearance" },
-    { id: "watching", label: "Watching", icon: "TvPlayback" },
-    { id: "content", label: "Content", icon: "Shield" },
-  ],
   storage: [
     { id: "overview", label: "Overview", icon: "HardDrive" },
     { id: "video", label: "Video files", icon: "FileVideo" },
     { id: "caches", label: "Caches", icon: "Trash2" },
-  ],
-  relay: [
-    { id: "status", label: "Status", icon: "Relay" },
-    { id: "manage", label: "Manage", icon: "RelaySettings" },
   ],
   trackers: [{ id: "letterboxd", label: "Letterboxd", icon: "Clapperboard", img: letterboxdLogo }],
   advanced: [

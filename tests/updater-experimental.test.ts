@@ -70,17 +70,17 @@ function manifest() {
     notes: "Test fixes",
     platforms: {
       "windows-x86_64": {
-        url: "https://example.test/0.9.123/Harbor.exe",
+        url: "https://example.test/0.9.123/Frame.exe",
         signature: "signed-test-artifact",
       },
       "darwin-aarch64": {
-        url: "https://example.test/0.9.123/Harbor.app.tar.gz",
+        url: "https://example.test/0.9.123/Frame.app.tar.gz",
         signature: "signed-mac-artifact",
       },
     },
     installer: {
       "windows-x86_64": {
-        url: "https://example.test/0.9.123/Harbor-installer.exe",
+        url: "https://example.test/0.9.123/Frame-installer.exe",
         signature: "signed-test-installer",
         payloadVersion: 9123,
         size: 2048,
@@ -301,7 +301,7 @@ function harness(
       },
       "@/lib/config/endpoints": {
         HARBOR_API_BASE: "https://example.test",
-        HARBOR_RELEASES_URL: "https://github.com/crazyrabbit0/harbor/releases",
+        HARBOR_RELEASES_URL: "https://github.com/abdallahkattriah-sketch/frame/releases",
       },
       "@/lib/i18n": { t: (s: string) => s },
       "./channel": channel,
@@ -407,7 +407,7 @@ test("account requests use native-aware transport and retry with the refreshed t
     },
     "@/lib/config/endpoints": {
       HARBOR_API_BASE: "https://example.test",
-      HARBOR_RELEASES_URL: "https://github.com/crazyrabbit0/harbor/releases",
+      HARBOR_RELEASES_URL: "https://github.com/abdallahkattriah-sketch/frame/releases",
     },
     "@/lib/safe-fetch": {
       safeFetch: async (url: string, options: { headers: unknown; signal: unknown }) => {
@@ -469,7 +469,7 @@ test("verification distinguishes rejected sessions from network failures without
   }
 });
 
-test("experimental access recognizes only the approved Harbor account badges", () => {
+test("experimental access recognizes only the approved Frame account badges", () => {
   let author: { badges?: Array<{ name: string }> } | null = null;
   const access = load<ExperimentalAccess>(
     "src/lib/updater/experimental-access.ts",
@@ -748,7 +748,7 @@ test("missing native platform opens the download site instead of another archite
     await h.updater.openManualDownload();
     assert.deepEqual(
       h.calls.manualUrls,
-      ["https://github.com/crazyrabbit0/harbor/releases"],
+      ["https://github.com/abdallahkattriah-sketch/frame/releases"],
       platform,
     );
   }
@@ -763,7 +763,7 @@ test("manual download uses the native platform rather than the WebView user agen
 test("manual Apple Silicon download keeps the matching DMG conversion", async () => {
   const h = harness({ beta: true, platform: "darwin-aarch64" });
   await h.updater.openManualDownload();
-  assert.deepEqual(h.calls.manualUrls, ["https://example.test/0.9.123/Harbor.dmg"]);
+  assert.deepEqual(h.calls.manualUrls, ["https://example.test/0.9.123/Frame.dmg"]);
 });
 
 test("unknown device and failed manifest do not choose an installer", async () => {
@@ -774,7 +774,7 @@ test("unknown device and failed manifest do not choose an installer", async () =
     await h.updater.openManualDownload();
     assert.deepEqual(
       h.calls.manualUrls,
-      ["https://github.com/crazyrabbit0/harbor/releases"],
+      ["https://github.com/abdallahkattriah-sketch/frame/releases"],
       failure,
     );
   }
@@ -799,9 +799,11 @@ test("channel changes are blocked during verification; external changes invalida
   for (const managed of [false, true]) {
     const h = harness({ managed });
     if (managed) h.updater.setExperimentalUpdates(true);
-    await h.updater.checkForUpdate();
+    // Stable updates start downloading in the background as soon as the check
+    // finds one, so hold that download (or the manual one) in flight here.
     const wait = deferred<void>();
     h.config.downloadWait = wait.promise;
+    await h.updater.checkForUpdate();
     const download = h.updater.downloadUpdate();
     while (h.calls.stage + h.calls.download === 0) await Promise.resolve();
     assert.equal(h.updater.setExperimentalUpdates(false), false);
@@ -809,10 +811,53 @@ test("channel changes are blocked during verification; external changes invalida
     h.channel.writeUpdateChannel(managed ? "stable" : "beta");
     wait.resolve();
     await download;
+    while (h.updater.useUpdate().status === "downloading") await Promise.resolve();
     await h.updater.installUpdate();
     assert.equal(h.updater.useUpdate().status, "idle");
     assert.equal(h.calls.install + h.calls.launch, 0);
   }
+});
+
+async function settle(h: ReturnType<typeof harness>) {
+  for (let i = 0; i < 50 && h.updater.useUpdate().status === "downloading"; i++) {
+    await new Promise((r) => setTimeout(r, 0));
+  }
+}
+
+test("stable updates download in the background but never install on their own", async () => {
+  const h = harness({ managed: false });
+  await h.updater.checkForUpdate();
+  await settle(h);
+  assert.equal(h.calls.download, 1);
+  assert.equal(h.updater.useUpdate().status, "downloaded");
+  assert.equal(h.calls.install + h.calls.launch, 0);
+  // A later check neither re-downloads nor discards the ready update.
+  await h.updater.checkForUpdate();
+  assert.equal(h.calls.download, 1);
+  assert.equal(h.updater.useUpdate().status, "downloaded");
+});
+
+test("a dismissed version is not downloaded in the background", async () => {
+  const h = harness({ managed: false });
+  h.localStorage.setItem("harbor.update.dismissed", "0.9.123");
+  await h.updater.checkForUpdate();
+  await settle(h);
+  assert.equal(h.calls.download, 0);
+  assert.equal(h.updater.useUpdate().status, "available");
+});
+
+test("a failed background download returns to available and is not retried silently", async () => {
+  const h = harness({ managed: false });
+  h.config.signatureFailure = true;
+  await h.updater.checkForUpdate();
+  await settle(h);
+  assert.equal(h.calls.download, 1);
+  assert.equal(h.updater.useUpdate().status, "available");
+  assert.equal(h.updater.useUpdate().error, null);
+  await h.updater.checkForUpdate();
+  await settle(h);
+  assert.equal(h.calls.download, 1, "the same version is not fetched again on its own");
+  assert.equal(h.calls.install, 0);
 });
 
 test("switching after download or during native preparation prevents stale installation", async () => {

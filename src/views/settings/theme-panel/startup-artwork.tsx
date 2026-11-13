@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { LoaderCircle, RotateCcw, Upload } from "lucide-react";
 import { CustomArtwork, useCustomArtwork } from "@/components/custom-artwork";
 import { HarborLoader } from "@/components/harbor-loader";
-import { HarborMark } from "@/components/icons/harbor-mark";
+import { FrameMark } from "@/components/icons/frame-mark";
 import { ARTWORK_ACCEPT, type ArtworkRole } from "@/lib/custom-artwork-data";
 import { importArtwork } from "@/lib/custom-artwork-import";
 import { saveArtwork } from "@/lib/custom-artwork-store";
@@ -57,7 +57,7 @@ function ArtworkSetting({ role }: { role: ArtworkRole }) {
               role === "loading" ? (
                 <HarborLoader size="sm" original />
               ) : (
-                <HarborMark className="h-16 w-16 text-ink" />
+                <FrameMark className="h-16 w-16 text-ink" />
               )
             }
           />

@@ -577,8 +577,8 @@ const coverage: Record<string, string> = {
   "Delete comment": "删除评论",
   "Export as .m3u": "导出为 .m3u",
   anime: "动漫",
-  "Harbor catches stremio:// install links so the configure-and-install flow stays inside the app.":
-    "Harbor 会接管 stremio:// 安装链接，让配置和安装流程都在应用内完成。",
+  "Frame catches stremio:// install links so the configure-and-install flow stays inside the app.":
+    "Frame 会接管 stremio:// 安装链接，让配置和安装流程都在应用内完成。",
   "Searching…": "搜索中…",
   "profile.primary": "主个人资料",
   "Track switching isn't supported on the current engine. The file's default audio is playing.":

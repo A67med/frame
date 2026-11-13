@@ -511,7 +511,7 @@ async fn init(app: AppHandle, cancellation: CancellationToken) -> Result<(), Str
         }
     };
     // Persisted stream-cache torrents must never resume peer traffic merely
-    // because Harbor started. A real HTTP stream request resumes them on demand.
+    // because Frame started. A real HTTP stream request resumes them on demand.
     pause_all_torrents(&session).await;
     let side_dht = dht_boot::build(session.cancellation_token().child_token()).await;
     let listener = TcpListener::bind(SocketAddr::from(([127, 0, 0, 1], 0)))

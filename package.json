@@ -1,6 +1,6 @@
 {
-  "name": "harbor",
-  "version": "0.1.0",
+  "name": "frame",
+  "version": "0.2.0",
   "private": true,
   "license": "MIT",
   "type": "module",
@@ -24,7 +24,8 @@
     "android:init": "tauri android init",
     "android:dev": "tauri android dev",
     "android:build": "tauri android build --apk --target aarch64",
-    "setup": "npm run setup:binaries && npm run setup:libmpv && npm run setup:mpv && npm run setup:fonts && npm run setup:capstan",
+    "setup": "npm run setup:binaries && npm run setup:libmpv && npm run setup:mpv && npm run setup:vcruntime && npm run setup:fonts && npm run setup:capstan",
+    "setup:vcruntime": "node scripts/copy-vc-runtime.mjs",
     "setup:binaries": "node scripts/fetch-binaries.mjs",
     "setup:libmpv": "node scripts/fetch-libmpv.mjs",
     "setup:mpv": "node scripts/fetch-mpv.mjs",

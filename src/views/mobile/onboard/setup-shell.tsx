@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import { HarborMark } from "@/components/icons/harbor-mark";
+import { FrameMark } from "@/components/icons/frame-mark";
 import { useT } from "@/lib/i18n";
 import { SETUP_CSS } from "./setup-ui";
 import type { LinkStatus } from "./use-setup-link";
@@ -18,7 +18,7 @@ export type SetupChrome = {
   idleHost?: boolean;
   stepIndex: number;
   stepCount: number;
-  /** Pieces of Harbor's mark this run has earned, 0 to BOAT_PARTS. */
+  /** Pieces of Frame's mark this run has earned, 0 to BOAT_PARTS. */
   built: number;
 };
 
@@ -51,7 +51,7 @@ export function SetupShell({
       >
         <div className="flex items-center justify-between gap-3">
           <span className="flex min-w-0 items-center gap-2">
-            <HarborMark className="h-[15px] w-[15px] shrink-0 text-ink" />
+            <FrameMark className="h-[15px] w-[15px] shrink-0 text-ink" />
             <span className="truncate text-[15px] font-bold tracking-[-0.01em] text-ink">
               {t("Set up Frame")}
             </span>

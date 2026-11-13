@@ -1,60 +1,81 @@
 # Frame
 
-A personal desktop media app for movies and TV, built on [Harbor](https://github.com/crazyrabbit0/harbor) with Tauri 2, React, TypeScript, Rust and libmpv.
+A personal desktop media app for movies and TV, built with Tauri 2, React, TypeScript, Rust and libmpv.
 
-Version 0.1.0.
+Version 0.2.0.
+
+Frame began as a fork of [Harbor](https://github.com/crazyrabbit0/harbor), a Stremio client, and keeps its MIT license and notice. See [LICENSE](LICENSE) and `src-tauri/THIRD-PARTY-NOTICES.txt`.
+
+## Screenshots
+
+| Sidebar                                                                                                  | Theme selection                                                                                  |
+| -------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------ |
+| <img src="docs/screenshots/sidebar.png" alt="Frame sidebar with Settings above the profile" width="160"> | <img src="docs/screenshots/theme-selection.png" alt="Theme and appearance settings" width="560"> |
+
+| Backup & restore                                                                      | Choosing what a backup includes                                                                            |
+| ------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------- |
+| <img src="docs/screenshots/backup.png" alt="Backup and restore settings" width="420"> | <img src="docs/screenshots/backup-export.png" alt="Backup export dialog with password option" width="420"> |
 
 ## What it does
 
 - **Browse:** Home, Discover, Movies, TV Shows and My Library, with global search, advanced filters and right-click menus.
-- **Radar:** upcoming theatrical releases, digital releases, newly released films and popular picks. Egypt is the default release region, and Radar can favour films from people you follow.
-- **Following:** the actors and directors you follow, shared with Radar.
+- **Radar:** For You, Trending / Popular, Digital Releases, Discover and Upcoming / New Releases, using your computer's local time zone.
+- **Following:** the actors, directors and crew you follow, their latest and upcoming work, and people you might like. Radar and Following share the same list.
 - **Watch:** a native mpv player with embedded playback, online subtitles, resume, skip intro and outro, picture-in-picture and the existing player extras.
-- **Sources:** Stremio and its add-ons, extensions and plugins, and local files, with metadata and artwork from TMDB.
+- **Sources:** Stremio and its add-ons, extensions and local files, with metadata and artwork from TMDB.
+- **Profile:** your Stremio account is your profile. Frame's local settings stay separate from it, and Frame works without signing in.
 - **Track:** Letterboxd is the only tracker.
-- **Details:** cast, crew and filmography, awards and ratings from metadata providers, and recommendations.
-- **Make it yours:** themes, Theme Studio and custom layouts. New installs start on the built-in Default theme, and themes export as `.framestyle` files.
-- **Together:** Watch Party through your own relay.
-- **More:** downloads, Big Picture (TV mode), catalogs, collections, the People rank, Wrapped, AI search, X-Ray and Spooktober.
+- **Themes:** Default, Stremio, Royal, Velvet and Amoled. Themes import and export as `.framestyle` files.
 
-Backups save as `frame-backup-YYYY-MM-DD.framex`. Both `.framex` and older Harbor `.harbx` backups can be imported.
+Backups save as `frame-backup-YYYY-MM-DD.framex`, optionally encrypted with a password (AES-256-GCM). Both `.framex` and older `.harbx` backups can be imported. Before a restore, the desktop app saves a copy of your current setup to its data folder (`backups/`, newest five kept), and a restore that cannot finish is rolled back. Custom JavaScript and HTML in a backup are only restored if you tick that option. Backups hold settings and app data only, never your video files.
 
-## What Frame removes from Harbor
+## Install
 
-Music, Manga, eBook, Games, the anime pages, Calendar, Sports, Kids, Live TV and IPTV, playlist VOD, Multiview, casting, Plex, Jellyfin and Emby, Discord, webhooks, Trakt, Simkl, AniList and MyAnimeList, multiple profiles, the Arabic interface, and everything that needed Harbor's servers, such as accounts, community themes and community collections.
+Requirements: Windows 10 or 11 (x64). macOS and Linux builds are also produced.
 
-Settings and data from a Harbor install are kept. Frame keeps Harbor's internal identifiers (`app.harbor`, `harbor.*` storage keys and `harbor://` links), so an existing profile carries over.
+Download the installer for your platform from [Releases](https://github.com/abdallahkattriah-sketch/frame/releases). The Windows installer includes mpv and its runtime files. Windows also needs WebView2, which the installer sets up if it's missing.
+
+Frame stores its data under the identifier `io.github.abdallahkattriah-sketch.frame`. On first launch it copies data from a v0.1.0 install (`app.harbor`) and leaves the original folder in place.
+
+## TMDB key
+
+Radar, Following and most artwork read from TMDB. Add your own key in **Settings > Sources & library > Library & metadata**.
 
 ## Build
 
-Requirements: Node with pnpm (through corepack), Rust, and the Tauri 2 prerequisites for your platform.
-
 ```sh
-corepack pnpm install
-corepack pnpm run setup        # fetches mpv, ffmpeg, fonts and other binaries
-corepack pnpm tauri dev        # run in development
-corepack pnpm tauri build      # build an installer
+pnpm install
+pnpm run setup          # fetches ffmpeg, yt-dlp, libmpv, mpv, fonts
+pnpm tauri build --bundles nsis
 ```
 
-Checks:
+The installer is written to `src-tauri/target/release/bundle/nsis/`. On Windows you also need the MSVC toolchain, CMake and the Rust toolchain.
+
+To regenerate the logo, icons and installer art, run `node scripts/generate-brand.mjs`, then `pnpm tauri icon src-tauri/icons/source.png`.
+
+## Updates
+
+Frame checks GitHub Releases for a newer version and downloads it in the background (unless you dismissed that version or your connection is in Data Saver mode). It installs and restarts only when you choose, and it refuses an update whose signature does not match the key built into the app. There is one stable channel.
+
+## Releases
+
+1. `node scripts/bump-version.mjs <x.y.z>`, commit, and merge to `main`.
+2. Tag that commit `v<x.y.z>` and push the tag.
+
+The Release workflow checks that the tag matches every version file and sits on `main`, builds all platforms, and creates a **draft** release behind the `release` environment. Nothing reaches users until the draft is published by hand. In-app updates need the `TAURI_SIGNING_PRIVATE_KEY` secret to match `plugins.updater.pubkey` in `src-tauri/tauri.conf.json`.
+
+## Development
 
 ```sh
-corepack pnpm run typecheck
-corepack pnpm test
+pnpm install
+pnpm dev                 # browser build on http://127.0.0.1:1420
+pnpm tauri dev           # desktop app
+pnpm run typecheck
+pnpm test
 ```
 
-`AGENTS.md` holds the full development notes inherited from Harbor.
-
-## Releases and updates
-
-The in-app updater reads releases from this repository. Before publishing a release, generate your own updater signing key (`pnpm tauri signer generate`), put its public half in `plugins.updater.pubkey` in `src-tauri/tauri.conf.json`, and store the private half as the `TAURI_SIGNING_PRIVATE_KEY` repository secret. The key in the config today belongs to the Harbor fork, so updates signed by anyone else will not install.
-
-## Contributing
-
-Bug reports and pull requests are welcome. Before opening a pull request, please read the
-development notes in `AGENTS.md` and make sure `corepack pnpm run typecheck` and
-`corepack pnpm test` pass.
+`scripts/test-installer-hooks.ps1` checks the Windows installer hook against decoy processes.
 
 ## License
 
-[MIT](./LICENSE). Frame is a modified version of Harbor; the original copyright notice is kept in `LICENSE`.
+MIT. See [LICENSE](LICENSE).

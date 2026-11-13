@@ -1,44 +1,25 @@
 import { SettingGroup } from "./kit";
 import { useSettings } from "@/lib/settings";
-import { useState } from "react";
 import { Info, Link2 } from "./icons";
 import { useT } from "@/lib/i18n";
 import { ROW_DESC, Section, ToggleRow } from "./shared";
-import { useSubTabs } from "./sub-tabs";
-import { IdentityTab } from "./account/identity-tab";
+import { StremioProfileHeader } from "./account/stremio-profile-header";
 import { StremioCard } from "./account/stremio-card";
 import { SyncedAddonsCard } from "./account/synced-addons-card";
 
 const isTauri = typeof window !== "undefined" && "__TAURI_INTERNALS__" in window;
 
-type Tab = "you" | "stremio";
-
 export function AccountStub() {
   const t = useT();
-  const [tab, setTab] = useState<Tab>("you");
-  const tabs = [
-    { id: "you" as const, label: t("Your profile") },
-    { id: "stremio" as const, label: t("Stremio") },
-  ];
-
-  useSubTabs(tabs, tab, (id) => setTab(id as Tab));
   return (
-    <div key={tab} className="harbor-cascade flex flex-col gap-10">
-      {tab === "you" && <IdentityTab />}
-      {tab === "stremio" && <StremioTab />}
-    </div>
-  );
-}
+    <div className="harbor-cascade flex flex-col gap-10">
+      <StremioProfileHeader />
 
-function StremioTab() {
-  const t = useT();
-  return (
-    <>
       {isTauri && (
         <Section
           title={t("Stremio install links")}
           subtitle={t(
-            "Harbor catches stremio:// install links so the configure-and-install flow stays inside the app. Every install also syncs to your Stremio account, so the official app remains the canonical home for your library.",
+            "Frame catches stremio:// install links so the configure-and-install flow stays inside the app. Every install also syncs to your Stremio account, so the official app remains the canonical home for your library.",
           )}
         >
           <StremioDeeplinkRow />
@@ -59,7 +40,7 @@ function StremioTab() {
       >
         <SyncedAddonsCard />
       </Section>
-    </>
+    </div>
   );
 }
 
@@ -70,9 +51,9 @@ function StremioDeeplinkRow() {
   return (
     <SettingGroup>
       <ToggleRow
-        label={t("Catch stremio:// install links inside Harbor")}
+        label={t("Catch stremio:// install links inside Frame")}
         sub={t(
-          "Harbor's in-app installer animates the manifest install and keeps you in context. Anything Harbor installs is also synced to your Stremio account, so the official app stays the canonical library. Turn this off and Stremio becomes the only handler for stremio:// links; Harbor still installs anything you trigger from inside the app (Configure & install, paste, drag-and-drop).",
+          "Frame's in-app installer animates the manifest install and keeps you in context. Anything Frame installs is also synced to your Stremio account, so the official app stays the canonical library. Turn this off and Stremio becomes the only handler for stremio:// links; Frame still installs anything you trigger from inside the app (Configure & install, paste, drag-and-drop).",
         )}
         leading={<Link2 size={18} strokeWidth={2} />}
         value={on}
@@ -83,10 +64,10 @@ function StremioDeeplinkRow() {
         <p className={`max-w-[66ch] ${ROW_DESC}`}>
           {on
             ? t(
-                "Heads up: if Stremio is also installed, Windows may ask which app to use the first time a stremio:// link fires. Pick Harbor to make it stick.",
+                "Heads up: if Stremio is also installed, Windows may ask which app to use the first time a stremio:// link fires. Pick Frame to make it stick.",
               )
             : t(
-                "stremio:// links now open in the Stremio app. Harbor will only install when you trigger it from inside Harbor.",
+                "stremio:// links now open in the Stremio app. Frame will only install when you trigger it from inside Frame.",
               )}
         </p>
       </div>

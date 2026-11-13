@@ -1,7 +1,7 @@
 import { usePreviewNavCustomization } from "@/lib/theme-preview";
 import { Lock } from "lucide-react";
 import { useState } from "react";
-import { HarborMark } from "@/components/icons/harbor-mark";
+import { FrameMark } from "@/components/icons/frame-mark";
 import { useAvailableNavItems, applyNavCustomization, type NavItem } from "@/chrome/nav-items";
 import { ProfileChip } from "@/chrome/sidebar/profile-chip";
 import { CollapseToggle } from "@/chrome/sidebar/collapse-toggle";
@@ -9,6 +9,7 @@ import { useContextMenu } from "@/lib/context-menu";
 import { NavHiddenTray, NavEditableItem, useNavDrag } from "@/chrome/nav-edit";
 import { useNavEditMode } from "@/chrome/nav-edit-mode";
 import { SidebarBigPictureEntry } from "@/chrome/sidebar/big-picture-entry";
+import { SidebarSettingsEntry } from "@/chrome/sidebar/settings-entry";
 import { ParentalPinModal } from "@/components/parental-pin-modal";
 import { useT } from "@/lib/i18n";
 import { useParental } from "@/lib/parental";
@@ -41,12 +42,16 @@ export function DraculaSidebar() {
     openContextMenu(e, { kind: "nav" });
   };
 
+  const available = useAvailableNavItems();
   const items = applyNavCustomization(
-    useAvailableNavItems(),
+    available,
     usePreviewNavCustomization(settings.navCustomization),
   );
   const primary = items.filter((i) => PRIMARY_IDS.has(i.id));
-  const collections = items.filter((i) => !PRIMARY_IDS.has(i.id));
+  // Settings lives in the bottom utility group, above the profile control.
+  const collections = items.filter((i) => !PRIMARY_IDS.has(i.id) && i.id !== "settings");
+  // Read from the full list so hiding Settings in the nav editor cannot remove it.
+  const settingsItem = available.find((i) => i.id === "settings");
 
   const isVisible = (item: NavItem) => {
     if (item.id === "kids") return false;
@@ -109,20 +114,13 @@ export function DraculaSidebar() {
               aria-label={t("chrome.harborHome")}
               className="flex items-center gap-2 text-ink"
             >
-              <HarborMark className="harbor-dracula-moon h-7 w-7 shrink-0 text-accent drop-shadow-[0_0_10px_var(--color-accent-soft)] lg:h-[26px] lg:w-[26px]" />
+              <FrameMark className="harbor-dracula-moon h-7 w-7 shrink-0 text-accent drop-shadow-[0_0_10px_var(--color-accent-soft)] lg:h-[26px] lg:w-[26px]" />
               {!collapsed && (
                 <span
                   className="hidden text-[40px] font-medium leading-none tracking-tight lg:inline"
                   style={{ fontFamily: "var(--font-display)", transform: "translateY(1px)" }}
                 >
-                  Harb
-                  <span
-                    className="inline-block"
-                    style={{ transform: "rotate(8deg)", transformOrigin: "50% 65%" }}
-                  >
-                    o
-                  </span>
-                  r
+                  Frame
                 </span>
               )}
             </button>
@@ -165,6 +163,14 @@ export function DraculaSidebar() {
             <div className={`mb-1 flex flex-col gap-1 ${collapsed ? "items-center" : ""}`}>
               <SidebarBigPictureEntry collapsed={collapsed} />
               <CollapseToggle collapsed={collapsed} />
+              {settingsItem && (
+                <SidebarSettingsEntry
+                  active={view === settingsItem.view}
+                  gated={!!settingsItem.pinGated && locked}
+                  collapsed={collapsed}
+                  onClick={() => go(settingsItem)}
+                />
+              )}
             </div>
             {locked ? (
               <div

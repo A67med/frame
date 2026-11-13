@@ -620,8 +620,8 @@ const personalization: Record<string, string> = {
   "Save review": "İncelemeyi kaydet",
   "Save rule": "Kuralı kaydet",
   "Save status": "Durumu kaydet",
-  "Save the current frame (video only, no subtitles) as a PNG to Pictures/Harbor.":
-    "Geçerli video karesini altyazılar olmadan PNG biçiminde Pictures/Harbor klasörüne kaydedin.",
+  "Save the current frame (video only, no subtitles) as a PNG to Pictures/Frame.":
+    "Geçerli video karesini altyazılar olmadan PNG biçiminde Pictures/Frame klasörüne kaydedin.",
   "Save the worker source. Copy": "Worker kaynak kodunu kaydedin. Frame reposundaki",
   "Save the worker source. Copy {code1} from the Frame repo into a new directory as {code2}.":
     "Worker kaynak dosyasını kaydedin. Frame deposundaki {code1} dosyasını yeni bir dizine {code2} adıyla kopyalayın.",
@@ -958,8 +958,8 @@ const personalization: Record<string, string> = {
   "Start a voyage": "Yolculuğa başla",
   "Start after": "Şu süreden sonra başlat",
   "Start another": "Yeni bir yolculuğa başla",
-  "Start or stop recording a GIF of the video (no subtitles). Saves to Pictures/Harbor.":
-    "Videonun GIF kaydını başlatın veya durdurun (altyazılar dâhil değildir). Pictures/Harbor klasörüne kaydedilir.",
+  "Start or stop recording a GIF of the video (no subtitles). Saves to Pictures/Frame.":
+    "Videonun GIF kaydını başlatın veya durdurun (altyazılar dâhil değildir). Pictures/Frame klasörüne kaydedilir.",
   "Start over": "Baştan başla",
   "Start playback": "Oynatmayı başlat",
   "Start server": "Sunucuyu başlat",
@@ -1758,8 +1758,8 @@ const personalization: Record<string, string> = {
   "rpdb key": "RPDB anahtarı",
   shown: "gösterildi",
   skipped: "atlandı",
-  "stremio:// links now open in the Stremio app. Harbor will only install when you trigger it from inside Harbor.":
-    "stremio:// bağlantıları artık Stremio uygulamasında açılıyor. Harbor yalnızca Harbor içinden başlattığınızda yükleme yapacak.",
+  "stremio:// links now open in the Stremio app. Frame will only install when you trigger it from inside Frame.":
+    "stremio:// bağlantıları artık Stremio uygulamasında açılıyor. Frame yalnızca Frame içinden başlattığınızda yükleme yapacak.",
   "subdomain acts as the access token. There is no login.":
     "alt alan adı erişim anahtarı işlevi görür. Giriş gerekmez.",
   "subscriber API key": "abone API anahtarı",

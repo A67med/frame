@@ -10,7 +10,7 @@ const source = readFileSync(
   "utf8",
 );
 
-test("returning focus resumes playback that Harbor auto-paused", () => {
+test("returning focus resumes playback that Frame auto-paused", () => {
   const focusBranch = source.match(/else if \(autoPausedRef\.current\) \{[\s\S]*?\n\s{8}\}/);
 
   assert.ok(focusBranch, "auto-pause focus-return branch is missing");

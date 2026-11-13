@@ -12,7 +12,6 @@ import { settingsAnchor, type SectionId } from "./shared";
 import { TOP_GROUPS } from "./groups";
 import { markSectionSeen, useSettingsNew } from "./settings-new";
 import { useExperimentalAccess } from "@/lib/updater/experimental-access";
-import { useStreamPluginCount } from "@/lib/plugins";
 
 type IconProps = { size?: number; strokeWidth?: number };
 
@@ -40,45 +39,6 @@ function IconChevronRight(p: IconProps) {
   return (
     <IconBase {...p}>
       <path d="M9 5l7 7-7 7" />
-    </IconBase>
-  );
-}
-
-function IconRemotes(p: IconProps) {
-  return (
-    <IconBase {...p}>
-      <rect x="7.5" y="3.5" width="9" height="17" rx="2.4" />
-      <path d="M10.8 17.6h2.4" />
-      <path d="M19.6 7.2a6.6 6.6 0 0 1 0 4.6" />
-      <path d="M4.4 7.2a6.6 6.6 0 0 0 0 4.6" />
-    </IconBase>
-  );
-}
-
-function IconTvSettings(p: IconProps) {
-  return (
-    <IconBase {...p}>
-      <rect x="2.5" y="4.5" width="19" height="12.5" rx="2.2" />
-      <path d="M8.5 20.5h7" />
-      <path d="M12 17v3.5" />
-      <circle cx="12" cy="10.75" r="2.1" />
-      <path d="M12 6.6v1.4" />
-      <path d="M12 13.5v1.4" />
-      <path d="M15.6 8.7l-1.2.7" />
-      <path d="M9.6 12.1l-1.2.7" />
-      <path d="M15.6 12.8l-1.2-.7" />
-      <path d="M9.6 9.4l-1.2-.7" />
-    </IconBase>
-  );
-}
-
-function IconBigPicture(p: IconProps) {
-  return (
-    <IconBase {...p}>
-      <rect x="2.5" y="4.5" width="19" height="12.5" rx="2.2" />
-      <path d="M8.5 20.5h7" />
-      <path d="M12 17v3.5" />
-      <path d="M10 8.6l4.1 2.5-4.1 2.5z" />
     </IconBase>
   );
 }
@@ -161,19 +121,6 @@ function IconLibrary(p: IconProps) {
   );
 }
 
-function IconRelay(p: IconProps) {
-  return (
-    <IconBase {...p}>
-      <path d="M10.5 10 Q 12 8 13.5 10" strokeWidth="1.4" />
-      <path d="M8 7.5 Q 12 4.5 16 7.5" strokeWidth="1.4" />
-      <path d="M5.5 5 Q 12 1 18.5 5" strokeWidth="1.4" />
-      <path d="M8 12 V 20" strokeWidth="2.4" />
-      <path d="M16 12 V 20" strokeWidth="2.4" />
-      <path d="M8 16 H 16" strokeWidth="2.4" />
-    </IconBase>
-  );
-}
-
 function IconStreaming(p: IconProps) {
   return (
     <IconBase {...p}>
@@ -187,14 +134,6 @@ function IconFilters(p: IconProps) {
   return (
     <IconBase {...p}>
       <path d="M4 5.5h16l-6.1 7.2v5.2l-3.8 1.9v-7.1z" />
-    </IconBase>
-  );
-}
-
-function IconPlugins(p: IconProps) {
-  return (
-    <IconBase {...p}>
-      <path d="M14 7.5V5.6a1.6 1.6 0 0 1 3.2 0v1.9h1.4A1.9 1.9 0 0 1 20.5 9.4v1.6h-1.8a1.7 1.7 0 0 0 0 3.4h1.8v1.8a1.9 1.9 0 0 1-1.9 1.9h-1.8v-1.6a1.7 1.7 0 0 0-3.4 0v1.6H9.4a1.9 1.9 0 0 1-1.9-1.9v-1.8H5.9a1.6 1.6 0 0 1 0-3.2h1.6V9.4A1.9 1.9 0 0 1 9.4 7.5H14z" />
     </IconBase>
   );
 }
@@ -297,26 +236,6 @@ function IconPlayerLayout(p: IconProps) {
       <circle cx="10.5" cy="17" r="0.9" fill="currentColor" stroke="none" />
       <circle cx="14" cy="17" r="0.9" fill="currentColor" stroke="none" />
       <circle cx="17.5" cy="17" r="0.9" fill="currentColor" stroke="none" />
-    </IconBase>
-  );
-}
-
-function IconHotkeys(p: IconProps) {
-  return (
-    <IconBase {...p}>
-      <rect x="2.5" y="6" width="19" height="12" rx="2" />
-      <path d="M6 10h.01M9 10h.01M12 10h.01M15 10h.01M18 10h.01M6 14h12" strokeLinecap="round" />
-    </IconBase>
-  );
-}
-
-function IconController(p: IconProps) {
-  return (
-    <IconBase {...p}>
-      <path d="M8.5 8h7a5 5 0 0 1 4.9 4l1 5a2.2 2.2 0 0 1-4 1.6L15.6 15a2 2 0 0 0-1.6-.8h-4a2 2 0 0 0-1.6.8l-1.8 3.4a2.2 2.2 0 0 1-4-1.6l1-5A5 5 0 0 1 8.5 8z" />
-      <path d="M7.5 11.1v2.4M6.3 12.3h2.4" strokeLinecap="round" />
-      <circle cx="15.4" cy="11.6" r="0.9" fill="currentColor" stroke="none" />
-      <circle cx="17.2" cy="13" r="0.9" fill="currentColor" stroke="none" />
     </IconBase>
   );
 }
@@ -465,12 +384,6 @@ const NAV_GROUPS: Array<{ heading: string | null; items: NavItem[] }> = [
     heading: "Streaming",
     items: [
       {
-        id: "relay",
-        label: "Frame Relay",
-        Icon: IconRelay,
-        keywords: ["together", "watch party", "p2p", "host", "share"],
-      },
-      {
         id: "streaming",
         label: "Streaming sources",
         Icon: IconStreaming,
@@ -542,108 +455,6 @@ const NAV_GROUPS: Array<{ heading: string | null; items: NavItem[] }> = [
           "remux",
           "scrub freely",
           "webdav",
-        ],
-      },
-      {
-        id: "plugins",
-        label: "Plugins",
-        Icon: IconPlugins,
-        keywords: [
-          "plugin",
-          "plugins",
-          "provider",
-          "providers",
-          "repository",
-          "repositories",
-          "repo",
-          "scraper",
-          "scrapers",
-          "script",
-          "scripts",
-          "extension",
-          "extensions",
-          "manga sources",
-          "book sources",
-          "stream sources",
-          "manifest",
-        ],
-      },
-      {
-        id: "remotes",
-        label: "Remotes",
-        Icon: IconRemotes,
-        keywords: [
-          "remote",
-          "phone remote",
-          "manga remote",
-          "reader remote",
-          "web ui",
-          "harbor in browser",
-          "web app",
-          "11471",
-          "wifi",
-          "lan",
-          "couch",
-          "control from phone",
-          "cast",
-          "tv browser",
-          "flipbook remote",
-        ],
-      },
-      {
-        id: "tv",
-        label: "TV Settings",
-        Icon: IconTvSettings,
-        keywords: [
-          "tv",
-          "tv settings",
-          "android tv",
-          "big picture",
-          "10 foot",
-          "ten foot",
-          "living room",
-          "shield",
-          "fire stick",
-          "firestick",
-          "chromecast",
-          "google tv",
-          "set up my tv",
-          "configure tv",
-          "tv theme",
-          "tv subtitles",
-          "tv player",
-          "overscan",
-          "edge margin",
-          "couch",
-          "sync to tv",
-          "cloud",
-          "from my computer",
-        ],
-      },
-      {
-        id: "bigPicture",
-        label: "Big Picture",
-        Icon: IconBigPicture,
-        keywords: [
-          "big picture",
-          "couch",
-          "ten foot",
-          "10 foot",
-          "fullscreen",
-          "full screen",
-          "monitor",
-          "laptop",
-          "handheld",
-          "steam deck",
-          "launch",
-          "auto start",
-          "interface sounds",
-          "overscan",
-          "mosaic",
-          "edge margin",
-          "big picture button",
-          "open big picture",
-          "play on boot",
         ],
       },
     ],
@@ -758,32 +569,6 @@ const NAV_GROUPS: Array<{ heading: string | null; items: NavItem[] }> = [
         label: "Player layout",
         Icon: IconPlayerLayout,
         keywords: ["controls", "ui", "overlay", "skip", "trickplay", "thumbnail"],
-      },
-      {
-        id: "hotkeys",
-        label: "Hotkeys",
-        Icon: IconHotkeys,
-        keywords: ["shortcuts", "keys", "keyboard", "bindings"],
-      },
-      {
-        id: "controllers",
-        label: "Controllers",
-        Icon: IconController,
-        keywords: [
-          "controller",
-          "gamepad",
-          "joystick",
-          "joypad",
-          "xbox",
-          "playstation",
-          "ps4",
-          "ps5",
-          "dualshock",
-          "dualsense",
-          "deadzone",
-          "bluetooth controller",
-          "usb controller",
-        ],
       },
       {
         id: "language",
@@ -1027,105 +812,6 @@ const NAV_ITEM_BY_ID = new Map(NAV_GROUPS.flatMap((g) => g.items).map((i) => [i.
 
 const SETTINGS_OPTIONS: SettingsOption[] = [
   {
-    label: "Player controls in Big Picture",
-    section: "hotkeys",
-    tab: "behaviour",
-    anchorTitle: "Big Picture",
-    keywords: [
-      "big picture player",
-      "ten foot player",
-      "tenfoot controls",
-      "normal player in big picture",
-      "desktop player ui",
-      "use the normal player",
-      "same player as desktop",
-      "big picture controls too big",
-      "couch player",
-      "remote controls",
-      "player ui",
-      "playback controls size",
-    ],
-  },
-  {
-    label: "Use plugins",
-    section: "plugins",
-    tab: "plugins",
-    anchorTitle: "Use plugins",
-    keywords: [
-      "plugins",
-      "plugin",
-      "enable plugins",
-      "turn off plugins",
-      "pause plugins",
-      "group by repository",
-      "background checks",
-      "provider scripts",
-      "scrapers",
-    ],
-  },
-  {
-    label: "Installed plugins",
-    section: "plugins",
-    tab: "plugins",
-    anchorTitle: "Installed plugins",
-    keywords: [
-      "installed plugins",
-      "plugin list",
-      "manga sources",
-      "book sources",
-      "stream sources",
-      "remove plugin",
-      "update plugin",
-      "plugin settings",
-      "check it works",
-      "test provider",
-    ],
-  },
-  {
-    label: "Add a repository",
-    section: "plugins",
-    tab: "repositories",
-    anchorTitle: "Add a repository",
-    keywords: [
-      "add repository",
-      "add repo",
-      "repository link",
-      "manifest.json",
-      "github link",
-      "import repo",
-      "plugin repo",
-      "extension repo",
-      "mangayomi",
-    ],
-  },
-  {
-    label: "Your repositories",
-    section: "plugins",
-    tab: "repositories",
-    anchorTitle: "Your repositories",
-    keywords: [
-      "repositories",
-      "repos",
-      "remove repository",
-      "refresh repository",
-      "update all plugins",
-      "install plugin",
-    ],
-  },
-  {
-    label: "Check repositories daily",
-    section: "plugins",
-    tab: "repositories",
-    anchorTitle: "Checking for updates",
-    keywords: [
-      "plugin updates",
-      "check for plugin updates",
-      "daily check",
-      "auto update plugins",
-      "newer version",
-    ],
-  },
-  {
     label: "Custom screensaver",
     section: "theme",
     anchorTitle: "Screensaver",
@@ -1156,365 +842,6 @@ const SETTINGS_OPTIONS: SettingsOption[] = [
       "ambient",
       "what shows when idle",
       "change the screensaver",
-    ],
-  },
-  {
-    label: "Set up my TV from this computer",
-    section: "tv",
-    anchorTitle: "The link to your TV",
-    keywords: [
-      "tv",
-      "android tv",
-      "big picture",
-      "living room",
-      "configure tv",
-      "set up tv",
-      "sync to tv",
-      "cloud",
-      "shield",
-      "fire stick",
-      "google tv",
-      "remote setup",
-      "edit tv settings",
-      "tv not signed in",
-    ],
-  },
-  {
-    label: "Open in Big Picture",
-    section: "bigPicture",
-    anchorTitle: "Launch",
-    keywords: [
-      "big picture",
-      "couch",
-      "ten foot",
-      "10 foot",
-      "fullscreen",
-      "full screen",
-      "monitor",
-      "handheld",
-      "steam deck",
-      "open big picture",
-      "big picture button",
-      "auto start",
-      "launch harbor",
-      "interface sounds",
-      "ui sounds",
-      "overscan",
-      "edge margin",
-      "mosaic",
-      "animated backdrop",
-      "20 percent",
-    ],
-  },
-  {
-    label: "Frames on your network",
-    section: "tv",
-    tab: "devices",
-    anchorTitle: "Frames on your network",
-    keywords: [
-      "devices",
-      "instances",
-      "lan",
-      "local network",
-      "discover",
-      "harbors nearby",
-      "play on",
-      "other harbor",
-      "which tv",
-    ],
-  },
-  {
-    label: "Theme on the TV",
-    section: "tv",
-    tab: "look",
-    anchorTitle: "Theme on the TV",
-    keywords: [
-      "tv theme",
-      "big picture theme",
-      "tv colors",
-      "tv colours",
-      "tv palette",
-      "nord",
-      "dracula",
-      "tokyo night",
-      "noir",
-      "match this computer",
-      "same theme on tv",
-      "copy my theme",
-    ],
-  },
-  {
-    label: "Home layout on the TV",
-    section: "tv",
-    tab: "look",
-    anchorTitle: "Getting around the TV",
-    keywords: [
-      "tv home",
-      "big picture home",
-      "harbor layout",
-      "classic layout",
-      "tv rows",
-      "tv hero",
-      "hero trailer",
-      "hide watched on tv",
-    ],
-  },
-  {
-    label: "Display language on the TV",
-    section: "tv",
-    tab: "look",
-    anchorTitle: "Getting around the TV",
-    keywords: [
-      "tv language",
-      "big picture language",
-      "ui language tv",
-      "russian tv",
-      "portuguese tv",
-    ],
-  },
-  {
-    label: "Controller navigation on the TV",
-    section: "tv",
-    tab: "look",
-    anchorTitle: "Getting around the TV",
-    keywords: [
-      "controller",
-      "gamepad",
-      "xbox controller",
-      "tv controller",
-      "joystick",
-      "dpad",
-      "open in big picture",
-      "auto start big picture",
-      "boot into tv mode",
-    ],
-  },
-  {
-    label: "Edge margin (TV crops the picture)",
-    section: "tv",
-    tab: "look",
-    anchorTitle: "Picture and feel",
-    keywords: [
-      "overscan",
-      "edge margin",
-      "cut off edges",
-      "picture cropped",
-      "cant see the edges",
-      "safe area",
-      "tv cuts off ui",
-      "shrink ui",
-    ],
-  },
-  {
-    label: "Picture quality on the TV",
-    section: "tv",
-    tab: "look",
-    anchorTitle: "Picture and feel",
-    keywords: [
-      "tv performance",
-      "slow tv",
-      "laggy tv",
-      "cheap stick",
-      "balanced",
-      "max quality",
-      "animated backdrop",
-      "tv art quality",
-      "fire stick slow",
-    ],
-  },
-  {
-    label: "Interface sounds on the TV",
-    section: "tv",
-    tab: "look",
-    anchorTitle: "Picture and feel",
-    keywords: [
-      "tv sounds",
-      "ui sounds",
-      "click sound",
-      "navigation sound",
-      "cinematic",
-      "retro",
-      "glass",
-      "mute ui sounds",
-    ],
-  },
-  {
-    label: "Instant play on the TV",
-    section: "tv",
-    tab: "look",
-    anchorTitle: "Starting a show",
-    keywords: [
-      "instant play tv",
-      "tv play button",
-      "source picker tv",
-      "minimal source rows",
-      "tv stream list",
-    ],
-  },
-  {
-    label: "Player engine on the TV",
-    section: "tv",
-    tab: "look",
-    anchorTitle: "Starting a show",
-    keywords: [
-      "tv engine",
-      "mpv on tv",
-      "html5 tv",
-      "exoplayer",
-      "media3",
-      "hardware acceleration tv",
-      "hwdec",
-      "green screen tv",
-      "tearing on tv",
-    ],
-  },
-  {
-    label: "Auto-play next episode on the TV",
-    section: "tv",
-    tab: "look",
-    anchorTitle: "Between episodes",
-    keywords: [
-      "tv autoplay",
-      "auto next tv",
-      "binge tv",
-      "still watching",
-      "are you still watching",
-      "ask after episodes",
-      "tv plays all night",
-    ],
-  },
-  {
-    label: "Episode spoilers on the TV",
-    section: "tv",
-    tab: "look",
-    anchorTitle: "Episodes and spoilers",
-    keywords: [
-      "tv spoilers",
-      "hide spoilers tv",
-      "hide thumbnails",
-      "hide episode titles",
-      "hide descriptions",
-      "episode ratings tv",
-      "next episode spoiler",
-    ],
-  },
-  {
-    label: "Audio and subtitle languages on the TV",
-    section: "tv",
-    tab: "look",
-    anchorTitle: "Languages on the TV",
-    keywords: [
-      "tv languages",
-      "tv audio language",
-      "tv subtitle language",
-      "dub on tv",
-      "sub on tv",
-      "english subs tv",
-      "japanese audio tv",
-    ],
-  },
-  {
-    label: "Streaming services on the TV",
-    section: "tv",
-    tab: "look",
-    anchorTitle: "Services on the TV",
-    keywords: [
-      "tv services",
-      "netflix tv",
-      "disney tv",
-      "turn off services tv",
-      "services i dont have",
-      "tv providers",
-      "where to watch tv",
-    ],
-  },
-  {
-    label: "Player controls on the TV",
-    section: "tv",
-    tab: "look",
-    anchorTitle: "Player controls on the TV",
-    keywords: [
-      "tv player chrome",
-      "skip button tv",
-      "skip intro tv",
-      "hide skip button",
-      "clock while playing",
-      "tv player layout",
-      "tv overlay",
-    ],
-  },
-  {
-    label: "Subtitle look on the TV",
-    section: "tv",
-    tab: "look",
-    anchorTitle: "Subtitle look on the TV",
-    keywords: [
-      "tv subtitle size",
-      "tv subtitles too small",
-      "bigger subtitles on tv",
-      "subtitle color tv",
-      "subtitle outline tv",
-      "subtitle box tv",
-      "subtitle position tv",
-      "subtitle font tv",
-      "bold subtitles tv",
-      "line spacing",
-      "sublook",
-      "read from the couch",
-    ],
-  },
-  {
-    label: "Copy my settings to the TV",
-    section: "tv",
-    tab: "devices",
-    anchorTitle: "Start from this computer",
-    keywords: [
-      "copy to tv",
-      "mirror settings",
-      "same as my computer",
-      "match my pc",
-      "clone settings",
-      "duplicate settings",
-      "push settings to tv",
-      "one click tv setup",
-      "start from this computer",
-    ],
-  },
-  {
-    label: "Things you still do on the TV itself",
-    section: "tv",
-    tab: "devices",
-    anchorTitle: "Still done on the TV",
-    keywords: [
-      "pairing code",
-      "scan code",
-      "tv sign in",
-      "log in on tv",
-      "tv accounts",
-      "mdblist on tv",
-      "live tv playlist",
-      "m3u",
-      "xtream",
-      "tv addons",
-      "watch together on tv",
-      "other devices",
-      "cannot set from computer",
-    ],
-  },
-  {
-    label: "Between episodes on the TV",
-    section: "tv",
-    tab: "look",
-    anchorTitle: "Between episodes",
-    keywords: [
-      "still watching",
-      "are you still watching",
-      "tv autoplay",
-      "auto next tv",
-      "binge tv",
-      "ask after episodes",
-      "tv plays all night",
-      "stop after",
     ],
   },
   {
@@ -2161,54 +1488,6 @@ const SETTINGS_OPTIONS: SettingsOption[] = [
       "11470",
       "use exclusively",
       "strict",
-    ],
-  },
-  {
-    label: "Frame on other devices (web app)",
-    section: "remotes",
-    anchorTitle: "Frame on other devices",
-    keywords: [
-      "harbor in browser",
-      "web ui",
-      "web app",
-      "web version",
-      "11471",
-      "serve",
-      "network",
-      "tv browser",
-      "laptop",
-      "open on phone",
-    ],
-  },
-  {
-    label: "Phone remote",
-    section: "remotes",
-    anchorTitle: "Phone remote",
-    keywords: [
-      "control from phone",
-      "use my phone",
-      "phone as remote",
-      "control harbor from my phone",
-      "phone remote",
-      "remote control",
-      "couch",
-      "control playback",
-      "cast from phone",
-      "pause from phone",
-      "volume remote",
-    ],
-  },
-  {
-    label: "Manga reader remote",
-    section: "remotes",
-    anchorTitle: "Manga reader remote",
-    keywords: [
-      "manga remote",
-      "reader remote",
-      "flipbook remote",
-      "turn pages",
-      "page turner",
-      "manga phone",
     ],
   },
   {
@@ -2898,25 +2177,6 @@ const SETTINGS_OPTIONS: SettingsOption[] = [
   },
 
   {
-    label: "Watch Together relay",
-    section: "relay",
-    anchorTitle: "Frame Relay",
-    keywords: [
-      "friends",
-      "with friends",
-      "watch party",
-      "watch together",
-      "relay",
-      "party",
-      "p2p",
-      "host",
-      "cloudflare",
-      "deploy",
-      "share",
-    ],
-  },
-
-  {
     label: "Theme preset",
     section: "theme",
     tab: "theme",
@@ -3182,31 +2442,6 @@ const SETTINGS_OPTIONS: SettingsOption[] = [
       "disconnect",
       "top 250",
       "popular",
-    ],
-  },
-  {
-    label: "Hotkeys / keyboard shortcuts",
-    section: "hotkeys",
-    keywords: ["hotkeys", "shortcuts", "keybindings", "keyboard", "rebind", "reset shortcuts"],
-  },
-  {
-    label: "Controllers / gamepad",
-    section: "controllers",
-    keywords: [
-      "controller",
-      "gamepad",
-      "joystick",
-      "joypad",
-      "xbox",
-      "playstation",
-      "ps4",
-      "ps5",
-      "dualshock",
-      "dualsense",
-      "deadzone",
-      "repeat speed",
-      "bluetooth controller",
-      "usb controller",
     ],
   },
   {
@@ -4122,92 +3357,6 @@ const SETTINGS_OPTIONS: SettingsOption[] = [
     tab: "letterboxd",
     anchorTitle: "Connection",
     keywords: ["logout", "disconnect", "sign out letterboxd", "unlink", "full mode"],
-  },
-  {
-    label: "Frame Relay",
-    section: "relay",
-    anchorTitle: "Frame Relay",
-    keywords: [
-      "relay",
-      "watch together",
-      "cloudflare worker",
-      "rooms",
-      "sync server",
-      "copy url",
-      "hosted relay",
-    ],
-  },
-  {
-    label: "Deploy a relay",
-    section: "relay",
-    anchorTitle: "Get a relay",
-    keywords: [
-      "deploy",
-      "cloudflare",
-      "worker",
-      "self host",
-      "setup relay",
-      "desktop only",
-      "deploy relay",
-      "cloudflare worker",
-      "watch together server",
-      "own relay",
-      "host relay",
-    ],
-  },
-  {
-    label: "Enter an existing relay URL:",
-    section: "relay",
-    anchorTitle: "Frame Relay",
-    keywords: ["relay url", "wss", "workers.dev", "custom relay", "paste url", "save"],
-  },
-  {
-    label: "Test relay connection",
-    section: "relay",
-    anchorTitle: "Frame Relay",
-    keywords: ["test connection", "run test", "ping", "health", "reachable", "verify relay"],
-  },
-  {
-    label: "Backup credentials",
-    section: "relay",
-    anchorTitle: "Your relay",
-    keywords: ["export", "backup", "api token", "credentials", "json file", "cloudflare token"],
-  },
-  {
-    label: "Stop relay",
-    section: "relay",
-    anchorTitle: "Your relay",
-    keywords: ["stop", "delete worker", "remove relay", "teardown"],
-  },
-  {
-    label: "Forget URL",
-    section: "relay",
-    anchorTitle: "Your relay",
-    keywords: ["forget", "clear url", "reset relay", "remove url"],
-  },
-  {
-    label: "Use a different URL",
-    section: "relay",
-    anchorTitle: "Switch relay",
-    keywords: ["change relay", "switch relay", "different url", "replace"],
-  },
-  {
-    label: "Deploy mine instead",
-    section: "relay",
-    anchorTitle: "Switch relay",
-    keywords: ["own relay", "deploy mine", "self host", "migrate"],
-  },
-  {
-    label: "Redeploy",
-    section: "relay",
-    anchorTitle: "Health",
-    keywords: ["redeploy", "update relay", "upgrade", "new version", "redeploy instructions"],
-  },
-  {
-    label: "Documentation: run your own relay",
-    section: "relay",
-    anchorTitle: "Frame Relay",
-    keywords: ["docs", "documentation", "guide", "run your own", "instructions"],
   },
   {
     label: "Addon wait time",
@@ -5180,23 +4329,6 @@ const SETTINGS_OPTIONS: SettingsOption[] = [
     keywords: ["mpv", "libmpv", "truehd", "dts", "av1", "hdr player", "plays anything"],
   },
   {
-    label: "Open in Big Picture",
-    section: "bigPicture",
-    keywords: ["big picture", "couch mode", "ten foot", "startup layout", "start in big picture"],
-  },
-  {
-    label: "Big Picture display",
-    section: "bigPicture",
-    keywords: [
-      "big picture monitor",
-      "big picture display",
-      "which monitor",
-      "open on monitor",
-      "tv display",
-      "secondary display",
-    ],
-  },
-  {
     label: "Embed mpv inside Frame window",
     section: "player",
     tab: "engine",
@@ -6048,423 +5180,6 @@ const SETTINGS_OPTIONS: SettingsOption[] = [
     ],
   },
   {
-    label: "Reset all ({n})",
-    section: "hotkeys",
-    keywords: ["reset hotkeys", "default bindings", "clear custom keys", "undo rebinds"],
-  },
-  {
-    label: "Behavior",
-    section: "hotkeys",
-    tab: "behaviour",
-    anchorTitle: "Behavior",
-    keywords: ["key behavior", "esc behavior", "seek step", "playback keys behavior"],
-  },
-  {
-    label: "Esc exits fullscreen first",
-    section: "hotkeys",
-    tab: "behaviour",
-    anchorTitle: "Behavior",
-    keywords: ["escape fullscreen", "esc close player", "exit fullscreen first", "escape key"],
-  },
-  {
-    label: "Ask before leaving",
-    section: "hotkeys",
-    tab: "behaviour",
-    anchorTitle: "Behavior",
-    keywords: [
-      "confirm exit",
-      "leave prompt",
-      "close confirmation",
-      "dont ask again",
-      "quit confirm",
-    ],
-  },
-  {
-    label: "Seek step",
-    section: "hotkeys",
-    tab: "behaviour",
-    anchorTitle: "Behavior",
-    keywords: [
-      "arrow jump",
-      "seek amount",
-      "skip seconds",
-      "back forward step",
-      "10 seconds",
-      "jump length",
-    ],
-  },
-  {
-    label: "Global",
-    section: "hotkeys",
-    tab: "keys",
-    anchorTitle: "Global",
-    keywords: ["global shortcuts", "app wide keys", "anywhere shortcuts", "keyboard"],
-  },
-  {
-    label: "Focus search",
-    section: "hotkeys",
-    tab: "keys",
-    anchorTitle: "Global",
-    keywords: ["search shortcut", "slash key", "jump to search", "find", "quick search"],
-  },
-  {
-    label: "Open settings",
-    section: "hotkeys",
-    tab: "keys",
-    anchorTitle: "Global",
-    keywords: ["settings shortcut", "settings hotkey", "ctrl s", "preferences"],
-  },
-  {
-    label: "Increase interface scale",
-    section: "hotkeys",
-    tab: "keys",
-    anchorTitle: "Global",
-    keywords: ["zoom in", "bigger ui", "ctrl plus", "scale up", "enlarge"],
-  },
-  {
-    label: "Decrease interface scale",
-    section: "hotkeys",
-    tab: "keys",
-    anchorTitle: "Global",
-    keywords: ["zoom out", "smaller ui", "ctrl minus", "scale down", "shrink"],
-  },
-  {
-    label: "Reset interface scale",
-    section: "hotkeys",
-    tab: "keys",
-    anchorTitle: "Global",
-    keywords: ["reset zoom", "100 percent", "ctrl zero", "default scale"],
-  },
-  {
-    label: "Adjust interface scale with wheel",
-    section: "hotkeys",
-    tab: "keys",
-    anchorTitle: "Global",
-    keywords: ["ctrl scroll", "mouse wheel zoom", "resize interface", "cmd scroll"],
-  },
-  {
-    label: "Player",
-    section: "hotkeys",
-    tab: "keys",
-    anchorTitle: "Player",
-    keywords: ["player shortcuts", "playback keys", "in player hotkeys", "video shortcuts"],
-  },
-  {
-    label: "Close player",
-    section: "hotkeys",
-    tab: "keys",
-    anchorTitle: "Player",
-    keywords: ["escape", "exit playback", "quit player", "back out"],
-  },
-  {
-    label: "Play / pause",
-    section: "hotkeys",
-    tab: "keys",
-    anchorTitle: "Player",
-    keywords: ["space bar", "pause", "toggle playback", "play key"],
-  },
-  {
-    label: "Toggle fullscreen",
-    section: "hotkeys",
-    tab: "keys",
-    anchorTitle: "Player",
-    keywords: ["f key", "fullscreen toggle", "maximize video", "full screen"],
-  },
-  {
-    label: "Picture-in-picture",
-    section: "hotkeys",
-    tab: "keys",
-    anchorTitle: "Player",
-    keywords: ["pip", "floating window", "mini player", "always on top video", "u key"],
-  },
-  {
-    label: "Toggle stats overlay",
-    section: "hotkeys",
-    tab: "keys",
-    anchorTitle: "Player",
-    keywords: ["stats", "playback stats", "nerd info", "bitrate overlay", "i key"],
-  },
-  {
-    label: "Cycle aspect / crop",
-    section: "hotkeys",
-    tab: "keys",
-    anchorTitle: "Player",
-    keywords: ["aspect hotkey", "crop cycle", "v key", "fill zoom", "ratio cycle"],
-  },
-  {
-    label: "Zoom out",
-    section: "hotkeys",
-    tab: "keys",
-    anchorTitle: "Player",
-    keywords: ["panscan out", "restore black bars", "minus key", "unzoom"],
-  },
-  {
-    label: "Zoom in",
-    section: "hotkeys",
-    tab: "keys",
-    anchorTitle: "Player",
-    keywords: ["panscan in", "crop black bars", "equals key", "zoom mode"],
-  },
-  {
-    label: "Screenshot",
-    section: "hotkeys",
-    tab: "keys",
-    anchorTitle: "Player",
-    keywords: ["capture frame", "png screenshot", "snapshot", "p key", "pictures folder"],
-  },
-  {
-    label: "Record GIF",
-    section: "hotkeys",
-    tab: "keys",
-    anchorTitle: "Player",
-    keywords: ["gif recording", "capture gif", "o key", "animated gif"],
-  },
-  {
-    label: "Save video clip",
-    section: "hotkeys",
-    tab: "keys",
-    anchorTitle: "Player",
-    keywords: ["clip last 30 seconds", "save clip", "video capture", "c key", "clip with audio"],
-  },
-  {
-    label: "Toggle Anime4K",
-    section: "hotkeys",
-    tab: "keys",
-    anchorTitle: "Player",
-    keywords: ["anime4k hotkey", "a key", "upscale toggle", "shader toggle"],
-  },
-  {
-    label: "Anime4K on",
-    section: "hotkeys",
-    tab: "keys",
-    anchorTitle: "Player",
-    keywords: ["anime4k enable key", "alt a", "upscaling on", "force anime4k"],
-  },
-  {
-    label: "Anime4K off",
-    section: "hotkeys",
-    tab: "keys",
-    anchorTitle: "Player",
-    keywords: ["anime4k disable key", "shift a", "upscaling off", "stop shaders"],
-  },
-  {
-    label: "Toggle RTX Video HDR",
-    section: "hotkeys",
-    tab: "keys",
-    anchorTitle: "Player",
-    keywords: ["rtx hdr hotkey", "ctrl h", "nvidia video hdr", "hdr enhancement toggle"],
-  },
-  {
-    label: "Toggle RTX Super Resolution",
-    section: "hotkeys",
-    tab: "keys",
-    anchorTitle: "Player",
-    keywords: ["rtx vsr hotkey", "ctrl u", "nvidia super resolution", "video upscaling toggle"],
-  },
-  {
-    label: "Seek back",
-    section: "hotkeys",
-    tab: "keys",
-    anchorTitle: "Player",
-    keywords: ["rewind", "arrow left", "jump back", "skip backward"],
-  },
-  {
-    label: "Seek forward",
-    section: "hotkeys",
-    tab: "keys",
-    anchorTitle: "Player",
-    keywords: ["fast forward", "arrow right", "jump ahead", "skip forward"],
-  },
-  {
-    label: "Seek back 30s",
-    section: "hotkeys",
-    tab: "keys",
-    anchorTitle: "Player",
-    keywords: ["back thirty seconds", "comma key", "big rewind", "30 second jump"],
-  },
-  {
-    label: "Seek forward 30s",
-    section: "hotkeys",
-    tab: "keys",
-    anchorTitle: "Player",
-    keywords: ["forward thirty seconds", "period key", "big skip", "30 second jump"],
-  },
-  {
-    label: "Previous frame",
-    section: "hotkeys",
-    tab: "keys",
-    anchorTitle: "Player",
-    keywords: ["frame step back", "frame by frame", "pause frame", "frame accurate"],
-  },
-  {
-    label: "Next frame",
-    section: "hotkeys",
-    tab: "keys",
-    anchorTitle: "Player",
-    keywords: ["frame advance", "frame accurate step", "single frame", "step forward"],
-  },
-  {
-    label: "Jump to start",
-    section: "hotkeys",
-    tab: "keys",
-    anchorTitle: "Player",
-    keywords: ["home key", "beginning", "restart video", "go to start"],
-  },
-  {
-    label: "Jump to end",
-    section: "hotkeys",
-    tab: "keys",
-    anchorTitle: "Player",
-    keywords: ["end key", "skip to end", "finish", "last seconds"],
-  },
-  {
-    label: "Volume up",
-    section: "hotkeys",
-    tab: "keys",
-    anchorTitle: "Player",
-    keywords: ["louder", "arrow up", "raise volume", "shift big steps"],
-  },
-  {
-    label: "Volume down",
-    section: "hotkeys",
-    tab: "keys",
-    anchorTitle: "Player",
-    keywords: ["quieter", "arrow down", "lower volume", "softer"],
-  },
-  {
-    label: "Toggle mute",
-    section: "hotkeys",
-    tab: "keys",
-    anchorTitle: "Player",
-    keywords: ["mute", "unmute", "m key", "silence audio"],
-  },
-  {
-    label: "Cycle subtitles",
-    section: "hotkeys",
-    tab: "keys",
-    anchorTitle: "Player",
-    keywords: ["subtitle track cycle", "s key", "switch subs", "next subtitle"],
-  },
-  {
-    label: "Cycle subtitles (alt)",
-    section: "hotkeys",
-    tab: "keys",
-    anchorTitle: "Player",
-    keywords: ["alternate subtitle key", "c key", "muscle memory", "second binding"],
-  },
-  {
-    label: "Subtitle delay −0.1s",
-    section: "hotkeys",
-    tab: "keys",
-    anchorTitle: "Player",
-    keywords: ["sub delay earlier", "subtitle sync", "z key", "timing fix", "out of sync"],
-  },
-  {
-    label: "Subtitle delay +0.1s",
-    section: "hotkeys",
-    tab: "keys",
-    anchorTitle: "Player",
-    keywords: ["sub delay later", "subtitle sync", "x key", "timing fix", "shift later"],
-  },
-  {
-    label: "Next episode",
-    section: "hotkeys",
-    tab: "keys",
-    anchorTitle: "Player",
-    keywords: ["n key", "skip to next episode", "forward episode", "binge key"],
-  },
-  {
-    label: "Previous episode",
-    section: "hotkeys",
-    tab: "keys",
-    anchorTitle: "Player",
-    keywords: ["b key", "go back episode", "last episode", "prior episode"],
-  },
-  {
-    label: "Previous channel",
-    section: "hotkeys",
-    tab: "keys",
-    anchorTitle: "Player",
-    keywords: ["last channel", "live tv back", "h key", "channel zap", "channel history"],
-  },
-  {
-    label: "Speed down",
-    section: "hotkeys",
-    tab: "keys",
-    anchorTitle: "Player",
-    keywords: ["slower playback", "speed decrease", "bracket key", "0.25x slower"],
-  },
-  {
-    label: "Speed up",
-    section: "hotkeys",
-    tab: "keys",
-    anchorTitle: "Player",
-    keywords: ["faster playback", "speed increase", "bracket key", "0.25x faster"],
-  },
-  {
-    label: "Stream switcher",
-    section: "hotkeys",
-    tab: "keys",
-    anchorTitle: "Player",
-    keywords: ["switch stream", "change source in player", "w key", "source switcher"],
-  },
-  {
-    label: "Up next / episodes",
-    section: "hotkeys",
-    tab: "keys",
-    anchorTitle: "Player",
-    keywords: ["episode panel", "up next", "e key", "episode list", "season browser"],
-  },
-  {
-    label: "TV guide",
-    section: "hotkeys",
-    tab: "keys",
-    anchorTitle: "Player",
-    keywords: ["live tv guide", "epg", "g key", "channels list", "program guide"],
-  },
-  {
-    label: "DVR / record",
-    section: "hotkeys",
-    tab: "keys",
-    anchorTitle: "Player",
-    keywords: ["record live tv", "dvr", "r key", "recorder", "live recording"],
-  },
-  {
-    label: "Sleep at end of episode",
-    section: "hotkeys",
-    tab: "keys",
-    anchorTitle: "Player",
-    keywords: ["sleep timer", "pause after episode", "l key", "bedtime", "auto pause"],
-  },
-  {
-    label: "Reload source",
-    section: "hotkeys",
-    tab: "keys",
-    anchorTitle: "Player",
-    keywords: [
-      "reload stream",
-      "restart stream",
-      "refresh source",
-      "stream stuck",
-      "reopen stream",
-      "buffering fix",
-    ],
-  },
-  {
-    label: "Restart streaming server",
-    section: "hotkeys",
-    tab: "keys",
-    anchorTitle: "Player",
-    keywords: [
-      "restart server",
-      "streaming server",
-      "engine restart",
-      "server stuck",
-      "torrent server",
-      "11470",
-    ],
-  },
-  {
     label: "Theme",
     section: "theme",
     tab: "theme",
@@ -7150,7 +5865,7 @@ const SETTINGS_OPTIONS: SettingsOption[] = [
     keywords: ["pause on focus loss", "alt tab pause", "unfocused pause", "another window"],
   },
   {
-    label: "Catch stremio:// install links inside Harbor",
+    label: "Catch stremio:// install links inside Frame",
     section: "account",
     tab: "stremio",
     anchorTitle: "Stremio install links",
@@ -7678,25 +6393,6 @@ const SETTINGS_OPTIONS: SettingsOption[] = [
     ],
   },
   {
-    label: "Relay version status",
-    section: "relay",
-    anchorTitle: "Frame Relay",
-    keywords: [
-      "relay version",
-      "outdated",
-      "up to date",
-      "current version",
-      "update available",
-      "protocol",
-    ],
-  },
-  {
-    label: "Download relay documentation",
-    section: "relay",
-    anchorTitle: "Frame Relay",
-    keywords: ["download docs", "export documentation", "pdf", "txt", "json", "save docs", "print"],
-  },
-  {
     label: "Move Refresh next to Back",
     section: "streaming",
     tab: "picker",
@@ -8108,243 +6804,6 @@ const SETTINGS_OPTIONS: SettingsOption[] = [
     ],
   },
   {
-    label: "Navigation",
-    section: "hotkeys",
-    tab: "behaviour",
-    anchorTitle: "Navigation",
-    keywords: [
-      "navigation",
-      "tv remote",
-      "arrow keys",
-      "focus navigation",
-      "remote control",
-      "keyboard nav",
-      "d-pad",
-    ],
-  },
-  {
-    label: "TV navigation",
-    section: "hotkeys",
-    tab: "behaviour",
-    anchorTitle: "Navigation",
-    keywords: [
-      "tv navigation",
-      "arrow keys",
-      "focus",
-      "remote",
-      "spatial navigation",
-      "d-pad",
-      "enter select",
-    ],
-  },
-  {
-    label: "TV navigation in player",
-    section: "hotkeys",
-    tab: "behaviour",
-    anchorTitle: "Navigation",
-    keywords: [
-      "player navigation",
-      "arrows in player",
-      "control focus",
-      "remote in player",
-      "spatial nav player",
-      "select space",
-    ],
-  },
-  {
-    label: "Short seek (Shift + arrows)",
-    section: "hotkeys",
-    tab: "behaviour",
-    anchorTitle: "Behavior",
-    keywords: [
-      "short seek",
-      "shift arrows",
-      "small jump",
-      "nudge seconds",
-      "fine seek",
-      "shorter jump",
-      "seek step",
-    ],
-  },
-  {
-    label: "Short seek back",
-    section: "hotkeys",
-    tab: "keys",
-    anchorTitle: "Player",
-    keywords: [
-      "short rewind",
-      "shift left",
-      "small jump back",
-      "nudge back",
-      "fine rewind",
-      "shift arrow left",
-    ],
-  },
-  {
-    label: "Short seek forward",
-    section: "hotkeys",
-    tab: "keys",
-    anchorTitle: "Player",
-    keywords: [
-      "short skip forward",
-      "shift right",
-      "small jump ahead",
-      "nudge forward",
-      "fine forward",
-      "shift arrow right",
-    ],
-  },
-  {
-    label: "Enable controller",
-    section: "controllers",
-    tab: "setup",
-    anchorTitle: "Controller support",
-    keywords: [
-      "enable controller",
-      "turn on gamepad",
-      "disable controller",
-      "controller on off",
-      "toggle gamepad",
-      "activate controller",
-      "controller support",
-    ],
-  },
-  {
-    label: "Live controller preview",
-    section: "controllers",
-    tab: "setup",
-    anchorTitle: "Controller support",
-    keywords: [
-      "live preview",
-      "test controller",
-      "input test",
-      "button test",
-      "controller diagram",
-      "xbox layout",
-      "playstation layout",
-      "mirror inputs",
-    ],
-  },
-  {
-    label: "Connected controllers",
-    section: "controllers",
-    tab: "setup",
-    anchorTitle: "Connected controllers",
-    keywords: [
-      "connected controllers",
-      "detected controllers",
-      "paired controller",
-      "recognized gamepad",
-      "controller list",
-      "usb bluetooth controller",
-    ],
-  },
-  {
-    label: "Button map",
-    section: "controllers",
-    tab: "mapping",
-    anchorTitle: "Button map",
-    keywords: [
-      "button map",
-      "button mapping",
-      "controls reference",
-      "what buttons do",
-      "browsing controls",
-      "player controls",
-      "d-pad",
-      "bumpers triggers",
-    ],
-  },
-  {
-    label: "Test controller",
-    section: "controllers",
-    tab: "setup",
-    anchorTitle: "Controller support",
-    keywords: [
-      "test controller",
-      "test mode",
-      "controller test",
-      "try controller",
-      "check buttons",
-      "controller selecting things",
-      "stop controller navigating",
-      "capture controller",
-    ],
-  },
-  {
-    label: "Controller cursor",
-    section: "controllers",
-    tab: "setup",
-    anchorTitle: "Controller cursor",
-    keywords: [
-      "cursor",
-      "pointer",
-      "dot",
-      "controller cursor",
-      "cursor image",
-      "custom cursor",
-      "harbor logo cursor",
-      "boat cursor",
-      "cursor size",
-    ],
-  },
-  {
-    label: "Your own image",
-    section: "controllers",
-    tab: "setup",
-    anchorTitle: "Controller cursor",
-    keywords: ["custom cursor", "upload cursor", "cursor image", "replace cursor"],
-  },
-  {
-    label: "Cursor size",
-    section: "controllers",
-    tab: "setup",
-    anchorTitle: "Controller cursor",
-    keywords: ["cursor size", "bigger cursor", "smaller pointer", "cursor px"],
-  },
-  {
-    label: "Deadzone",
-    section: "controllers",
-    tab: "mapping",
-    anchorTitle: "Stick and timing",
-    keywords: [
-      "deadzone",
-      "stick drift",
-      "stick sensitivity",
-      "analog threshold",
-      "thumbstick",
-      "focus drift",
-    ],
-  },
-  {
-    label: "Repeat speed",
-    section: "controllers",
-    tab: "mapping",
-    anchorTitle: "Stick and timing",
-    keywords: [
-      "repeat speed",
-      "navigation speed",
-      "focus move speed",
-      "held direction",
-      "repeat rate",
-      "scroll speed",
-    ],
-  },
-  {
-    label: "Initial delay",
-    section: "controllers",
-    tab: "mapping",
-    anchorTitle: "Stick and timing",
-    keywords: [
-      "initial delay",
-      "repeat delay",
-      "hold delay",
-      "before repeating",
-      "key repeat delay",
-      "held direction delay",
-    ],
-  },
-  {
     label: "Choose subtitles before playback",
     section: "subtitles",
     tab: "languages",
@@ -8474,7 +6933,6 @@ const SETTINGS_OPTIONS: SettingsOption[] = [
       "own server",
       "sync endpoint",
       "point to server",
-      "sync.harbor.site",
     ],
   },
   {
@@ -9004,20 +7462,6 @@ const SETTINGS_OPTIONS: SettingsOption[] = [
     keywords: ["quality badge", "4k badge", "resolution badge", "what am i watching"],
   },
   {
-    label: "Show the Big Picture button",
-    section: "hotkeys",
-    tab: "behaviour",
-    anchorTitle: "Big Picture",
-    keywords: ["big picture button", "tv mode button", "hide big picture", "ten foot"],
-  },
-  {
-    label: "Keep controlling Frame in the background",
-    section: "controllers",
-    tab: "setup",
-    anchorTitle: "Controller support",
-    keywords: ["background controller", "controller when unfocused", "gamepad background"],
-  },
-  {
     label: "Subtitle indicator dot",
     section: "subtitles",
     tab: "languages",
@@ -9092,26 +7536,6 @@ const SETTINGS_OPTIONS: SettingsOption[] = [
     tab: "trailers",
     anchorTitle: "Trailer quality",
     keywords: ["scroll trailer", "trailer on scroll", "autoplay trailer", "hero trailer"],
-  },
-  {
-    label: "Serve Frame on your network",
-    section: "remotes",
-    anchorTitle: "Frame on other devices",
-    keywords: [
-      "lan",
-      "network",
-      "web app",
-      "open on phone",
-      "serve harbor",
-      "local server",
-      "wifi access",
-    ],
-  },
-  {
-    label: "Use an existing relay",
-    section: "relay",
-    anchorTitle: "Get a relay",
-    keywords: ["relay url", "existing relay", "friends relay", "paste relay", "wss"],
   },
   {
     label: "Subtitle language order",
@@ -9669,28 +8093,6 @@ const SETTINGS_OPTIONS: SettingsOption[] = [
     ],
   },
   {
-    label: "Lock player controls",
-    section: "hotkeys",
-    tab: "keys",
-    anchorTitle: "Player",
-    keywords: [
-      "lock",
-      "screen lock",
-      "lock controls",
-      "lock the screen",
-      "unlock",
-      "child lock",
-      "kid lock",
-      "baby lock",
-      "ctrl l",
-      "block input",
-      "disable keyboard while watching",
-      "stop accidental clicks",
-      "freeze controls",
-      "toddler",
-    ],
-  },
-  {
     label: "Animated sidebar icons",
     section: "theme",
     anchorTitle: "Sidebar",
@@ -9994,7 +8396,6 @@ export function SettingsNav({
   setQuery?: (v: string) => void;
 }) {
   const { settings } = useSettings();
-  const pluginCount = useStreamPluginCount();
   const [openGroups, setOpenGroups] = useState<Set<string>>(new Set());
   const t = useT();
   const isNew = useSettingsNew();
@@ -10033,8 +8434,6 @@ export function SettingsNav({
 
   const debridChip = libraryKeys > 0 ? `${libraryKeys}/5` : null;
 
-  const relayLive = settings.togetherRelayUrl ? "live" : null;
-
   const webhookActive =
     (settings.webhooks.discordUrl ||
       settings.webhooks.telegramUrl ||
@@ -10058,13 +8457,11 @@ export function SettingsNav({
       : null,
     trackers: null,
     updates: null,
-    relay: relayLive,
     streaming: debridChip,
     streamFilters: settings.customStreamFilters?.length
       ? String(settings.customStreamFilters.length)
       : null,
     p2p: null,
-    plugins: pluginCount > 0 ? String(pluginCount) : null,
     language: null,
     subtitles: settings.subtitleAutoSync ? "sync" : null,
     player: settings.playerEngine === "auto" ? null : settings.playerEngine,
@@ -10080,18 +8477,13 @@ export function SettingsNav({
         ? "on"
         : null,
     playerLayout: null,
-    controllers: settings.controllerSupportEnabled ? "on" : null,
     theme:
       settings.theme.preset === "frame" && settings.theme.fontPair === "general-sans" ? null : "•",
     badges: null,
     awardIcons: null,
     webhooks: webhookActive ? "live" : null,
-    hotkeys: null,
     bug: null,
     support: null,
-    remotes: settings.serveWebUi || settings.remoteControlEnabled ? "live" : null,
-    tv: null,
-    bigPicture: null,
     storage: null,
     advanced: null,
   };

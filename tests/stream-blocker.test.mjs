@@ -6,7 +6,7 @@ import { buildStreamBlockerRules } from "../scripts/build-stream-blocker.mjs";
 const resource = new URL("../src-tauri/resources/harbor-stream-blocker/", import.meta.url);
 const read = (name) => readFileSync(new URL(name, resource), "utf8");
 
-test("bundled request rules match Harbor's local blocklist and stay provider scoped", () => {
+test("bundled request rules match Frame's local blocklist and stay provider scoped", () => {
   const source = readFileSync(new URL("../src/lib/privacy/blocklist.ts", import.meta.url), "utf8");
   const rules = buildStreamBlockerRules(source);
   assert.deepEqual(JSON.parse(read("rules.json")), rules);

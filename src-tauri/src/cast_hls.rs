@@ -585,7 +585,7 @@ fn apply_headers(cmd: &mut tokio::process::Command, headers: &HashMap<String, St
     }
     if !has_ua {
         cmd.arg("-user_agent")
-            .arg("Mozilla/5.0 (Windows NT 10.0; Win64; x64) Harbor/0.8");
+            .arg("Mozilla/5.0 (Windows NT 10.0; Win64; x64) Frame/0.8");
     }
     let mut blob = String::new();
     for (k, v) in headers {

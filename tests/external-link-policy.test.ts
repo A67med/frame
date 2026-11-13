@@ -2,7 +2,7 @@ import assert from "node:assert/strict";
 import test from "node:test";
 import { parseExternalLink } from "../src/lib/social/external-link-policy.ts";
 
-test("normalizes HTTP(S) destinations and limits Harbor to HTTPS", () => {
+test("normalizes HTTP(S) destinations and limits Frame to HTTPS", () => {
   assert.deepEqual(parseExternalLink("  https://Example.COM/path?q=1  "), {
     ok: true,
     link: {

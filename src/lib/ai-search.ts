@@ -8,7 +8,7 @@ import {
 import { meta as fetchFullMeta, type Meta } from "./cinemeta";
 
 import { releaseText } from "@/lib/release-info";
-import { HARBOR_API_BASE } from "@/lib/config/endpoints";
+import { HARBOR_REPO_URL } from "@/lib/config/endpoints";
 const OPENROUTER_URL = "https://openrouter.ai/api/v1/chat/completions";
 const GROQ_URL = "https://api.groq.com/openai/v1/chat/completions";
 const MAX_SUGGESTIONS = 12;
@@ -113,7 +113,7 @@ export async function aiSuggest(
     "Content-Type": "application/json",
   };
   if (!isGroq) {
-    headers["HTTP-Referer"] = HARBOR_API_BASE;
+    headers["HTTP-Referer"] = HARBOR_REPO_URL;
     headers["X-Title"] = "Frame";
   }
   const systemPrompt = webContext?.trim()

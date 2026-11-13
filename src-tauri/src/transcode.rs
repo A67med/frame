@@ -39,7 +39,7 @@ pub fn locate_ffmpeg() -> Option<std::path::PathBuf> {
     if cfg!(windows) {
         owned.push("ffmpeg.exe".into());
         owned.push("ffmpeg".into());
-        // Bundled / dev tree relative to harbor.exe
+        // Bundled / dev tree relative to frame.exe
         if let Ok(exe) = std::env::current_exe() {
             if let Some(dir) = exe.parent() {
                 owned.push(dir.join("ffmpeg.exe").to_string_lossy().to_string());

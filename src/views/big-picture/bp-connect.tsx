@@ -235,7 +235,7 @@ function BpConnectAction({
 /**
  * Everything onboarding sets, reachable after onboarding. Someone who skipped a
  * step, or who only ever saw the TV, had no route back to it: the tabs that need
- * a TMDB key simply vanished, which reads as Harbor being broken rather than
+ * a TMDB key simply vanished, which reads as Frame being broken rather than
  * unconfigured. Owns its own handoff host, so the QR is live only while this is
  * on screen.
  */

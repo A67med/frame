@@ -1,4 +1,4 @@
-import { HarborMark } from "@/components/icons/harbor-mark";
+import { FrameMark } from "@/components/icons/frame-mark";
 import { useT } from "@/lib/i18n";
 import { openUrl } from "@/lib/window";
 
@@ -7,7 +7,7 @@ export function MobileNotice() {
   return (
     <div className="flex min-h-dvh flex-col items-center justify-center gap-7 bg-canvas px-8 text-center">
       <div className="flex items-center gap-3 text-ink">
-        <HarborMark className="h-9 w-9" />
+        <FrameMark className="h-9 w-9" />
         <span className="font-display text-[36px] font-semibold leading-none tracking-tight">
           Frame
         </span>
@@ -26,12 +26,12 @@ export function MobileNotice() {
         </p>
       </div>
       <a
-        href="https://github.com/crazyrabbit0/harbor"
+        href="https://github.com/abdallahkattriah-sketch/frame"
         target="_blank"
         rel="noreferrer"
         onClick={(event) => {
           event.preventDefault();
-          openUrl("https://github.com/crazyrabbit0/harbor");
+          openUrl("https://github.com/abdallahkattriah-sketch/frame");
         }}
         className="flex h-11 items-center justify-center rounded-full bg-elevated px-6 text-[14px] font-semibold text-ink ring-1 ring-edge-soft transition-colors hover:bg-raised"
       >

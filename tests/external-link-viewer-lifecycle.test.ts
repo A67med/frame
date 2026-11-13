@@ -183,7 +183,7 @@ class FakeElement {
   }
 }
 
-test("focus scope traps Tab only and restores Harbor state on cleanup", () => {
+test("focus scope traps Tab only and restores Frame state on cleanup", () => {
   const document = new FakeDocument();
   const prior = new FakeElement(document);
   const first = new FakeElement(document);

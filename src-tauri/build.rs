@@ -29,7 +29,7 @@ fn main() {
             println!("cargo:rustc-link-arg=/STACK:16777216,1048576");
         }
         if !libmpv.join("libmpv-2.dll").exists() {
-            println!("cargo:warning=libmpv-2.dll not found in src-tauri/libmpv. Run `pnpm run setup:libmpv` to fetch it (needed to run and bundle Harbor on Windows).");
+            println!("cargo:warning=libmpv-2.dll not found in src-tauri/libmpv. Run `pnpm run setup:libmpv` to fetch it (needed to run and bundle Frame on Windows).");
         }
     }
 

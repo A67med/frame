@@ -120,7 +120,7 @@ pub(super) async fn install() -> Result<(), String> {
     let command = install_command(&source)?;
     run_privileged(
         &command,
-        "Harbor needs administrator access to install its virtual microphone into /Library/Audio/Plug-Ins/HAL and restart Core Audio.",
+        "Frame needs administrator access to install its virtual microphone into /Library/Audio/Plug-Ins/HAL and restart Core Audio.",
     )
     .await
 }
@@ -129,7 +129,7 @@ pub(super) async fn uninstall() -> Result<(), String> {
     let command = uninstall_command()?;
     run_privileged(
         &command,
-        "Harbor needs administrator access to remove its virtual microphone from /Library/Audio/Plug-Ins/HAL and restart Core Audio.",
+        "Frame needs administrator access to remove its virtual microphone from /Library/Audio/Plug-Ins/HAL and restart Core Audio.",
     )
     .await
 }
@@ -141,11 +141,11 @@ mod tests {
     #[test]
     fn install_command_quotes_the_source_and_restarts_core_audio() {
         let command = install_command(Path::new(
-            "/Applications/Harbor.app/Contents/Resources/HarborVirtualMic.driver",
+            "/Applications/Frame.app/Contents/Resources/HarborVirtualMic.driver",
         ))
         .expect("quotable path");
         assert!(command
-            .contains("'/Applications/Harbor.app/Contents/Resources/HarborVirtualMic.driver'"));
+            .contains("'/Applications/Frame.app/Contents/Resources/HarborVirtualMic.driver'"));
         assert!(command.contains("'/Library/Audio/Plug-Ins/HAL/HarborVirtualMic.driver'"));
         assert!(command.contains("killall coreaudiod"));
     }

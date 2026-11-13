@@ -92,8 +92,8 @@ const catalog16: Record<string, string> = {
   stars: "gwiazdki",
   stats: "statystyki",
   "stremio:// link": "Link stremio://",
-  "stremio:// links now open in the Stremio app. Harbor will only install when you trigger it from inside Harbor.":
-    "Łącza stremio:// otwierają się teraz w aplikacji Stremio. Harbor będzie instalować tylko wtedy, gdy uruchomisz instalację z poziomu Harbor.",
+  "stremio:// links now open in the Stremio app. Frame will only install when you trigger it from inside Frame.":
+    "Łącza stremio:// otwierają się teraz w aplikacji Stremio. Frame będzie instalować tylko wtedy, gdy uruchomisz instalację z poziomu Frame.",
   "stremio://… or https://…/manifest.json": "stremio://… lub https://…/manifest.json",
   "stub files": "pliki szczątkowe",
   "study, character, quote": "nauka, postać, cytat",

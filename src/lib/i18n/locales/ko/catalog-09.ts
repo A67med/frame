@@ -827,8 +827,8 @@ const catalog09: Record<string, string> = {
     "여기서 시작하세요. 거의 모두가 사용하는 애드온입니다.",
   "Start import": "가져오기 시작",
   "Start of manga": "만화 시작",
-  "Start or stop recording a GIF of the video (no subtitles). Saves to Pictures/Harbor.":
-    "자막 없이 동영상의 GIF 녹화를 시작하거나 중지합니다. Pictures/Harbor에 저장됩니다.",
+  "Start or stop recording a GIF of the video (no subtitles). Saves to Pictures/Frame.":
+    "자막 없이 동영상의 GIF 녹화를 시작하거나 중지합니다. Pictures/Frame에 저장됩니다.",
   "Start over": "처음부터 다시",
   "Start playback": "재생 시작",
   "Start recording": "녹화 시작",

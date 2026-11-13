@@ -31,7 +31,7 @@ test("defaults invalid or unavailable storage to browser", () => {
   );
 });
 
-test("round-trips browser and Harbor without throwing on write failure", () => {
+test("round-trips browser and Frame without throwing on write failure", () => {
   for (const preference of ["browser", "harbor"] as const) {
     const storage = memoryStorage();
     writeExternalLinkDestinationPreference(preference, storage);
@@ -62,7 +62,7 @@ test("resolves one direct action and one eligible alternate", () => {
   });
 });
 
-test("HTTP fallback does not overwrite a stored Harbor preference", () => {
+test("HTTP fallback does not overwrite a stored Frame preference", () => {
   const storage = memoryStorage("harbor");
   const preference = readExternalLinkDestinationPreference(storage);
   assert.deepEqual(resolveExternalLinkActionLayout(preference, false), {

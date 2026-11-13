@@ -29,9 +29,9 @@ const SCOPES: &[&str] = &[
     "playlist-modify-public",
 ];
 const CALLBACK_HTML: &str = r#"<!doctype html>
-<html><head><meta charset="utf-8"><title>Harbor Music connected</title>
+<html><head><meta charset="utf-8"><title>Frame Music connected</title>
 <style>body{font-family:system-ui,-apple-system,Segoe UI,sans-serif;background:#0b0d10;color:#f5f3ec;display:grid;place-items:center;min-height:100vh;margin:0;text-align:center}h1{font-weight:500;margin:0 0 .5rem;font-size:1.25rem}p{opacity:.6;margin:0;font-size:.875rem}</style></head>
-<body><main><h1>Connected to Harbor Music</h1><p>You can close this tab.</p></main></body></html>"#;
+<body><main><h1>Connected to Frame Music</h1><p>You can close this tab.</p></main></body></html>"#;
 
 pub struct Authorization {
     pub access_token: String,
@@ -45,7 +45,7 @@ pub fn client_id(app: &AppHandle) -> Result<String, String> {
         .ok_or_else(|| format!("{MISSING_CLIENT_ID}. {}", setup_hint()))
 }
 
-/// What a listener has to do once, in their own Spotify dashboard, before Harbor can
+/// What a listener has to do once, in their own Spotify dashboard, before Frame can
 /// ask Spotify for a token on their behalf.
 pub fn setup_hint() -> String {
     format!(
@@ -129,7 +129,7 @@ async fn ensure_port_free() -> Result<(), String> {
         }
     }
     Err(format!(
-        "Spotify sign in needs port {REDIRECT_PORT}. Close whatever is using it, or restart Harbor, and try again."
+        "Spotify sign in needs port {REDIRECT_PORT}. Close whatever is using it, or restart Frame, and try again."
     ))
 }
 

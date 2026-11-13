@@ -104,7 +104,7 @@ test("provider-script manifests map scrapers to entries", () => {
 test("harbor manifests keep their richer fields", () => {
   const parsed = parseStreamRepoManifest(
     {
-      name: "Harbor Repo",
+      name: "Frame Repo",
       type: "stream",
       homepage: "https://example.com",
       plugins: [

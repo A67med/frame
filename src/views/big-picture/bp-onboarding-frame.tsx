@@ -1,5 +1,5 @@
 import { useEffect, useId, useRef, type ReactNode, type RefObject } from "react";
-import { HarborMark } from "@/components/icons/harbor-mark";
+import { FrameMark } from "@/components/icons/frame-mark";
 import { SFX } from "@/lib/sfx";
 import { BpOnboardBackdrop } from "./onboarding/bp-onboard-backdrop";
 import { useBpOnboardEscape } from "./onboarding/bp-onboard-escape";
@@ -213,19 +213,12 @@ export function BpOnboardFrame({
         aria-hidden
         className="pointer-events-none absolute bottom-[calc(var(--bp-hint-h)+clamp(10px,1.4vh,22px))] start-[var(--bp-gutter)] z-10 flex items-center gap-[clamp(10px,1vw,18px)] opacity-40"
       >
-        <HarborMark className="h-[clamp(32px,3.9vh,52px)] w-[clamp(32px,3.9vh,52px)] shrink-0 text-ink" />
+        <FrameMark className="h-[clamp(32px,3.9vh,52px)] w-[clamp(32px,3.9vh,52px)] shrink-0 text-ink" />
         <span
           className="whitespace-nowrap text-[clamp(28px,3.5vh,48px)] font-medium leading-none tracking-tight text-ink"
           style={{ fontFamily: '"Fraunces", "Iowan Old Style", "Georgia", serif' }}
         >
-          Harb
-          <span
-            className="inline-block"
-            style={{ transform: "rotate(7deg)", transformOrigin: "50% 65%" }}
-          >
-            o
-          </span>
-          r
+          Frame
         </span>
       </div>
       <header className="flex shrink-0 flex-col gap-[clamp(12px,1.6vh,24px)] px-[var(--bp-gutter)] pt-[calc(var(--bp-safe-y,0px)+clamp(26px,4.4vh,72px))]">

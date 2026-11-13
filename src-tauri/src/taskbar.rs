@@ -370,9 +370,9 @@ unsafe extern "system" fn subclass_proc(
 }
 
 // Matches the installer's shortcut AUMID (the bundle identifier), so installed and portable copies share it.
-const APP_ID: &str = "app.harbor";
+const APP_ID: &str = crate::legacy_data::IDENTIFIER;
 
-/// Names Harbor in Windows' media overlay, which shows "Unknown app" for a process without a registered AUMID.
+/// Names Frame in Windows' media overlay, which shows "Unknown app" for a process without a registered AUMID.
 pub fn register_app_identity() {
     let id = utf16(APP_ID);
     unsafe {
@@ -420,7 +420,7 @@ pub fn register_app_identity() {
             let _ = RegSetValueExW(key, PCWSTR(value.as_ptr()), None, REG_SZ, Some(&bytes));
         }
     };
-    set("DisplayName", "Harbor");
+    set("DisplayName", "Frame");
     if let Ok(exe) = std::env::current_exe() {
         set("IconUri", &format!("{},0", exe.display()));
     }

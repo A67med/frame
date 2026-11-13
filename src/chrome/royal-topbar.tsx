@@ -5,7 +5,7 @@ import { useContextMenu } from "@/lib/context-menu";
 import { NavHiddenTray, NavEditableItem, NavEditClose, useNavDrag } from "@/chrome/nav-edit";
 import { useNavEditMode } from "@/chrome/nav-edit-mode";
 import { Search } from "@/components/icons/search-icon";
-import { HarborMark } from "@/components/icons/harbor-mark";
+import { FrameMark } from "@/components/icons/frame-mark";
 import { ParentalPinModal } from "@/components/parental-pin-modal";
 import { TogetherButton } from "@/chrome/topbar";
 import { AccountMenu } from "@/chrome/account-menu/account-menu";
@@ -109,7 +109,7 @@ export function RoyalTopbar() {
               {customMark ? (
                 <img src={customMark} alt="" draggable={false} className="h-7 w-7 object-contain" />
               ) : (
-                <HarborMark className="h-7 w-7" />
+                <FrameMark className="h-7 w-7" />
               )}
               <span
                 className="hidden text-[18px] font-medium uppercase leading-none tracking-[0.14em] text-ink lg:inline"

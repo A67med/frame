@@ -171,7 +171,7 @@ mod windows_impl {
                     .map_err(|e| e.to_string())?;
                 {
                     let mut all = profiles().lock().map_err(|_| "Privacy state lock failed")?;
-                    // All Harbor windows sharing a profile need only one installation.
+                    // All Frame windows sharing a profile need only one installation.
                     if all.contains_key(&key) {
                         return Ok(());
                     }

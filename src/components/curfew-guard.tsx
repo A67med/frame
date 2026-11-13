@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
-import { HarborMark } from "@/components/icons/harbor-mark";
+import { FrameMark } from "@/components/icons/frame-mark";
 import { loadCurfew, saveCurfew, type CurfewRecord } from "@/lib/curfew";
 import { useT } from "@/lib/i18n";
 import { verifyProfilePassword } from "@/lib/profile-password";
@@ -103,7 +103,7 @@ function CurfewLockdown({
         className="pointer-events-none absolute bottom-[10%] right-[10%] h-20 w-auto opacity-70"
       />
 
-      <HarborMark className="curfew-sail relative h-24 w-24" />
+      <FrameMark className="curfew-sail relative h-24 w-24" />
       <h1 className="relative mt-4 font-display text-[clamp(40px,7vw,72px)] font-bold leading-none tracking-tight drop-shadow-[0_3px_12px_rgba(0,0,0,0.35)]">
         {t("Time's up!")}
       </h1>

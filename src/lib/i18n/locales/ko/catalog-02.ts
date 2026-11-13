@@ -321,7 +321,7 @@ const catalog02: Record<string, string> = {
   Catalogs: "카탈로그",
   "Catalogs & metadata": "카탈로그 및 메타데이터",
   "Catalogs to show": "표시할 카탈로그",
-  "Catch stremio:// install links inside Harbor": "Harbor에서 stremio:// 설치 링크 열기",
+  "Catch stremio:// install links inside Frame": "Frame에서 stremio:// 설치 링크 열기",
   Categories: "카테고리",
   Cause: "원인",
   "Celebrated actors": "주목받은 배우",

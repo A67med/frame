@@ -2,7 +2,7 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import { localeForRegion, localeLabel } from "../src/lib/region/locale-map.ts";
 
-test("unambiguous regions select their translated Harbor interface", () => {
+test("unambiguous regions select their translated Frame interface", () => {
   const expected = {
     AT: "de",
     CN: "zh",

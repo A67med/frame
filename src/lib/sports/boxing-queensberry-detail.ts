@@ -39,7 +39,7 @@ export function parseQueensberryDetail(html: string, game: SportsGame): SportsGa
     return game;
   const expected = `${ORIGIN}/${game.id.slice("queensberry:".length)}`;
   const template = document.createElement("template");
-  // Parsing stays inert: no provider scripts or event handlers enter Harbor's DOM.
+  // Parsing stays inert: no provider scripts or event handlers enter Frame's DOM.
   template.innerHTML = html;
   const page = template.content;
   if (page.querySelector('link[rel="canonical"]')?.getAttribute("href") !== expected) return game;

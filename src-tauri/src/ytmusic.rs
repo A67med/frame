@@ -61,7 +61,7 @@ pub async fn ytmusic_open(app: AppHandle) -> Result<(), String> {
         #[allow(unused_mut)]
         let mut builder =
             WebviewWindowBuilder::new(&app_for_main, YTM_LABEL, WebviewUrl::External(parsed))
-                .title("Harbor Music")
+                .title("Frame Music")
                 .inner_size(width, height)
                 .position(x, y)
                 .resizable(true)
@@ -112,7 +112,7 @@ pub fn ytmusic_is_open(app: AppHandle) -> bool {
     app.get_webview_window(YTM_LABEL).is_some()
 }
 
-/// Embedding puts YouTube Music inside Harbor's own window, so the sidebar and title bar stay
+/// Embedding puts YouTube Music inside Frame's own window, so the sidebar and title bar stay
 /// around it, instead of it being a second window on the taskbar.
 ///
 /// Windows only, and deliberately so. `parent_raw` is a real WS_CHILD there, clipped to the
@@ -148,10 +148,10 @@ pub async fn ytmusic_embed(app: AppHandle, geom: crate::mpv::MpvGeometry) -> Res
         let parent = windows::Win32::Foundation::HWND(parent_raw as *mut _);
         let built =
             WebviewWindowBuilder::new(&app_for_main, YTM_EMBED_LABEL, WebviewUrl::External(parsed))
-                // Do NOT let this title start with "Harbor". mpv.rs finds its own embedded
+                // Do NOT let this title start with "Frame". mpv.rs finds its own embedded
                 // child by enumerating children of the main HWND and matching
-                // `class == "mpv"` or `(class.is_empty() && title.starts_with("Harbor"))`.
-                // A "Harbor..." title here risks this webview being taken for mpv and shoved
+                // `class == "mpv"` or `(class.is_empty() && title.starts_with("Frame"))`.
+                // A "Frame..." title here risks this webview being taken for mpv and shoved
                 // to HWND_BOTTOM or hidden with it.
                 .title("YouTube Music")
                 .parent_raw(parent)
@@ -160,7 +160,7 @@ pub async fn ytmusic_embed(app: AppHandle, geom: crate::mpv::MpvGeometry) -> Res
                 .shadow(false)
                 // A window.open() or target=_blank inside YouTube Music is cancelled by
                 // default, silently. Anything it wants to pop out (a share link, a policy page)
-                // belongs in the user's real browser, not a chromeless child of Harbor.
+                // belongs in the user's real browser, not a chromeless child of Frame.
                 .on_new_window(|url, _features| {
                     let _ = tauri_plugin_opener::open_url(url.as_str(), None::<&str>);
                     tauri::webview::NewWindowResponse::Deny
@@ -191,7 +191,7 @@ pub async fn ytmusic_embed(app: AppHandle, geom: crate::mpv::MpvGeometry) -> Res
     ytmusic_set_visible(app, true).await
 }
 
-/// Harbor keeps an inactive view mounted and merely display:none's it for a minute, and a
+/// Frame keeps an inactive view mounted and merely display:none's it for a minute, and a
 /// native child window does not honour CSS. Leaving the Music tab therefore has to hide this
 /// explicitly, or YouTube Music stays painted over whatever comes next.
 #[cfg(windows)]

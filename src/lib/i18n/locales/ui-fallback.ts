@@ -1,5 +1,55 @@
 // Newly introduced UI copy remains usable until each locale provides an override.
 const uiFallback: Record<string, string> = {
+  "Following 1 person.": "Following 1 person.",
+  "Paste an invite link from someone hosting a room to join them.":
+    "Paste an invite link from someone hosting a room to join them.",
+  "People you follow: {names}": "People you follow: {names}",
+  "Worked with {name}": "Worked with {name}",
+  "Nobody on TMDB matches {query}.": "Nobody on TMDB matches {query}.",
+  "The people you follow shape For You in Radar.": "The people you follow shape For You in Radar.",
+  "Following reads people and credits from TMDB. Add your TMDB key to use it.":
+    "Following reads people and credits from TMDB. Add your TMDB key to use it.",
+  "People you follow": "People you follow",
+  "Latest from people you follow": "Latest from people you follow",
+  "TMDB lists no recent or upcoming titles for them.":
+    "TMDB lists no recent or upcoming titles for them.",
+  "Recently released": "Recently released",
+  "TMDB didn't answer for {n} of them, so this list may be incomplete.":
+    "TMDB didn't answer for {n} of them, so this list may be incomplete.",
+  "People you might like": "People you might like",
+  "Who the people you follow have worked with.": "Who the people you follow have worked with.",
+  "Directors and actors from what's trending this week.":
+    "Directors and actors from what's trending this week.",
+  "Nothing new to recommend right now.": "Nothing new to recommend right now.",
+  "Follow people, rate titles or add to your watchlist to get recommendations.":
+    "Follow people, rate titles or add to your watchlist to get recommendations.",
+  "Because of {title}": "Because of {title}",
+  "Matches your genres": "Matches your genres",
+  "For You": "For You",
+  "Picked from who you follow and what you watch, rate and save.":
+    "Picked from who you follow and what you watch, rate and save.",
+  "Trending / Popular": "Trending / Popular",
+  "What everyone is watching right now, from TMDB.":
+    "What everyone is watching right now, from TMDB.",
+  "TMDB lists nothing here yet.": "TMDB lists nothing here yet.",
+  "Digital Releases": "Digital Releases",
+  "Digital release dates from the Blu-ray.com calendar.":
+    "Digital release dates from the Blu-ray.com calendar.",
+  "This calendar isn't connected yet. Frame only shows digital dates from Blu-ray.com, so nothing is listed here until it can read them.":
+    "This calendar isn't connected yet. Frame only shows digital dates from Blu-ray.com, so nothing is listed here until it can read them.",
+  "Open the calendar on Blu-ray.com": "Open the calendar on Blu-ray.com",
+  "Actors and directors worth a look. Open one for their filmography.":
+    "Actors and directors worth a look. Open one for their filmography.",
+  "Upcoming / New Releases": "Upcoming / New Releases",
+  "Movies and series by their actual release date.":
+    "Movies and series by their actual release date.",
+  "Follow actors and directors to shape what you see here.":
+    "Follow actors and directors to shape what you see here.",
+  "Radar reads titles and people from TMDB. Add your TMDB key to use it.":
+    "Radar reads titles and people from TMDB. Add your TMDB key to use it.",
+  "Your Stremio profile": "Your Stremio profile",
+  "Sign in to Stremio to use your profile here. Frame works without it too.":
+    "Sign in to Stremio to use your profile here. Frame works without it too.",
   "Big Picture display": "Big Picture display",
   "Which monitor Big Picture opens on at startup.":
     "Which monitor Big Picture opens on at startup.",
@@ -2189,6 +2239,47 @@ const uiFallback: Record<string, string> = {
   Everything: "Everything",
   Acting: "Acting",
   Directing: "Directing",
+  "This backup is too large to restore.": "This backup is too large to restore.",
+  "This backup was made by a newer version of Frame. Update Frame, then try again.":
+    "This backup was made by a newer version of Frame. Update Frame, then try again.",
+  "This backup is damaged and cannot be restored.":
+    "This backup is damaged and cannot be restored.",
+  "Restore did not finish. Your previous setup was put back. Free some storage, then try again.":
+    "Restore did not finish. Your previous setup was put back. Free some storage, then try again.",
+  "Frame could not save a safety copy of your current setup, so nothing was restored. Free some storage, then try again.":
+    "Frame could not save a safety copy of your current setup, so nothing was restored. Free some storage, then try again.",
+  "Password (optional)": "Password (optional)",
+  "With a password the file is encrypted, and it cannot be restored without it. Frame cannot recover a forgotten password.":
+    "With a password the file is encrypted, and it cannot be restored without it. Frame cannot recover a forgotten password.",
+  Password: "Password",
+  "Repeat the password": "Repeat the password",
+  "Use at least {n} characters.": "Use at least {n} characters.",
+  "The passwords do not match.": "The passwords do not match.",
+  "Save without a password. Settings, addons, Live TV and sign-ins can contain API keys and passwords, and anyone with the file can read them.":
+    "Save without a password. Settings, addons, Live TV and sign-ins can contain API keys and passwords, and anyone with the file can read them.",
+  "Wrong password, or the file was changed or damaged.":
+    "Wrong password, or the file was changed or damaged.",
+  "This encrypted backup needs a newer version of Frame.":
+    "This encrypted backup needs a newer version of Frame.",
+  "This encrypted backup is damaged and cannot be restored.":
+    "This encrypted backup is damaged and cannot be restored.",
+  "This backup is password protected": "This backup is password protected",
+  "Enter the password that was set when the backup was saved.":
+    "Enter the password that was set when the backup was saved.",
+  "Unlocking...": "Unlocking...",
+  "This older full backup restores its {n} saved entries and replaces each part of your setup it covers. {removed} current entries in those parts are not in the file and will be removed.":
+    "This older full backup restores its {n} saved entries and replaces each part of your setup it covers. {removed} current entries in those parts are not in the file and will be removed.",
+  "A copy of your current setup is saved first, so you can go back.":
+    "A copy of your current setup is saved first, so you can go back.",
+  "No community server is set. You can point Frame at a server you run yourself.":
+    "No community server is set. You can point Frame at a server you run yourself.",
+  "Frame has no community server of its own. Enter a URL to use a server you run yourself. Private mode below stops all contact either way.":
+    "Frame has no community server of its own. Enter a URL to use a server you run yourself. Private mode below stops all contact either way.",
+  "Enter the address of a server you run yourself, or leave this blank to keep community lookups off.":
+    "Enter the address of a server you run yourself, or leave this blank to keep community lookups off.",
+  Unlock: "Unlock",
+  "Also restore the custom JavaScript and HTML in this file. That code runs with full access to Frame, so only include it from a backup you made yourself. Left unticked, your current custom code stays.":
+    "Also restore the custom JavaScript and HTML in this file. That code runs with full access to Frame, so only include it from a backup you made yourself. Left unticked, your current custom code stays.",
 };
 
 export default uiFallback;

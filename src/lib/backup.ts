@@ -19,9 +19,12 @@ declare const __APP_VERSION__: string;
 // files are the same JSON and either one restores on Frame or Harbor.
 const FORMAT = "harbor-backup";
 const VERSION = 1;
+/** Restores refuse larger files before parsing; matches the native safety-copy cap. */
+export const MAX_BACKUP_TEXT_LENGTH = 100 * 1024 * 1024;
+const LOCAL_LIBRARY_KEY = "harbor.library.local.v1";
 
 export const BACKUP_EXTENSION = "framex";
-/** Extensions the restore picker accepts: Frame's own and Harbor's. */
+/** Extensions the restore picker accepts: Frame's own and Frame's. */
 export const BACKUP_IMPORT_EXTENSIONS = ["framex", "harbx"] as const;
 
 export function backupFileName(date: Date = new Date()): string {
@@ -348,9 +351,37 @@ export async function buildBackup(selected?: BackupSectionKey[]): Promise<Backup
   };
 }
 
-export async function downloadBackup(selected?: BackupSectionKey[]): Promise<boolean> {
-  const backup = await buildBackup(selected);
+/**
+ * Sections whose entries can hold API keys, tokens or passwords: settings keep
+ * debrid and provider keys, addon URLs often embed keys, Live TV playlists can
+ * carry Xtream logins. Exporting any of them without a password needs consent.
+ */
+export const CREDENTIAL_SECTIONS: readonly BackupSectionKey[] = [
+  "settings",
+  "addons",
+  "sessions",
+  "iptv",
+  "iptvCredentials",
+];
+
+export function selectionHasCredentials(selected: readonly BackupSectionKey[]): boolean {
+  return selected.some((key) => CREDENTIAL_SECTIONS.includes(key));
+}
+
+/** The backup file text, encrypted with the password when one is given. */
+export async function serializeBackup(backup: Backup, password?: string): Promise<string> {
   const text = JSON.stringify(backup, null, 2);
+  if (!password) return text;
+  const { encryptBackupText } = await import("@/lib/backup-crypto");
+  return encryptBackupText(text, password);
+}
+
+export async function downloadBackup(
+  selected?: BackupSectionKey[],
+  options: { password?: string } = {},
+): Promise<boolean> {
+  const backup = await buildBackup(selected);
+  const text = await serializeBackup(backup, options.password);
   return downloadText(backupFileName(), text, [BACKUP_EXTENSION], "Frame backup");
 }
 
@@ -359,13 +390,19 @@ export type BackupValidationError =
   | "Unrecognized file."
   | "This is not a Frame backup file."
   | "This backup has no data in it."
-  | "This backup contained nothing restorable.";
+  | "This backup contained nothing restorable."
+  | "This backup is too large to restore."
+  | "This backup was made by a newer version of Frame. Update Frame, then try again."
+  | "This backup is damaged and cannot be restored.";
 
 export type ParsedBackup =
   | { ok: true; backup: Backup }
   | { ok: false; error: BackupValidationError };
 
 export function parseBackup(text: string): ParsedBackup {
+  if (text.length > MAX_BACKUP_TEXT_LENGTH) {
+    return { ok: false, error: "This backup is too large to restore." };
+  }
   let json: unknown;
   try {
     json = JSON.parse(text);
@@ -379,12 +416,29 @@ export function parseBackup(text: string): ParsedBackup {
   if (b.format !== FORMAT) {
     return { ok: false, error: "This is not a Frame backup file." };
   }
-  if (!b.data || typeof b.data !== "object") {
+  // Files without a version predate the field and are read as version 1.
+  if (b.version !== undefined) {
+    if (typeof b.version !== "number" || !Number.isInteger(b.version) || b.version < 1) {
+      return { ok: false, error: "This backup is damaged and cannot be restored." };
+    }
+    if (b.version > VERSION) {
+      return {
+        ok: false,
+        error: "This backup was made by a newer version of Frame. Update Frame, then try again.",
+      };
+    }
+  }
+  if (!b.data || typeof b.data !== "object" || Array.isArray(b.data)) {
     return { ok: false, error: "This backup has no data in it." };
   }
   const data: Record<string, string> = {};
   for (const [k, v] of Object.entries(b.data)) {
     if (typeof v === "string" && isPortable(k)) data[k] = v;
+  }
+  // The local library is replaced as one document, so a damaged one would
+  // fail halfway through the restore; refuse it before anything is written.
+  if (data[LOCAL_LIBRARY_KEY] != null && !isJsonArray(data[LOCAL_LIBRARY_KEY])) {
+    return { ok: false, error: "This backup is damaged and cannot be restored." };
   }
   if (Object.keys(data).length === 0) {
     return { ok: false, error: "This backup contained nothing restorable." };
@@ -411,6 +465,14 @@ export function parseBackup(text: string): ParsedBackup {
       ...(typeof b.bgImage === "string" || b.bgImage === null ? { bgImage: b.bgImage } : {}),
     },
   };
+}
+
+function isJsonArray(text: string): boolean {
+  try {
+    return Array.isArray(JSON.parse(text));
+  } catch {
+    return false;
+  }
 }
 
 export function backupKeyCount(backup: Backup): number {
@@ -479,69 +541,318 @@ function retargetProfileKeys(data: Record<string, string>): Record<string, strin
   return out;
 }
 
-export async function applyBackup(backup: Backup): Promise<void> {
-  const data = retargetProfileKeys(backup.data);
-  const localLibrary = data["harbor.library.local.v1"];
-  if (localLibrary != null) {
-    restoreLocalLibrary(localLibrary);
-    delete data["harbor.library.local.v1"];
+/**
+ * Settings fields whose contents run as code with full access to the app
+ * (CustomCodeMount evaluates customJs and injects customHtml). A restore only
+ * takes them from the file when the user opts in.
+ */
+const CODE_FIELDS = ["customJs", "customHtml"] as const;
+
+function settingsObject(text: string | null | undefined): Record<string, unknown> | null {
+  if (!text) return null;
+  try {
+    const value = JSON.parse(text) as unknown;
+    return value && typeof value === "object" && !Array.isArray(value)
+      ? (value as Record<string, unknown>)
+      : null;
+  } catch {
+    return null;
   }
+}
+
+function carriesCode(settings: Record<string, unknown> | null): boolean {
+  return (
+    !!settings &&
+    CODE_FIELDS.some((field) => {
+      const value = settings[field];
+      return typeof value === "string" && value.trim() !== "";
+    })
+  );
+}
+
+/** True when the backup's settings carry custom JavaScript or HTML. */
+export function backupHasCustomCode(backup: Backup): boolean {
+  return Object.entries(backup.data).some(
+    ([key, value]) => sectionOf(key) === "settings" && carriesCode(settingsObject(value)),
+  );
+}
+
+/**
+ * Replaces the file's custom JavaScript and HTML with what this install
+ * already has under the same key, so declining the code neither runs the
+ * file's code nor wipes the user's own.
+ */
+function keepLocalCustomCode(data: Record<string, string>): void {
+  for (const [key, value] of Object.entries(data)) {
+    if (sectionOf(key) !== "settings") continue;
+    const incoming = settingsObject(value);
+    if (!carriesCode(incoming) || !incoming) continue;
+    let current: Record<string, unknown> | null = null;
+    try {
+      current = settingsObject(localStorage.getItem(key));
+    } catch {
+      current = null;
+    }
+    for (const field of CODE_FIELDS) {
+      const local = current?.[field];
+      incoming[field] = typeof local === "string" ? local : "";
+    }
+    data[key] = JSON.stringify(incoming);
+  }
+}
+
+export type RestoreOptions = {
+  /** Take custom JavaScript and HTML from the file. Off unless the user opts in. */
+  includeCustomCode?: boolean;
+};
+
+type RestorePlan = {
+  /** Entries to write, already retargeted to this install's profiles. */
+  data: Record<string, string>;
+  localLibrary: string | null;
+  /** Legacy full backups replace whole sections; these existing keys go away. */
+  staleLocalKeys: string[];
+  staleSecretKeys: string[];
+  wipesSections: boolean;
+};
+
+function planRestore(backup: Backup, options: RestoreOptions = {}): RestorePlan {
+  const data = retargetProfileKeys(backup.data);
+  if (!options.includeCustomCode) keepLocalCustomCode(data);
+  const localLibrary = data[LOCAL_LIBRARY_KEY] ?? null;
+  delete data[LOCAL_LIBRARY_KEY];
 
   // Whole-domain wiping is reserved for legacy full backups (no sections
   // field): there, "restore everything" must also clear items the source
   // install had deleted. Sectioned files replace only the exact entries they
-  // carry and never touch anything else, matching the restore dialog's promise.
-  let wipeSections: Set<BackupSectionKey> | null = null;
-  if (backup.sections == null || backup.sections.length === 0) {
+  // carry and never touch anything else.
+  const staleLocalKeys: string[] = [];
+  const staleSecretKeys: string[] = [];
+  const wipesSections = backup.sections == null || backup.sections.length === 0;
+  if (wipesSections) {
     const filled = new Set<BackupSectionKey>();
     for (const key of Object.keys(backup.data)) {
       if (!isPortable(key)) continue;
       filled.add(sectionOf(key));
     }
-    wipeSections = new Set<BackupSectionKey>(
-      [...ALL_SECTION_KEYS].filter((key) => filled.has(key)),
-    );
-    const stale: string[] = [];
     for (let i = 0; i < localStorage.length; i++) {
       const key = localStorage.key(i);
-      if (!key || !isPortable(key)) continue;
-      if (!wipeSections.has(sectionOf(key))) continue;
-      stale.push(key);
+      if (!key || !isPortable(key) || key === LOCAL_LIBRARY_KEY) continue;
+      if (!filled.has(sectionOf(key))) continue;
+      staleLocalKeys.push(key);
     }
-    for (const key of stale) localStorage.removeItem(key);
     for (const key of Object.keys(getAllSecrets())) {
       if (!isPortable(key)) continue;
-      if (!wipeSections.has(sectionOf(key))) continue;
-      if (data[key] == null) setSecret(key, null);
+      if (!filled.has(sectionOf(key))) continue;
+      if (data[key] == null) staleSecretKeys.push(key);
     }
   }
-  // Restore localStorage-backed entries first so a restored profiles list can
-  // change which profile the sign-ins land on. Small personal keys are written
-  // before bulky recomputable caches so a full storage degrades by dropping
-  // caches instead of user data; recovery prunes quotas and retries.
-  const entries = Object.entries(data)
-    .filter(([k]) => isPortable(k) && !isSecretKey(k))
-    .sort(([, a], [, b]) => a.length - b.length);
-  for (const [k, v] of entries) {
-    try {
-      if (!setItemWithRecovery(k, v)) {
-        console.warn(`[backup] storage refused "${k}" during restore`);
-      }
-    } catch (e) {
-      console.warn(`[backup] failed to restore "${k}"`, e);
-    }
+  return { data, localLibrary, staleLocalKeys, staleSecretKeys, wipesSections };
+}
+
+export type RestorePreview = {
+  /** Entries the file writes. */
+  entries: number;
+  /** True for legacy full backups, which replace whole sections. */
+  replacesWholeSections: boolean;
+  /** Existing entries that the restore removes because the file lacks them. */
+  removes: number;
+  /** The file's settings carry custom JavaScript or HTML. */
+  customCode: boolean;
+};
+
+/** What a restore would change on this install, computed without writing anything. */
+export function previewRestore(backup: Backup): RestorePreview {
+  const plan = planRestore(backup);
+  const written = new Set(Object.keys(plan.data));
+  const removes =
+    plan.staleLocalKeys.filter((k) => !written.has(k)).length + plan.staleSecretKeys.length;
+  return {
+    entries: backupKeyCount(backup),
+    replacesWholeSections: plan.wipesSections,
+    removes,
+    customCode: backupHasCustomCode(backup),
+  };
+}
+
+export type RestoreFailure =
+  | "safety-copy"
+  | "storage-refused"
+  | "library-refused"
+  | "secrets-not-saved";
+
+/**
+ * Thrown when a restore could not be completed. `rolledBack` says whether the
+ * setup that was there before the restore was put back in full.
+ */
+export class BackupRestoreError extends Error {
+  readonly reason: RestoreFailure;
+  readonly rolledBack: boolean;
+  readonly failedKeys: string[];
+
+  constructor(reason: RestoreFailure, rolledBack: boolean, failedKeys: string[] = []) {
+    super(`restore failed: ${reason}`);
+    this.name = "BackupRestoreError";
+    this.reason = reason;
+    this.rolledBack = rolledBack;
+    this.failedKeys = failedKeys;
   }
-  // Sign-ins are stored per profile; place them on the profile that is active
-  // after this restore so they come back regardless of where the backup was made.
-  const targetProfile = activeProfileId();
-  for (const [k, v] of Object.entries(backup.data)) {
-    if (!isPortable(k) || !isSecretKey(k)) continue;
+}
+
+type Snapshot = {
+  local: Map<string, string>;
+  secrets: Record<string, string>;
+  library: string | null;
+};
+
+async function captureSnapshot(includeLibrary: boolean): Promise<Snapshot> {
+  const local = new Map<string, string>();
+  for (let i = 0; i < localStorage.length; i++) {
+    const key = localStorage.key(i);
+    if (!key || !isPortable(key)) continue;
+    const value = localStorage.getItem(key);
+    if (value != null) local.set(key, value);
+  }
+  let library: string | null = null;
+  if (includeLibrary) {
+    await localLibraryReady();
+    library = JSON.stringify(readLocalLibrary());
+  }
+  return { local, secrets: getAllSecrets(), library };
+}
+
+/** Puts the pre-restore state back for every key the restore touched. */
+async function rollback(snapshot: Snapshot, touched: Set<string>): Promise<boolean> {
+  let ok = true;
+  // Remove new keys first so their space is free for the previous values.
+  for (const key of touched) {
+    if (snapshot.local.has(key)) continue;
     try {
-      setSecret(secretKeyForProfile(k, targetProfile), v);
+      localStorage.removeItem(key);
     } catch {
-      /* keep restoring the rest even if one entry is rejected */
+      ok = false;
     }
   }
+  for (const key of touched) {
+    const previous = snapshot.local.get(key);
+    if (previous == null) continue;
+    try {
+      if (localStorage.getItem(key) !== previous && !setItemWithRecovery(key, previous)) ok = false;
+    } catch {
+      ok = false;
+    }
+  }
+  const current = getAllSecrets();
+  for (const key of Object.keys(current)) {
+    if (snapshot.secrets[key] == null) setSecret(key, null);
+  }
+  for (const [key, value] of Object.entries(snapshot.secrets)) {
+    if (current[key] !== value) setSecret(key, value);
+  }
+  if (snapshot.library != null && !restoreLocalLibrary(snapshot.library)) ok = false;
+  try {
+    await flushSecrets();
+  } catch {
+    ok = false;
+  }
+  return ok;
+}
+
+function isTauriRuntime(): boolean {
+  return typeof window !== "undefined" && "__TAURI_INTERNALS__" in window;
+}
+
+/**
+ * Saves the current setup to the app data folder before a restore replaces
+ * it. Returns the saved path, or null outside the desktop app.
+ */
+async function saveSafetyCopy(): Promise<string | null> {
+  if (!isTauriRuntime()) return null;
+  const { invoke } = await import("@tauri-apps/api/core");
+  const current = await buildBackup();
+  return invoke<string>("backup_save_safety_copy", { content: JSON.stringify(current) });
+}
+
+export type RestoreResult = {
+  /** Where the pre-restore safety copy was saved, when the platform keeps one. */
+  safetyCopyPath: string | null;
+};
+
+/**
+ * Restores a parsed backup. Nothing is written until a safety copy of the
+ * current setup exists (desktop) and an in-memory snapshot is taken; if any
+ * entry, the local library or the sign-ins cannot be saved, the touched keys
+ * are put back and a BackupRestoreError is thrown instead of reporting success.
+ */
+export async function applyBackup(
+  backup: Backup,
+  options: RestoreOptions = {},
+): Promise<RestoreResult> {
+  const plan = planRestore(backup, options);
+
+  let safetyCopyPath: string | null = null;
+  try {
+    safetyCopyPath = await saveSafetyCopy();
+  } catch (error) {
+    console.warn("[backup] could not save a safety copy, restore not started", error);
+    throw new BackupRestoreError("safety-copy", true);
+  }
+  const snapshot = await captureSnapshot(plan.localLibrary != null);
+  const touched = new Set<string>();
+  const failedKeys: string[] = [];
+  let failure: RestoreFailure | null = null;
+
+  if (plan.localLibrary != null && !restoreLocalLibrary(plan.localLibrary)) {
+    failure = "library-refused";
+  }
+
+  if (failure == null) {
+    for (const key of plan.staleLocalKeys) {
+      touched.add(key);
+      localStorage.removeItem(key);
+    }
+    for (const key of plan.staleSecretKeys) setSecret(key, null);
+
+    // Restore localStorage-backed entries first so a restored profiles list can
+    // change which profile the sign-ins land on. Small personal keys are written
+    // before bulky recomputable caches so a full storage degrades by dropping
+    // caches instead of user data; recovery prunes quotas and retries.
+    const entries = Object.entries(plan.data)
+      .filter(([k]) => isPortable(k) && !isSecretKey(k))
+      .sort(([, a], [, b]) => a.length - b.length);
+    for (const [k, v] of entries) {
+      touched.add(k);
+      try {
+        if (!setItemWithRecovery(k, v)) failedKeys.push(k);
+      } catch (e) {
+        console.warn(`[backup] failed to restore "${k}"`, e);
+        failedKeys.push(k);
+      }
+    }
+    if (failedKeys.length > 0) failure = "storage-refused";
+  }
+
+  if (failure == null) {
+    // Sign-ins are stored per profile; place them on the profile that is active
+    // after this restore so they come back regardless of where the backup was made.
+    const targetProfile = activeProfileId();
+    for (const [k, v] of Object.entries(backup.data)) {
+      if (!isPortable(k) || !isSecretKey(k)) continue;
+      setSecret(secretKeyForProfile(k, targetProfile), v);
+    }
+    try {
+      await flushSecrets();
+    } catch (error) {
+      console.warn("[backup] sign-ins could not be saved", error);
+      failure = "secrets-not-saved";
+    }
+  }
+
+  if (failure != null) {
+    const rolledBack = await rollback(snapshot, touched);
+    throw new BackupRestoreError(failure, rolledBack, failedKeys);
+  }
+
   const restoresTheme =
     backup.sections == null || backup.sections.length === 0 || backup.sections.includes("theme");
   if (restoresTheme) {
@@ -561,5 +872,5 @@ export async function applyBackup(backup: Backup): Promise<void> {
       }
     }
   }
-  await flushSecrets();
+  return { safetyCopyPath };
 }

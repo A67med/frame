@@ -93,7 +93,7 @@ HOST: 239.255.255.250:1900\r\n\
 MAN: \"ssdp:discover\"\r\n\
 MX: 1\r\n\
 ST: {st}\r\n\
-USER-AGENT: Harbor/1.0 UPnP/1.0\r\n\r\n"
+USER-AGENT: Frame/1.0 UPnP/1.0\r\n\r\n"
     )
     .into_bytes()
 }
@@ -483,7 +483,7 @@ pub async fn load(
     content_type: Option<String>,
     is_live: bool,
 ) -> Result<(), String> {
-    let display_title = title.unwrap_or_else(|| "Harbor".into());
+    let display_title = title.unwrap_or_else(|| "Frame".into());
     let vendor = recall_vendor(&control_url);
     let mime = content_type.unwrap_or_else(|| pick_vendor_mime(vendor, is_live));
     let metadata = build_didl(&url, &display_title, &mime, is_live, vendor);
@@ -634,7 +634,7 @@ pub(crate) async fn load_audio_route(control_url: &str, url: String, session_id:
     Ok(())
 }
 
-/// Never stop a source the user selected independently while Harbor was waiting.
+/// Never stop a source the user selected independently while Frame was waiting.
 pub(crate) async fn stop_audio_if_owned(control_url: &str, session_id: &str) -> Result<(), String> {
     let uncertain = || "CAST_AUDIO_STOP_UNCONFIRMED: Could not confirm the speaker stopped; keep local audio paused".to_string();
     if !uri_has_audio_session(&current_uri(control_url).await.map_err(|_| uncertain())?, session_id) { return Ok(()); }

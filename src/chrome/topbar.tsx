@@ -5,7 +5,7 @@ import { UiIcon } from "@/components/ui-icon";
 import { useEffect, useId, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { BackChrome } from "@/chrome/back-chrome";
-import { HarborMark } from "@/components/icons/harbor-mark";
+import { FrameMark } from "@/components/icons/frame-mark";
 import { TogetherPopover, TogetherModalShell } from "@/components/together-modal";
 import { DownloadsButton } from "@/components/downloads-popover";
 import { ThreeLiquidGlassSurface } from "@/components/ThreeLiquidGlassSurface";
@@ -163,7 +163,7 @@ export function Topbar({ connecting = false }: { connecting?: boolean } = {}) {
           )}
           {onLiveRoot && (
             <div className="flex items-center gap-1.5 text-ink">
-              <HarborMark className="h-7 w-7" />
+              <FrameMark className="h-7 w-7" />
               <span className="font-display text-[18px] font-semibold leading-none tracking-tight">
                 {t("Live")}
               </span>

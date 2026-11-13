@@ -24,7 +24,7 @@ export const HANDOFF_PARAM = "setup";
 
 export type HandoffStepId = "tmdb" | "stremio" | "harbor";
 
-// "harbor" stays a valid id so older phones can still be parsed, but is no longer offered: Harbor accounts are gone.
+// "harbor" stays a valid id so older phones can still be parsed, but is no longer offered: Frame accounts are gone.
 export const HANDOFF_STEPS: readonly HandoffStepId[] = ["tmdb", "stremio"];
 
 /**

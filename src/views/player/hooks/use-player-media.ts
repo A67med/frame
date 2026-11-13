@@ -197,12 +197,12 @@ export function usePlayerMedia(params: {
     return () => publishAutoSync(null);
   }, [asStatus, asOffer, asApply, asRevert, asRetry, asRun, asStop, asFeedback]);
 
-  // Whether the video actually renders inside Harbor's webview. This mirrors the
+  // Whether the video actually renders inside Frame's webview. This mirrors the
   // `embedActive` value the player bridge sends to mpv (use-player-bridge.ts):
   // embedded only when mpv is set to embed AND HDR is not forcing its own opaque
   // window. "True HDR, separate window" keeps playerMpvEmbed on but moves the
   // video to a separate VO window, so keying only off playerMpvEmbed drew the
-  // HTML subtitle overlay on the Harbor window while mpv played elsewhere.
+  // HTML subtitle overlay on the Frame window while mpv played elsewhere.
   const videoInHarborWebview =
     engine === "mpv"
       ? settings.playerMpvEmbed && !(isWindowsDesktop() && settings.playerHdrOpaqueWindow)

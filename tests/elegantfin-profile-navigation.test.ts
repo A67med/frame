@@ -40,7 +40,7 @@ function bridgeHelper(name: string): () => unknown {
 
 // Frame has no accounts, so the bridge keeps the profile helpers as inert
 // no-ops: custom theme code that calls them falls back to its drawer.
-test("Harbor bridge keeps the profile helpers as no-ops", async () => {
+test("Frame bridge keeps the profile helpers as no-ops", async () => {
   assert.equal(bridgeHelper("tryViewMyProfile")(), false);
   await assert.doesNotReject(bridgeHelper("viewMyProfile")() as Promise<void>);
   assert.equal(bridgeHelper("unreadCount")(), 0);
@@ -92,7 +92,7 @@ function mountElegantFin(api?: ImmediateApi, collapsed = false) {
       <div data-harbor-topbar-actions><div class="ms-1"></div></div>
     </div></header>
     <aside data-harbor-sidebar data-collapsed="${collapsed}" aria-hidden="false">
-      <div>Harbor</div><nav><button data-harbor-nav="home">Home</button></nav>
+      <div>Frame</div><nav><button data-harbor-nav="home">Home</button></nav>
       <div><div><button data-harbor-sidebar-toggle><svg><path></path></svg></button></div>
         <div class="relative"><div class="h-12 w-12 rounded-full"><img src="/avatar.png"></div></div>
       </div>

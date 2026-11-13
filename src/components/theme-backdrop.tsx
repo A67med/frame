@@ -1,6 +1,7 @@
 import { AuroraBokeh } from "@/components/aurora-bokeh";
 import { useSettings } from "@/lib/settings";
 import { getThemeById } from "@/lib/theme";
+import { storedBackgroundImage } from "@/lib/theme-background";
 import { useThemePreview } from "@/lib/theme-preview";
 import { useView } from "@/lib/view";
 
@@ -13,7 +14,8 @@ export function ThemeBackdrop() {
 
   const preset = settings.theme.preset !== "custom" ? getThemeById(settings.theme.preset) : null;
   const wantsBokeh = (preview ? preview.bokeh : !!preset?.bokeh) && view !== "addons";
-  const img = settings.theme.backgroundImage ?? preset?.background?.image ?? null;
+  const img =
+    storedBackgroundImage(settings.theme.backgroundImage) ?? preset?.background?.image ?? null;
   const dim = Math.max(
     0,
     Math.min(1, settings.theme.backgroundDim ?? preset?.background?.dim ?? 0.65),

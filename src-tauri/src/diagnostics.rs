@@ -152,7 +152,7 @@ fn build_system_info(
 ) -> String {
     let version = app.package_info().version.to_string();
     format!(
-        "Harbor Diagnostics\n\
+        "Frame Diagnostics\n\
          generatedAt: {}\n\
          appVersion: {}\n\
          os: {}\n\
@@ -207,7 +207,7 @@ pub async fn diagnostics_collect(
         .unwrap_or_else(|| "No crash report recorded.".to_string());
     let runtime_text = cap_str(&input.runtime_text, MAX_RUNTIME_BYTES);
     let render_note = "Render diagnostics\nlibmpv GPU and render messages are folded into mpv.log \
-        (mpv_request_log_messages). Harbor has no separate on-disk render log."
+        (mpv_request_log_messages). Frame has no separate on-disk render log."
         .to_string();
     let system_info = build_system_info(&app, &input, &mem);
 

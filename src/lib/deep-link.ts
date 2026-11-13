@@ -86,7 +86,7 @@ export function onOpenProfileEdit(handler: () => void): () => void {
 }
 
 export function isProfileEditUrl(url: string): boolean {
-  return url.startsWith("harbor://profile");
+  return (appLinkPath(url) ?? "").startsWith("profile");
 }
 
 const OPEN_FILE_EVENT = "harbor:open-local-file";
@@ -126,20 +126,26 @@ export function parseStremioOpen(url: string): DeepLinkOpen | null {
 }
 
 export function shareDeepLink(type: string, id: string): string {
-  return `harbor://detail/${encodeURIComponent(type)}/${encodeURIComponent(id)}`;
+  return `frame://detail/${encodeURIComponent(type)}/${encodeURIComponent(id)}`;
+}
+
+/** frame:// is the scheme now; links shared before the rename use harbor://. */
+function appLinkPath(url: string): string | null {
+  for (const prefix of ["frame://", "harbor://"]) {
+    if (url.startsWith(prefix)) return url.slice(prefix.length);
+  }
+  return null;
 }
 
 export function parseHarborOpen(url: string): DeepLinkOpen | null {
-  if (!url.startsWith("harbor://")) return null;
-  return parseDetailPath(url.slice("harbor://".length));
+  const path = appLinkPath(url);
+  return path === null ? null : parseDetailPath(path);
 }
 
 export function parseHarborList(url: string): DeepLinkList | null {
-  if (!url.startsWith("harbor://")) return null;
-  const parts = url
-    .slice("harbor://".length)
-    .split("/")
-    .filter((p) => p.length > 0);
+  const path = appLinkPath(url);
+  if (path === null) return null;
+  const parts = path.split("/").filter((p) => p.length > 0);
   if (parts[0] !== "list" || parts.length < 3) return null;
   const handle = decodeURIComponent(parts[1]);
   const listId = decodeURIComponent(parts[2]);
@@ -149,7 +155,7 @@ export function parseHarborList(url: string): DeepLinkList | null {
 
 function shouldForward(url: string): boolean {
   if (isMusicDeepLink(url)) return false;
-  if (url.startsWith("harbor://")) return true;
+  if (appLinkPath(url) !== null) return true;
   if (url.startsWith("stremio://")) {
     if (window.__harborInstallerOpen) return true;
     return !!window.__harborStremioDeeplink;

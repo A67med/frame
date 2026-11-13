@@ -4,8 +4,8 @@ use serde_json::json;
 use std::time::Duration;
 
 const API_VERSION: &str = "1.16.1";
-const CLIENT_NAME: &str = "Harbor";
-const USER_AGENT: &str = "Harbor/1.0";
+const CLIENT_NAME: &str = "Frame";
+const USER_AGENT: &str = "Frame/1.0";
 const REQUEST_TIMEOUT: Duration = Duration::from_secs(20);
 const ARTWORK_SIZE: &str = "512";
 const NAVIDROME_PORT: &str = "4533";
@@ -47,7 +47,7 @@ impl SubsonicClient {
             return Err(format!("Music server returned HTTP {status}"));
         }
         let body = serde_json::from_str::<Envelope>(&payload)
-            .map_err(|_| "Music server sent a response Harbor could not read".to_string())?
+            .map_err(|_| "Music server sent a response Frame could not read".to_string())?
             .response;
         if body.status != "ok" {
             return Err(describe(body.error.as_ref()));
@@ -267,7 +267,7 @@ mod tests {
         assert!(url.contains("s=c19b2d"));
         assert!(url.contains("t=26719a1196d2a940705a59634eb18eab"));
         assert!(url.contains("v=1.16.1"));
-        assert!(url.contains("c=Harbor"));
+        assert!(url.contains("c=Frame"));
         assert!(url.contains("format=raw"));
         assert!(!url.contains("f=json"));
     }

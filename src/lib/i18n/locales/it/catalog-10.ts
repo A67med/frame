@@ -369,8 +369,8 @@ const catalog10: Record<string, string> = {
   stars: "stelle",
   stats: "statistiche",
   "stremio:// link": "link stremio://",
-  "stremio:// links now open in the Stremio app. Harbor will only install when you trigger it from inside Harbor.":
-    "Ora i link stremio:// si aprono nell'app Stremio. Harbor eseguirà l'installazione solo quando la avvii dall'interno di Harbor.",
+  "stremio:// links now open in the Stremio app. Frame will only install when you trigger it from inside Frame.":
+    "Ora i link stremio:// si aprono nell'app Stremio. Frame eseguirà l'installazione solo quando la avvii dall'interno di Frame.",
   "stremio://… or https://…/manifest.json": "stremio://… o https://…/manifest.json",
   "study, character, quote": "studio, personaggio, citazione",
   "subdomain acts as the access token. There is no login.":

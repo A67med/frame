@@ -1222,8 +1222,8 @@ const sweep: Record<string, string> = {
   "Saturn Award": "Giải Saturn",
   "Saturn Awards": "Các giải Saturn",
   "Save it anyway": "Vẫn lưu",
-  "Save the last 30 seconds as a video clip with audio, choosing subtitles on or off. Saves to Pictures/Harbor.":
-    "Lưu 30 giây gần nhất thành clip video có âm thanh, tùy chọn bật hoặc tắt phụ đề. Lưu vào Pictures/Harbor.",
+  "Save the last 30 seconds as a video clip with audio, choosing subtitles on or off. Saves to Pictures/Frame.":
+    "Lưu 30 giây gần nhất thành clip video có âm thanh, tùy chọn bật hoặc tắt phụ đề. Lưu vào Pictures/Frame.",
   "Save video clip": "Lưu clip video",
   "Save your recovery code": "Lưu mã khôi phục",
   "Saved on that device. You can close this page, or use this phone as a remote.":

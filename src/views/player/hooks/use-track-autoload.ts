@@ -382,7 +382,7 @@ export function useTrackAutoload(params: {
           ? [prefs.subLang, ...langs.filter((lang) => lang !== prefs.subLang)]
           : langs;
         // The embedded-source preference must gate downloaded candidates too, or a
-        // prepared external track would replace the embedded track Harbor selected
+        // prepared external track would replace the embedded track Frame selected
         // from the same preferences moments earlier.
         const keepEmbedded = desiredSubtitleIsEmbedded(
           snapRef.current.subtitleTracks,

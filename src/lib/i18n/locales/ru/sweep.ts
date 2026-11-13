@@ -1349,8 +1349,8 @@ const sweep: Record<string, string> = {
   "Saturn Award": "Премия «Сатурн»",
   "Saturn Awards": "Премии «Сатурн»",
   "Save it anyway": "Всё равно сохранить",
-  "Save the last 30 seconds as a video clip with audio, choosing subtitles on or off. Saves to Pictures/Harbor.":
-    "Сохраняет последние 30 секунд как видеоклип со звуком, с субтитрами или без. Сохраняется в Pictures/Harbor.",
+  "Save the last 30 seconds as a video clip with audio, choosing subtitles on or off. Saves to Pictures/Frame.":
+    "Сохраняет последние 30 секунд как видеоклип со звуком, с субтитрами или без. Сохраняется в Pictures/Frame.",
   "Save video clip": "Сохранить видеоклип",
   "Save your recovery code": "Сохраните код восстановления",
   "Saved on that device. You can close this page, or use this phone as a remote.":

@@ -418,8 +418,8 @@ const catalog12: Record<string, string> = {
   stars: "별",
   stats: "통계",
   "stremio:// link": "stremio:// 링크",
-  "stremio:// links now open in the Stremio app. Harbor will only install when you trigger it from inside Harbor.":
-    "이제 stremio:// 링크가 Stremio 앱에서 열립니다. Harbor는 Harbor 안에서 설치를 실행한 경우에만 설치합니다.",
+  "stremio:// links now open in the Stremio app. Frame will only install when you trigger it from inside Frame.":
+    "이제 stremio:// 링크가 Stremio 앱에서 열립니다. Frame는 Frame 안에서 설치를 실행한 경우에만 설치합니다.",
   "stremio://… or https://…/manifest.json": "stremio://… 또는 https://…/manifest.json",
   "study, character, quote": "학습, 등장인물, 인용문",
   "subdomain acts as the access token. There is no login.":

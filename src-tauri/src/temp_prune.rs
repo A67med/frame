@@ -6,7 +6,7 @@ const RECENT_GRACE: Duration = Duration::from_secs(60 * 60);
 const ORPHAN_MAX_AGE: Duration = Duration::from_secs(24 * 60 * 60);
 
 fn is_updater_dir(name: &str) -> bool {
-    name.starts_with("Harbor-") && name.contains("-updater-")
+    name.starts_with("Frame-") && name.contains("-updater-")
 }
 
 fn is_orphan_dir(name: &str) -> bool {
@@ -48,7 +48,7 @@ fn sweep_prepared_subtitles(temp_dir: &std::path::Path) {
 pub fn sweep_temp() {
     let dir = std::env::temp_dir();
     // Crash leftovers contain plaintext dialogue, so bound their recovery life
-    // while preserving recent files that another Harbor instance may still use.
+    // while preserving recent files that another Frame instance may still use.
     sweep_prepared_subtitles(&dir);
     let entries = match std::fs::read_dir(&dir) {
         Ok(e) => e,
@@ -148,9 +148,9 @@ mod tests {
 
     #[test]
     fn matches_only_harbor_updater_dirs() {
-        assert!(is_updater_dir("Harbor-0.9.113-updater-mbbEi1"));
-        assert!(is_updater_dir("Harbor-0.9.35-updater-wTLMpQ"));
-        assert!(!is_updater_dir("Harbor-0.9.113"));
+        assert!(is_updater_dir("Frame-0.9.113-updater-mbbEi1"));
+        assert!(is_updater_dir("Frame-0.9.35-updater-wTLMpQ"));
+        assert!(!is_updater_dir("Frame-0.9.113"));
         assert!(!is_updater_dir("updater-cache"));
         assert!(!is_updater_dir("SomeOtherApp-updater-xyz"));
         assert!(!is_updater_dir("harbor-trailers"));

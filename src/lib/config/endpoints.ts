@@ -3,10 +3,12 @@ function resolveBase(raw: string | undefined, fallback: string): string {
   return value.replace(/\/+$/, "");
 }
 
-export const HARBOR_API_BASE = resolveBase(
-  import.meta.env.VITE_HARBOR_API_BASE,
-  "https://harbor.site",
-);
+// Harbor's hosted services (harbor.site and its subdomains) shut down with the
+// upstream project, and Frame runs no replacement. Their bases default to "",
+// which every consumer treats as "not configured": nothing is requested from a
+// retired host. A build can still point one at a server it runs through the
+// matching VITE_* variable.
+export const HARBOR_API_BASE = resolveBase(import.meta.env.VITE_HARBOR_API_BASE, "");
 
 export const HARBOR_REPO_URL = "https://github.com/abdallahkattriah-sketch/frame";
 export const HARBOR_RELEASES_URL = `${HARBOR_REPO_URL}/releases`;
@@ -16,7 +18,7 @@ export const HARBOR_BUG_FORM_URL = `${HARBOR_ISSUES_URL}/new?template=bug_report
 // Static feeds (awards, hero art, release notes, theme index) served from the repo's data/ folder.
 export const HARBOR_DATA_BASE = resolveBase(
   import.meta.env.VITE_HARBOR_DATA_BASE,
-  "https://raw.githubusercontent.com/crazyrabbit0/harbor/main/data",
+  "https://raw.githubusercontent.com/abdallahkattriah-sketch/frame/main/data",
 );
 
 export const HARBOR_TRAKT_BASE = resolveBase(
@@ -28,20 +30,16 @@ export const HARBOR_MAL_BASE = resolveBase(import.meta.env.VITE_HARBOR_MAL_BASE,
 
 export const HARBOR_TVDB_BASE = resolveBase(import.meta.env.VITE_HARBOR_TVDB_BASE, HARBOR_API_BASE);
 
-export const HARBOR_BUGS_BASE = resolveBase(
-  import.meta.env.VITE_HARBOR_BUGS_BASE,
-  "https://bugs.harbor.site",
-);
+export const HARBOR_BUGS_BASE = resolveBase(import.meta.env.VITE_HARBOR_BUGS_BASE, "");
 
-export const HARBOR_SYNC_BASE = resolveBase(
-  import.meta.env.VITE_HARBOR_SYNC_BASE,
-  "https://sync.harbor.site",
-);
+export const HARBOR_SYNC_BASE = resolveBase(import.meta.env.VITE_HARBOR_SYNC_BASE, "");
 
-export const HARBOR_RELAY_BASE = resolveBase(
-  import.meta.env.VITE_HARBOR_RELAY_BASE,
-  "https://app.harbor.site",
-);
+export const HARBOR_RELAY_BASE = resolveBase(import.meta.env.VITE_HARBOR_RELAY_BASE, "");
+
+/** Hosts of the retired Harbor services; safe-fetch refuses requests to them. */
+export function isRetiredHarborHost(hostname: string): boolean {
+  return /(^|\.)harbor\.site$/i.test(hostname);
+}
 
 export const HARBOR_DISCORD_INVITE = resolveBase(
   import.meta.env.VITE_HARBOR_DISCORD_INVITE,

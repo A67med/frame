@@ -73,6 +73,7 @@ import gameDiscovery from "./en/game-discovery";
 import gameDetails from "./en/game-details";
 import gameAchievements from "./en/game-achievements";
 import settingsRefinements from "./en/settings-refinements";
+import dataSafety from "./en/data-safety";
 
 import nytTv from "./en/nyt-tv";
 import curatedLists from "./en/curated-lists";
@@ -440,6 +441,7 @@ const en: Record<string, string> = {
   "update.of": "{downloaded} of {total}",
   "mpv.conf": "mpv.conf",
   ...settingsRefinements,
+  ...dataSafety,
   ...nytTv,
   ...curatedLists,
   ...filmRegistry,

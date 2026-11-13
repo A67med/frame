@@ -61,7 +61,7 @@ export function PackCard({
           {installed ? <Check size={18} strokeWidth={2.6} /> : <Download size={18} />}
           {busy ? t("Installing…") : installed ? t("Reinstall") : t("Install")}
         </button>
-        {pack.kind === "nuvio" && pack.author === "Harbor" && (
+        {pack.kind === "nuvio" && pack.author === "Frame" && (
           <button
             type="button"
             title={pack.url}

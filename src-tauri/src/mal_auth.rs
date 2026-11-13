@@ -14,9 +14,9 @@ use tokio::sync::{oneshot, Mutex};
 const PORT: u16 = 47321;
 const PATH: &str = "/harbor-mal";
 
-const PAGE_OK: &str = r#"<!doctype html><html><head><meta charset="utf-8"><title>Harbor</title><style>body{margin:0;height:100vh;display:flex;align-items:center;justify-content:center;font-family:system-ui,-apple-system,sans-serif;background:#0d0f14;color:#e9ebf2}.c{text-align:center;max-width:380px;padding:32px}h1{font-size:21px;margin:0 0 10px;font-weight:600}p{color:#9aa1ad;font-size:14px;line-height:1.55;margin:0}</style></head><body><div class="c"><h1>You're signed in</h1><p>You can close this tab and head back to Harbor.</p></div></body></html>"#;
+const PAGE_OK: &str = r#"<!doctype html><html><head><meta charset="utf-8"><title>Frame</title><style>body{margin:0;height:100vh;display:flex;align-items:center;justify-content:center;font-family:system-ui,-apple-system,sans-serif;background:#0d0f14;color:#e9ebf2}.c{text-align:center;max-width:380px;padding:32px}h1{font-size:21px;margin:0 0 10px;font-weight:600}p{color:#9aa1ad;font-size:14px;line-height:1.55;margin:0}</style></head><body><div class="c"><h1>You're signed in</h1><p>You can close this tab and head back to Frame.</p></div></body></html>"#;
 
-const PAGE_FAIL: &str = r#"<!doctype html><html><head><meta charset="utf-8"><title>Harbor</title><style>body{margin:0;height:100vh;display:flex;align-items:center;justify-content:center;font-family:system-ui,-apple-system,sans-serif;background:#0d0f14;color:#e9ebf2}.c{text-align:center;max-width:380px;padding:32px}p{color:#9aa1ad;font-size:14px;line-height:1.55}</style></head><body><div class="c"><p>MyAnimeList sent no sign-in code. Return to Harbor and try again.</p></div></body></html>"#;
+const PAGE_FAIL: &str = r#"<!doctype html><html><head><meta charset="utf-8"><title>Frame</title><style>body{margin:0;height:100vh;display:flex;align-items:center;justify-content:center;font-family:system-ui,-apple-system,sans-serif;background:#0d0f14;color:#e9ebf2}.c{text-align:center;max-width:380px;padding:32px}p{color:#9aa1ad;font-size:14px;line-height:1.55}</style></head><body><div class="c"><p>MyAnimeList sent no sign-in code. Return to Frame and try again.</p></div></body></html>"#;
 
 #[derive(Clone, Serialize)]
 struct MalAuthPayload {

@@ -5,13 +5,15 @@ use axum::http::{header, HeaderMap, HeaderName, HeaderValue, Response, StatusCod
 use axum::response::IntoResponse;
 use axum::routing::get;
 use futures_util::{SinkExt, StreamExt};
-use std::collections::HashSet;
+use std::collections::HashMap;
 use std::net::SocketAddr;
 use std::sync::atomic::{AtomicBool, AtomicU64, Ordering};
 use std::sync::{Arc, Mutex, OnceLock};
 use tauri::{AppHandle, Emitter};
 use tokio::net::TcpListener;
-use tokio::sync::{broadcast, oneshot, Mutex as AsyncMutex};
+use tokio::sync::{broadcast, mpsc, oneshot, Mutex as AsyncMutex};
+
+use crate::remote_auth::{self, Effect, RemoteSession};
 
 pub const WEB_PORT: u16 = 11471;
 const DEV_FRONTEND: &str = "http://127.0.0.1:1420";
@@ -24,11 +26,30 @@ fn is_tauri_dev() -> bool {
 static RUNNING: AtomicBool = AtomicBool::new(false);
 static NEXT_CLIENT_ID: AtomicU64 = AtomicU64::new(1);
 
+/// A frame Frame broadcasts. Only `public` frames (the TV hand-off offers)
+/// reach sockets that have not paired.
+#[derive(Clone)]
+struct Outbound {
+    payload: String,
+    public: bool,
+}
+
+enum Direct {
+    Text(String),
+    Close,
+}
+
+struct ClientHandle {
+    device: Option<String>,
+    authorized: Arc<AtomicBool>,
+    direct: mpsc::UnboundedSender<Direct>,
+}
+
 #[derive(Clone)]
 struct ServeState {
     app: AppHandle,
-    outbound: broadcast::Sender<String>,
-    clients: Arc<AsyncMutex<HashSet<u64>>>,
+    outbound: broadcast::Sender<Outbound>,
+    clients: Arc<AsyncMutex<HashMap<u64, ClientHandle>>>,
 }
 
 fn shutdown_slot() -> &'static Mutex<Option<oneshot::Sender<()>>> {
@@ -121,113 +142,6 @@ async fn proxy_dev_frontend(path_and_query: &str) -> Option<Response<Body>> {
     builder.body(Body::from(bytes)).ok()
 }
 
-fn pct_hex(b: u8) -> Option<u8> {
-    match b {
-        b'0'..=b'9' => Some(b - b'0'),
-        b'a'..=b'f' => Some(b - b'a' + 10),
-        b'A'..=b'F' => Some(b - b'A' + 10),
-        _ => None,
-    }
-}
-
-fn pct_decode(s: &str) -> String {
-    let bytes = s.as_bytes();
-    let mut out = Vec::with_capacity(bytes.len());
-    let mut i = 0;
-    while i < bytes.len() {
-        if bytes[i] == b'%' && i + 2 < bytes.len() {
-            if let (Some(h), Some(l)) = (pct_hex(bytes[i + 1]), pct_hex(bytes[i + 2])) {
-                out.push(h * 16 + l);
-                i += 3;
-                continue;
-            }
-        }
-        out.push(bytes[i]);
-        i += 1;
-    }
-    String::from_utf8_lossy(&out).into_owned()
-}
-
-fn blocked_host(url: &str) -> bool {
-    let lower = url.to_ascii_lowercase();
-    let after = lower.split("://").nth(1).unwrap_or("");
-    let host = after.split(['/', '?', '#', ':']).next().unwrap_or("");
-    host == "localhost"
-        || host.starts_with("127.")
-        || host.starts_with("0.")
-        || host.starts_with("10.")
-        || host.starts_with("192.168.")
-        || host.starts_with("169.254.")
-        || host.starts_with("[::1]")
-        || (host.starts_with("172.")
-            && host
-                .split('.')
-                .nth(1)
-                .and_then(|o| o.parse::<u8>().ok())
-                .map(|o| (16..=31).contains(&o))
-                .unwrap_or(false))
-}
-
-async fn manga_img_proxy(uri: axum::http::Uri) -> Response<Body> {
-    let query = uri.query().unwrap_or("");
-    let target = query
-        .split('&')
-        .find_map(|pair| pair.strip_prefix("u=").map(pct_decode));
-    let url = match target {
-        Some(u) if (u.starts_with("http://") || u.starts_with("https://")) && !blocked_host(&u) => {
-            u
-        }
-        _ => {
-            return Response::builder()
-                .status(StatusCode::BAD_REQUEST)
-                .body(Body::empty())
-                .unwrap()
-        }
-    };
-    let client = reqwest::Client::new();
-    let upstream = match client
-        .get(&url)
-        .header(
-            "User-Agent",
-            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0 Safari/537.36",
-        )
-        .send()
-        .await
-    {
-        Ok(r) => r,
-        Err(_) => {
-            return Response::builder()
-                .status(StatusCode::BAD_GATEWAY)
-                .body(Body::empty())
-                .unwrap()
-        }
-    };
-    let status =
-        StatusCode::from_u16(upstream.status().as_u16()).unwrap_or(StatusCode::BAD_GATEWAY);
-    let ctype = upstream
-        .headers()
-        .get(header::CONTENT_TYPE)
-        .and_then(|v| v.to_str().ok())
-        .unwrap_or("image/jpeg")
-        .to_string();
-    let bytes = match upstream.bytes().await {
-        Ok(b) => b,
-        Err(_) => {
-            return Response::builder()
-                .status(StatusCode::BAD_GATEWAY)
-                .body(Body::empty())
-                .unwrap()
-        }
-    };
-    Response::builder()
-        .status(status)
-        .header(header::CONTENT_TYPE, ctype)
-        .header(header::ACCESS_CONTROL_ALLOW_ORIGIN, "*")
-        .header(header::CACHE_CONTROL, "public, max-age=86400")
-        .body(Body::from(bytes))
-        .unwrap()
-}
-
 async fn serve_http(State(state): State<ServeState>, uri: axum::http::Uri) -> Response<Body> {
     let path_and_query = uri
         .path_and_query()
@@ -288,9 +202,18 @@ async fn remote_ws_handler(
 
 async fn handle_remote_socket(socket: WebSocket, state: ServeState) {
     let client_id = NEXT_CLIENT_ID.fetch_add(1, Ordering::SeqCst);
+    let authorized = Arc::new(AtomicBool::new(false));
+    let (direct, mut direct_rx) = mpsc::unbounded_channel::<Direct>();
     {
         let mut clients = state.clients.lock().await;
-        clients.insert(client_id);
+        clients.insert(
+            client_id,
+            ClientHandle {
+                device: None,
+                authorized: authorized.clone(),
+                direct: direct.clone(),
+            },
+        );
     }
     let _ = state.app.emit(
         "remote://client",
@@ -299,38 +222,98 @@ async fn handle_remote_socket(socket: WebSocket, state: ServeState) {
 
     let (mut sender, mut receiver) = socket.split();
     let mut outbound_rx = state.outbound.subscribe();
+    let send_authorized = authorized.clone();
 
     let send_task = tauri::async_runtime::spawn(async move {
         loop {
-            match outbound_rx.recv().await {
-                Ok(msg) => {
-                    if sender.send(Message::Text(msg.into())).await.is_err() {
+            tokio::select! {
+                broadcast = outbound_rx.recv() => match broadcast {
+                    Ok(frame) => {
+                        let trusted = send_authorized.load(Ordering::SeqCst);
+                        if !remote_auth::delivers(frame.public, trusted) {
+                            continue;
+                        }
+                        if sender.send(Message::Text(frame.payload.into())).await.is_err() {
+                            break;
+                        }
+                    }
+                    Err(broadcast::error::RecvError::Lagged(_)) => continue,
+                    Err(broadcast::error::RecvError::Closed) => break,
+                },
+                own = direct_rx.recv() => match own {
+                    Some(Direct::Text(text)) => {
+                        if sender.send(Message::Text(text.into())).await.is_err() {
+                            break;
+                        }
+                    }
+                    Some(Direct::Close) | None => {
+                        let _ = sender.send(Message::Close(None)).await;
                         break;
                     }
-                }
-                Err(broadcast::error::RecvError::Lagged(_)) => continue,
-                Err(broadcast::error::RecvError::Closed) => break,
+                },
             }
         }
     });
 
-    while let Some(Ok(msg)) = receiver.next().await {
-        match msg {
-            Message::Text(text) => {
-                let _ = state.app.emit(
-                    "remote://cmd",
-                    serde_json::json!({
-                        "clientId": client_id,
-                        "raw": text.to_string(),
-                    }),
-                );
-            }
+    let host = serde_json::to_value(crate::harbor_lan::identity()).unwrap_or_default();
+    let mut session = RemoteSession::new(client_id);
+    'frames: while let Some(Ok(msg)) = receiver.next().await {
+        let text = match msg {
+            Message::Text(text) => text.to_string(),
             Message::Close(_) => break,
-            Message::Ping(_) | Message::Pong(_) | Message::Binary(_) => {}
+            Message::Ping(_) | Message::Pong(_) | Message::Binary(_) => continue,
+        };
+        // Forgetting a device clears the flag; keep the session in step.
+        if session.authorized() && !authorized.load(Ordering::SeqCst) {
+            session.revoke();
+        }
+        let effects = match remote_auth::shared(&state.app).lock() {
+            Ok(mut auth) => session.on_text(&text, &mut auth, &host, remote_auth::now_ms()),
+            Err(_) => break,
+        };
+        for effect in effects {
+            match effect {
+                Effect::Reply(frame) => {
+                    let _ = direct.send(Direct::Text(frame.to_string()));
+                }
+                Effect::Forward(raw) => {
+                    let _ = state.app.emit(
+                        "remote://cmd",
+                        serde_json::json!({ "clientId": client_id, "raw": raw }),
+                    );
+                }
+                Effect::Emit(event, payload) => {
+                    let _ = state.app.emit(event, payload);
+                }
+                Effect::Authorized(device) => {
+                    authorized.store(true, Ordering::SeqCst);
+                    if let Some(client) = state.clients.lock().await.get_mut(&client_id) {
+                        client.device = Some(device);
+                    }
+                    let _ = state.app.emit(
+                        "remote://client",
+                        serde_json::json!({ "action": "auth", "clientId": client_id }),
+                    );
+                }
+                Effect::Close => {
+                    let _ = direct.send(Direct::Close);
+                    break 'frames;
+                }
+            }
         }
     }
 
-    send_task.abort();
+    let closing = match remote_auth::shared(&state.app).lock() {
+        Ok(mut auth) => session.on_close(&mut auth),
+        Err(_) => Vec::new(),
+    };
+    for effect in closing {
+        if let Effect::Emit(event, payload) = effect {
+            let _ = state.app.emit(event, payload);
+        }
+    }
+    let _ = direct.send(Direct::Close);
+    let _ = send_task.await;
     {
         let mut clients = state.clients.lock().await;
         clients.remove(&client_id);
@@ -339,6 +322,25 @@ async fn handle_remote_socket(socket: WebSocket, state: ServeState) {
         "remote://client",
         serde_json::json!({ "action": "leave", "clientId": client_id }),
     );
+}
+
+/// Disconnects every socket that paired as one of `ids` (devices the user
+/// just forgot), so a forgotten phone loses control at once.
+pub async fn disconnect_devices(ids: &[String]) {
+    let state = {
+        let guard = serve_state_slot().lock().unwrap();
+        guard.clone()
+    };
+    let Some(state) = state else {
+        return;
+    };
+    let clients = state.clients.lock().await;
+    for client in clients.values() {
+        if client.device.as_ref().is_some_and(|d| ids.contains(d)) {
+            client.authorized.store(false, Ordering::SeqCst);
+            let _ = client.direct.send(Direct::Close);
+        }
+    }
 }
 
 #[tauri::command]
@@ -352,18 +354,17 @@ pub async fn web_serve_start(app: AppHandle) -> Result<u16, String> {
     let (tx, rx) = oneshot::channel::<()>();
     *shutdown_slot().lock().unwrap() = Some(tx);
 
-    let (outbound, _) = broadcast::channel::<String>(256);
+    let (outbound, _) = broadcast::channel::<Outbound>(256);
     let state = ServeState {
         app: app.clone(),
         outbound,
-        clients: Arc::new(AsyncMutex::new(HashSet::new())),
+        clients: Arc::new(AsyncMutex::new(HashMap::new())),
     };
     *serve_state_slot().lock().unwrap() = Some(state.clone());
     RUNNING.store(true, Ordering::SeqCst);
 
     let router = axum::Router::new()
         .route("/api/remote", get(remote_ws_handler))
-        .route("/manga-img", get(manga_img_proxy))
         .fallback(serve_http)
         .with_state(state);
 
@@ -404,14 +405,36 @@ pub fn web_serve_status() -> bool {
     RUNNING.load(Ordering::SeqCst)
 }
 
-/// Push a JSON text frame to every connected remote client.
+/// Push a JSON text frame to every paired remote client, or to every
+/// connected client when `public` (only for frames that carry no secrets).
 #[tauri::command]
-pub fn remote_ws_broadcast(payload: String) -> Result<(), String> {
+pub fn remote_ws_broadcast(payload: String, public: Option<bool>) -> Result<(), String> {
     let guard = serve_state_slot().lock().unwrap();
     let Some(state) = guard.as_ref() else {
         return Ok(());
     };
-    let _ = state.outbound.send(payload);
+    let _ = state.outbound.send(Outbound {
+        payload,
+        public: public.unwrap_or(false),
+    });
+    Ok(())
+}
+
+/// Send a JSON text frame to one paired client (a command's ack).
+#[tauri::command]
+pub async fn remote_ws_send(client_id: u64, payload: String) -> Result<(), String> {
+    let state = {
+        let guard = serve_state_slot().lock().unwrap();
+        guard.clone()
+    };
+    let Some(state) = state else {
+        return Ok(());
+    };
+    if let Some(client) = state.clients.lock().await.get(&client_id) {
+        if client.authorized.load(Ordering::SeqCst) {
+            let _ = client.direct.send(Direct::Text(payload));
+        }
+    }
     Ok(())
 }
 
@@ -424,7 +447,13 @@ pub async fn remote_ws_client_count() -> Result<usize, String> {
     let Some(state) = state else {
         return Ok(0);
     };
-    let count = state.clients.lock().await.len();
+    let count = state
+        .clients
+        .lock()
+        .await
+        .values()
+        .filter(|c| c.authorized.load(Ordering::SeqCst))
+        .count();
     Ok(count)
 }
 

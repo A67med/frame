@@ -2,6 +2,9 @@ import { useEffect } from "react";
 import { isBigPictureActive, pushBigPicture } from "@/lib/big-picture";
 import type { Meta } from "@/lib/cinemeta";
 import { useProfiles } from "@/lib/profiles";
+import { useParental } from "@/lib/parental";
+import { NAV_ITEMS } from "@/chrome/nav-items";
+import { remoteMayOpenView } from "./view-gate";
 import { useView, type PlayEpisode } from "@/lib/view";
 import { useSettings } from "@/lib/settings";
 import { resolveLocalPlayVersions } from "@/lib/local-library/playback";
@@ -53,6 +56,7 @@ export function RemoteOpenBridge() {
   const { openMeta, openPerson, openPicker, openPlayer, openService, setView } = useView();
   const { settings } = useSettings();
   const { selectProfile } = useProfiles();
+  const { locked, hiddenTabs } = useParental();
   useEffect(() => {
     const onSetProfile = (e: Event) => {
       const id = (e as CustomEvent<string>).detail;
@@ -66,6 +70,8 @@ export function RemoteOpenBridge() {
       const d = (e as CustomEvent<RemoteOpen>).detail;
       if (!d) return;
       if (d.action === "goView") {
+        // A remote gets no further than the sidebar: locked views stay locked.
+        if (!remoteMayOpenView(d.view, NAV_ITEMS, locked, hiddenTabs)) return;
         setView(d.view as Parameters<typeof setView>[0]);
         return;
       }
@@ -156,6 +162,16 @@ export function RemoteOpenBridge() {
     };
     window.addEventListener("harbor:remote-open", onOpen);
     return () => window.removeEventListener("harbor:remote-open", onOpen);
-  }, [openMeta, openPerson, openPicker, openPlayer, openService, setView, settings]);
+  }, [
+    openMeta,
+    openPerson,
+    openPicker,
+    openPlayer,
+    openService,
+    setView,
+    settings,
+    locked,
+    hiddenTabs,
+  ]);
   return null;
 }

@@ -1253,7 +1253,8 @@ export function Home({
             !showHero) &&
             seasonalInvitation}
           {!cwTop && cwBlock}
-          {settings.homeMode !== "classic" && (
+          {/* An empty wrapper would still take a gap in this column. */}
+          {settings.homeMode !== "classic" && enabledServices.length > 0 && (
             <div data-scroll-anchor="streaming">
               <StreamingRail services={enabledServices} />
             </div>

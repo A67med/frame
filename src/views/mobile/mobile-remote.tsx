@@ -8,11 +8,13 @@ import {
   useState,
   type ReactNode,
 } from "react";
-import { Check, WifiOff } from "lucide-react";
+import { Check, WifiOff, X } from "lucide-react";
 import type { Meta } from "@/lib/cinemeta";
 import type { RemoteCommand, RemoteSnapshot } from "@/lib/remote/protocol";
 import { useRemoteClient } from "@/lib/remote/use-remote-client";
 import { useSettings } from "@/lib/settings";
+import { useT } from "@/lib/i18n";
+import { RemotePairScreen } from "./remote-pair";
 
 type PlayOpts = { season?: number; episode?: number; resume?: boolean };
 
@@ -27,8 +29,19 @@ type MobileRemoteValue = {
 const Ctx = createContext<MobileRemoteValue | null>(null);
 
 export function MobileRemoteProvider({ children }: { children: ReactNode }) {
-  const { status, snapshot, sendCommand } = useRemoteClient();
+  const {
+    status,
+    snapshot,
+    sendCommand,
+    pairing,
+    requestPairing,
+    submitPairingCode,
+    cancelPairing,
+  } = useRemoteClient();
   const { settings, update } = useSettings();
+  const t = useT();
+  const [pairOpen, setPairOpen] = useState(false);
+  const paired = pairing.phase === "paired";
   const [flash, setFlash] = useState<{ ok: boolean; text: string } | null>(null);
   const timer = useRef<number>(0);
 
@@ -82,10 +95,19 @@ export function MobileRemoteProvider({ children }: { children: ReactNode }) {
     timer.current = window.setTimeout(() => setFlash(null), 2200);
   }, []);
 
-  const connected = status === "connected";
+  // Unpaired, Frame ignores this device, so it is not really connected.
+  const connected = status === "connected" && paired;
+
+  useEffect(() => {
+    if (paired) setPairOpen(false);
+  }, [paired]);
 
   const playOnHost = useCallback(
     (meta: Meta, opts?: PlayOpts) => {
+      if (status === "connected" && !paired) {
+        setPairOpen(true);
+        return;
+      }
       const sent = sendCommand({
         action: "playMeta",
         metaId: meta.id,
@@ -98,11 +120,15 @@ export function MobileRemoteProvider({ children }: { children: ReactNode }) {
       });
       showFlash(sent, sent ? `Playing on your computer` : "Not connected to a computer");
     },
-    [sendCommand, showFlash],
+    [sendCommand, showFlash, status, paired],
   );
 
   const openOnHost = useCallback(
     (meta: Meta) => {
+      if (status === "connected" && !paired) {
+        setPairOpen(true);
+        return;
+      }
       const sent = sendCommand({
         action: "openMeta",
         metaId: meta.id,
@@ -112,7 +138,7 @@ export function MobileRemoteProvider({ children }: { children: ReactNode }) {
       });
       showFlash(sent, sent ? `Opened on your computer` : "Not connected to a computer");
     },
-    [sendCommand, showFlash],
+    [sendCommand, showFlash, status, paired],
   );
 
   const value = useMemo<MobileRemoteValue>(
@@ -123,6 +149,32 @@ export function MobileRemoteProvider({ children }: { children: ReactNode }) {
   return (
     <Ctx.Provider value={value}>
       {children}
+      {pairOpen && !paired && (
+        <div
+          role="dialog"
+          aria-modal="true"
+          aria-label={t("Pair with Frame")}
+          className="fixed inset-0 z-[70] flex flex-col bg-canvas"
+          style={{ paddingTop: "env(safe-area-inset-top, 0px)" }}
+        >
+          <div className="flex justify-end px-3 pt-3">
+            <button
+              type="button"
+              onClick={() => setPairOpen(false)}
+              aria-label={t("common.close")}
+              className="flex h-10 w-10 items-center justify-center rounded-full text-ink-muted hover:bg-elevated hover:text-ink"
+            >
+              <X size={20} />
+            </button>
+          </div>
+          <RemotePairScreen
+            pairing={pairing}
+            onRequest={() => void requestPairing()}
+            onSubmit={(code) => void submitPairingCode(code)}
+            onCancel={cancelPairing}
+          />
+        </div>
+      )}
       {flash && (
         <div
           className="pointer-events-none fixed inset-x-0 top-0 z-[60] flex justify-center px-4"

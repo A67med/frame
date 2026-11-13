@@ -54,10 +54,21 @@ import {
 
 const isTauri = typeof window !== "undefined" && "__TAURI_INTERNALS__" in window;
 
+/** Sends to every paired device. Devices that have not paired get nothing. */
 function broadcast(msg: RemoteServerMessage) {
   if (!isTauri) return;
   void invoke("remote_ws_broadcast", { payload: JSON.stringify(msg) }).catch(() => {});
 }
+
+/** Confirms a command to the device that sent it (Play on LAN waits for this). */
+function ack(clientId: number, id: unknown, ok: boolean, code?: string) {
+  if (!isTauri || typeof id !== "string" || !id) return;
+  const payload = JSON.stringify(ok ? { t: "ack", id, ok } : { t: "ack", id, ok, code });
+  void invoke("remote_ws_send", { clientId, payload }).catch(() => {});
+}
+
+/** Commands other Frame installs may send that this desktop does not carry out. */
+const UNSUPPORTED = new Set(["setConfig"]);
 
 function pushSnapshot(force = false) {
   const snapshot = {
@@ -478,6 +489,7 @@ export function RemoteHostMount() {
     void listen<{ clientId: number; raw: string }>("remote://cmd", (e) => {
       const raw = e.payload?.raw;
       if (!raw) return;
+      const clientId = e.payload.clientId;
       const msg = parseClientMessage(raw);
       if (!msg) {
         broadcast({ t: "error", message: "invalid message" });
@@ -489,6 +501,11 @@ export function RemoteHostMount() {
         return;
       }
       if (msg.t === "cmd") {
+        const id = (msg as { id?: unknown }).id;
+        if (UNSUPPORTED.has(msg.command.action)) {
+          ack(clientId, id, false, "unsupported");
+          return;
+        }
         void (async () => {
           try {
             if (msg.command.action === "castDiscover") {
@@ -501,21 +518,26 @@ export function RemoteHostMount() {
                 setRemoteCastDiscovering(false);
               }
               pushSnapshot();
+              ack(clientId, id, true);
               return;
             }
             if (msg.command.action === "ping") {
               broadcast({ t: "pong", at: Date.now() });
+              ack(clientId, id, true);
               return;
             }
             if (isMangaCommand(msg.command.action)) {
               await dispatchMangaCommand(msg.command);
+              ack(clientId, id, true);
               return;
             }
             await dispatchRemoteCommand(msg.command);
+            ack(clientId, id, true);
             // nav/setText: focusin/out + 400ms tick cover textEntry; skip churn.
             if (!SKIP_SNAPSHOT.has(msg.command.action)) pushSnapshot();
           } catch (err) {
             const message = err instanceof Error ? err.message : "remote command failed";
+            ack(clientId, id, false, "refused");
             broadcast({ t: "error", message });
             pushSnapshot();
           }
@@ -526,8 +548,10 @@ export function RemoteHostMount() {
       else unsubs.push(u);
     });
 
+    // A socket that just paired, or showed a saved token, gets the full state.
+    // Unpaired sockets ("join") get nothing until then.
     void listen<{ action: string }>("remote://client", (e) => {
-      if (e.payload?.action === "join") {
+      if (e.payload?.action === "auth") {
         broadcast({ t: "hello", proto: REMOTE_PROTO, server: "harbor-remote" });
         pushSnapshot(true);
       }

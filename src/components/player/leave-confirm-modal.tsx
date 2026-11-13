@@ -6,10 +6,14 @@ import {
   subscribeLeaveConfirm,
 } from "@/lib/player/leave-confirm";
 
-export function LeaveConfirmModal() {
+export function LeaveConfirmModal({ mediaKey }: { mediaKey?: string } = {}) {
   const t = useT();
   const state = useSyncExternalStore(subscribeLeaveConfirm, getLeaveConfirm);
   const [remember, setRemember] = useState(false);
+
+  // The question is about the media on screen. When another file starts in the same
+  // player, or the player goes away, an unanswered question must not stay open over it.
+  useEffect(() => () => closeLeaveConfirm(), [mediaKey]);
 
   useEffect(() => {
     if (state.open) setRemember(false);

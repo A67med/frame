@@ -3778,8 +3778,22 @@ const SETTINGS_OPTIONS: SettingsOption[] = [
     label: "Frame in your browser",
     section: "p2p",
     tab: "server",
-    anchorTitle: "Your streaming server address",
+    anchorTitle: "Phone remote",
     keywords: ["web ui", "browser app", "serve web", "phone", "tv browser", "11471", "web version"],
+  },
+  {
+    label: "Paired devices",
+    section: "p2p",
+    tab: "server",
+    anchorTitle: "Paired devices",
+    keywords: [
+      "phone remote",
+      "pair",
+      "pairing code",
+      "forget device",
+      "lan remote",
+      "remote control",
+    ],
   },
   {
     label: "Use exclusively (never fall back to local)",

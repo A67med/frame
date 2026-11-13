@@ -8,8 +8,20 @@ import {
   type RemoteSnapshot,
   idleSnapshot,
 } from "./protocol";
+import {
+  forgetRemoteToken,
+  pairAckOf,
+  pairPhaseAfterHello,
+  readRemoteToken,
+  remoteDeviceIdentity,
+  saveRemoteToken,
+  type RemotePairing,
+} from "./pairing";
+import { normalizePairCode } from "@/lib/lan-trust";
 
 export type RemoteClientStatus = "idle" | "connecting" | "connected" | "error";
+
+const PAIR_ACK_MS = 8000;
 
 const RETRY_BASE_MS = 400;
 const RETRY_CAP_MS = 3000;
@@ -39,6 +51,11 @@ export function useRemoteClient(initialHost?: string) {
   const ignoreClose = useRef(new WeakSet<WebSocket>());
   const connectRef = useRef<(nextHost?: string) => void>(() => {});
   const unparkCoalesceRef = useRef(false);
+  const [pairing, setPairing] = useState<RemotePairing>({ phase: "checking" });
+  const pairingRef = useRef(pairing);
+  pairingRef.current = pairing;
+  const ackWaiters = useRef(new Map<string, (frame: Record<string, unknown> | null) => void>());
+  const nonce = useRef(0);
 
   hostRef.current = host;
 
@@ -95,16 +112,49 @@ export function useRemoteClient(initialHost?: string) {
       ws.onopen = () => {
         retryRef.current = 0;
         setStatus("connected");
-        send({ t: "hello", client: "harbor-remote", proto: REMOTE_PROTO });
+        const token = readRemoteToken(h);
+        // A saved token pairs this socket; without one Frame answers "not paired".
+        send({
+          t: "hello",
+          client: "harbor-remote",
+          proto: REMOTE_PROTO,
+          ...(token ? { token } : {}),
+        } as RemoteClientMessage);
         // Do not castDiscover here — reconnect/refresh storms overlap native
         // DLNA discovery and have hard-crashed the host (heap corruption).
       };
 
       ws.onmessage = (ev) => {
         try {
-          const msg = JSON.parse(String(ev.data)) as RemoteServerMessage;
-          if (msg.t === "snapshot") setSnapshot(msg.snapshot);
-          if (msg.t === "error") setError(msg.message);
+          const msg = JSON.parse(String(ev.data)) as RemoteServerMessage | Record<string, unknown>;
+          if (msg.t === "snapshot") setSnapshot((msg as { snapshot: RemoteSnapshot }).snapshot);
+          if (msg.t === "hello") {
+            const hello = msg as Record<string, unknown>;
+            setPairing((prev) => {
+              const next = pairPhaseAfterHello(prev, hello);
+              // Frame no longer knows the saved token: the device was forgotten.
+              if (next.phase === "needed" && typeof hello.trust === "string") {
+                forgetRemoteToken(h);
+              }
+              return next;
+            });
+          }
+          if (msg.t === "ack") {
+            const frame = msg as Record<string, unknown>;
+            const waiter = typeof frame.id === "string" ? ackWaiters.current.get(frame.id) : null;
+            if (waiter) {
+              ackWaiters.current.delete(frame.id as string);
+              waiter(frame);
+            }
+          }
+          if (msg.t === "error") {
+            const err = msg as { message?: string; code?: string };
+            if (err.code === "untrusted") {
+              setPairing((prev) => (prev.phase === "paired" ? { phase: "needed" } : prev));
+            } else if (err.message) {
+              setError(err.message);
+            }
+          }
         } catch {
           /* ignore */
         }
@@ -118,6 +168,14 @@ export function useRemoteClient(initialHost?: string) {
 
       ws.onclose = () => {
         if (wsRef.current === ws) wsRef.current = null;
+        // Frame drops a pairing whose socket closes; say so instead of waiting.
+        for (const waiter of ackWaiters.current.values()) waiter(null);
+        ackWaiters.current.clear();
+        setPairing((prev) =>
+          prev.phase === "entering" || prev.phase === "requesting" || prev.phase === "submitting"
+            ? { phase: "needed", error: "interrupted" }
+            : prev,
+        );
         if (ignoreClose.current.has(ws) || manualClose.current || parkedRef.current) return;
 
         setStatus("error");
@@ -138,6 +196,73 @@ export function useRemoteClient(initialHost?: string) {
   );
 
   connectRef.current = connect;
+
+  const ask = useCallback(
+    (body: Record<string, unknown>): Promise<Record<string, unknown> | null> => {
+      nonce.current += 1;
+      const id = `r${Date.now().toString(36)}${nonce.current}`;
+      return new Promise((resolve) => {
+        const timer = setTimeout(() => {
+          ackWaiters.current.delete(id);
+          resolve(null);
+        }, PAIR_ACK_MS);
+        ackWaiters.current.set(id, (frame) => {
+          clearTimeout(timer);
+          resolve(frame);
+        });
+        if (!send({ ...body, id } as unknown as RemoteClientMessage)) {
+          clearTimeout(timer);
+          ackWaiters.current.delete(id);
+          resolve(null);
+        }
+      });
+    },
+    [send],
+  );
+
+  /** Asks Frame to show a pairing code on its own screen. */
+  const requestPairing = useCallback(async () => {
+    setPairing({ phase: "requesting" });
+    const frame = await ask({ t: "pair", step: "begin", peer: remoteDeviceIdentity() });
+    const result = pairAckOf(frame);
+    if (!result.ok) {
+      setPairing({ phase: "needed", error: result.code });
+      return;
+    }
+    const expiresAt = typeof frame?.expiresAt === "number" ? frame.expiresAt : Date.now() + 120_000;
+    const len = typeof frame?.len === "number" ? frame.len : 8;
+    setPairing({ phase: "entering", expiresAt, len });
+  }, [ask]);
+
+  /** Sends the code the user read off Frame's screen. */
+  const submitPairingCode = useCallback(
+    async (code: string) => {
+      const before = pairingRef.current;
+      if (before.phase !== "entering") return;
+      setPairing({ ...before, phase: "submitting", error: undefined });
+      const frame = await ask({ t: "pair", step: "code", code: normalizePairCode(code) });
+      const result = pairAckOf(frame);
+      const token = typeof frame?.token === "string" ? frame.token : "";
+      if (result.ok && token) {
+        saveRemoteToken(hostRef.current, token);
+        setPairing({ phase: "paired" });
+        return;
+      }
+      const failure = result.ok ? "refused" : result.code;
+      // A wrong code keeps the same code on Frame's screen, so stay on the form.
+      setPairing(
+        failure === "badCode"
+          ? { ...before, phase: "entering", error: failure }
+          : { phase: "needed", error: failure },
+      );
+    },
+    [ask],
+  );
+
+  const cancelPairing = useCallback(() => {
+    void ask({ t: "pair", step: "cancel" });
+    setPairing({ phase: "needed" });
+  }, [ask]);
 
   /** App/tab backgrounded: tear down WS now so resume isn't stuck on a zombie. */
   const park = useCallback(() => {
@@ -222,5 +347,9 @@ export function useRemoteClient(initialHost?: string) {
     connect,
     disconnect,
     sendCommand,
+    pairing,
+    requestPairing,
+    submitPairingCode,
+    cancelPairing,
   };
 }

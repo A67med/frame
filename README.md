@@ -29,6 +29,8 @@ Frame began as a fork of [Harbor](https://github.com/crazyrabbit0/harbor), a Str
 
 Backups save as `frame-backup-YYYY-MM-DD.framex`, optionally encrypted with a password (AES-256-GCM). Both `.framex` and older `.harbx` backups can be imported. Before a restore, the desktop app saves a copy of your current setup to its data folder (`backups/`, newest five kept), and a restore that cannot finish is rolled back. Custom JavaScript and HTML in a backup are only restored if you tick that option. Backups hold settings and app data only, never your video files.
 
+The phone remote and Frame in a browser are off until you turn them on (**Settings > Sources & library > P2P & servers > Server**, or Big Picture's phone setup). A phone or another Frame has to pair before it can control this one: it asks for a code, Frame shows the code on its own screen, and you type it on the device. The same section lists paired devices and forgets them, and forgetting a device disconnects it at once.
+
 ## Install
 
 Requirements: Windows 10 or 11 (x64). macOS and Linux builds are also produced.

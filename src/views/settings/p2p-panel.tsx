@@ -4,6 +4,7 @@ import { useSubTabs } from "./sub-tabs";
 import {
   LocalEngineSection,
   P2PPowerToolsSection,
+  RemoteDevicesSection,
   RemoteServerSection,
   ServerAddressSection,
 } from "./player-panel";
@@ -29,6 +30,7 @@ export function P2PPanel() {
       {tab === "server" && (
         <>
           <ServerAddressSection />
+          <RemoteDevicesSection />
           <RemoteServerSection />
         </>
       )}

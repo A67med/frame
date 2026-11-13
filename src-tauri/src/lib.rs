@@ -34,6 +34,7 @@ mod temp_prune;
 mod thumb_cache;
 mod torrent_engine;
 mod transcode;
+mod remote_auth;
 mod web_server;
 
 // Desktop-only. Each of these either drives a window, drives a tray or menu,
@@ -1247,6 +1248,11 @@ pub fn run() {
             web_server::web_serve_status,
             web_server::remote_ws_broadcast,
             web_server::remote_ws_client_count,
+            web_server::remote_ws_send,
+            remote_auth::remote_devices_list,
+            remote_auth::remote_device_forget,
+            remote_auth::remote_devices_forget_all,
+            remote_auth::remote_pair_cancel,
             anime4k::anime4k_download,
             anime4k::anime4k_dir,
             asr_model::asr_ensure_model,

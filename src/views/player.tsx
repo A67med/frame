@@ -1753,7 +1753,7 @@ function NativePlayerView({ src }: { src: PlayerSrc }) {
           }}
         />
       )}
-      {!tenFoot && <LeaveConfirmModal />}
+      {!tenFoot && <LeaveConfirmModal mediaKey={src.url} />}
       <HdrStageBridge
         active={hdrStageRequested}
         payload={{

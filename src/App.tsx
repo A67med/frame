@@ -68,6 +68,7 @@ import { ProfilesProvider, useProfiles } from "@/lib/profiles";
 import { useAutoDownloadRunner } from "@/lib/auto-download/runner";
 import { RemindersRunner } from "@/lib/reminders-runner";
 import { RemoteHostMount } from "@/lib/remote/host-mount";
+import { RemotePairPrompt } from "@/lib/remote/pair-prompt";
 import { RemoteOpenBridge } from "@/lib/remote/remote-open-bridge";
 import { ControllerConnectedToast } from "@/components/controller-connected-toast";
 import { GamepadRunner } from "@/components/gamepad-runner";
@@ -381,6 +382,7 @@ export function App({ onReady }: { onReady?: () => void }) {
                                                   <AutoDownloadRunner />
                                                   <RemindersRunner />
                                                   <RemoteHostMount />
+                                                  <RemotePairPrompt />
                                                   <RemoteOpenBridge />
                                                   <GamepadRunner />
                                                   <ControllerConnectedToast />

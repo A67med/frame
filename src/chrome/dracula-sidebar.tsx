@@ -286,7 +286,7 @@ function NavPill({
           )}
         </span>
         {!collapsed && (
-          <span className="relative hidden flex-1 text-[17px] font-medium tracking-tight lg:inline">
+          <span className="relative hidden flex-1 text-start text-[17px] font-medium tracking-tight lg:inline">
             {label}
           </span>
         )}

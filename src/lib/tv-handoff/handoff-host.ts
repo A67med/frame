@@ -59,7 +59,10 @@ function broadcast(offer: HandoffOffer | null, ack?: HandoffAck): void {
   if (!hasTauri) return;
   const msg: HandoffServerMessage = { t: HANDOFF_MSG, proto: HANDOFF_PROTO, offer };
   if (ack) msg.ack = ack;
-  void invoke("remote_ws_broadcast", { payload: JSON.stringify(msg) }).catch(() => {});
+  // Public: the phone doing the hand-off has not paired, and offers carry no secrets.
+  void invoke("remote_ws_broadcast", { payload: JSON.stringify(msg), public: true }).catch(
+    () => {},
+  );
 }
 
 export function startHandoffHost(opts: HandoffHostOptions): HandoffHost {

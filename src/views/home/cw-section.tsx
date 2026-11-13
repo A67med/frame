@@ -60,8 +60,9 @@ export function CWSection({ signedIn, items, watchedSet, onDismiss }: Props) {
       </>
     );
   }
+  // Same inset and spacing as the Row it replaces, so the heading lines up with the rows below.
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-col gap-5 ps-[9px]">
       <h3 className="text-[17px] font-medium tracking-tight text-ink">{t("Continue Watching")}</h3>
       <div className="flex items-center justify-center rounded-2xl border border-dashed border-edge px-6 py-14 text-center">
         {signedIn ? (

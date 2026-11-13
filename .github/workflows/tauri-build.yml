@@ -66,10 +66,14 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add package.json src-tauri/tauri.conf.json src-tauri/Cargo.toml src-tauri/Cargo.lock flatpak/io.github.abdallahkattriah_sketch.Frame.metainfo.xml
-          git commit -m "chore(release): prepare v$version [skip ci]"
-          # Branch-protection rules may require allowing this bot to push;
-          # fail visibly rather than bypassing checks or publishing stale code.
-          git push origin HEAD:main
+          if ! git diff --cached --quiet; then
+            git commit -m "chore(release): prepare v$version [skip ci]"
+            # Branch-protection rules may require allowing this bot to push;
+            # fail visibly rather than bypassing checks or publishing stale code.
+            git push origin HEAD:main
+          else
+            echo "Version $version was already prepared by an earlier failed run; retrying this build."
+          fi
           echo "version=$version" >> "$GITHUB_OUTPUT"
           echo "sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
           echo "ready=true" >> "$GITHUB_OUTPUT"

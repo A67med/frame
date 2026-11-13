@@ -3,6 +3,20 @@ import type { PlayerSnapshot } from "@/lib/player/bridge";
 import type { PlayerSrc } from "@/lib/view";
 import { SHORT_PLAYBACK_SEC } from "@/lib/dead-streams";
 
+/**
+ * Whether a source could be a stub: the short "not available" clip some addons
+ * serve in place of a real stream. Only streamed addon sources can be; a file
+ * the user opened from disk is never one, however short it is.
+ */
+export function mayBeStubStream(src: Pick<PlayerSrc, "url" | "meta">): boolean {
+  const id = src.meta.id ?? "";
+  if (id.startsWith("iptv:") || id.startsWith("url:") || id.startsWith("local:")) return false;
+  if (!/^https?:\/\//i.test(src.url)) return false;
+  const metaType = String(src.meta.type ?? "").toLowerCase();
+  if (metaType && !["movie", "series", "anime"].includes(metaType)) return false;
+  return !/\.m3u8(\?|#|$)/i.test(src.url);
+}
+
 export function useStubDetection(params: {
   src: PlayerSrc;
   snap: PlayerSnapshot;
@@ -14,11 +28,7 @@ export function useStubDetection(params: {
   useEffect(() => {
     if (!instantPlay) return;
     if (stubCheckedRef.current === src.url) return;
-    if (src.meta.id?.startsWith("iptv:")) return;
-    if (src.meta.id?.startsWith("url:")) return;
-    const metaType = String(src.meta.type ?? "").toLowerCase();
-    if (metaType && !["movie", "series", "anime"].includes(metaType)) return;
-    if (/\.m3u8(\?|#|$)/i.test(src.url)) return;
+    if (!mayBeStubStream(src)) return;
     if (snap.durationSec <= 0 || snap.durationSec >= SHORT_PLAYBACK_SEC) return;
     if (snap.status !== "playing") return;
     stubCheckedRef.current = src.url;

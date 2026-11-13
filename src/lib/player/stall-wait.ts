@@ -25,3 +25,25 @@ export function hasPlaybackStartedForStallCheck(params: {
     (params.videoWidth > 0 && params.videoHeight > 0)
   );
 }
+
+/** Only recover a genuinely unstarted stream; a paused first frame must not be reloaded. */
+export function canAutoRetryStuckLoad(
+  snapshot: {
+    status: string;
+    positionSec: number;
+    durationSec: number;
+    firstFrameReady: boolean;
+    videoWidth: number;
+    videoHeight: number;
+  },
+  clockPositionSec: number,
+): boolean {
+  if (snapshot.status !== "loading" && snapshot.status !== "playing") return false;
+  if (snapshot.firstFrameReady || snapshot.durationSec > 0) return false;
+  return !hasPlaybackStartedForStallCheck({
+    status: snapshot.status,
+    positionSec: Math.max(snapshot.positionSec, clockPositionSec),
+    videoWidth: snapshot.videoWidth,
+    videoHeight: snapshot.videoHeight,
+  });
+}

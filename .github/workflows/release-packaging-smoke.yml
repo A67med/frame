@@ -1,0 +1,49 @@
+name: Release packaging smoke
+
+on:
+  pull_request:
+    paths:
+      - ".github/workflows/release-packaging-smoke.yml"
+      - ".github/workflows/tauri-build.yml"
+      - "scripts/fetch-fonts.mjs"
+      - "scripts/macos-bundle-libmpv.py"
+      - "tests/test_macos_mpv_bundle.py"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  windows-fonts:
+    name: Windows bundled font inputs
+    runs-on: windows-2025
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 22
+      - name: Download and checksum-verify all installer fonts
+        run: node scripts/fetch-fonts.mjs
+      - name: Check required font file
+        shell: pwsh
+        run: |
+          if (-not (Test-Path "src-tauri/fonts/Inter-Variable.ttf")) {
+            throw "Inter-Variable.ttf missing after setup:fonts"
+          }
+          if ((Get-Item "src-tauri/fonts/Inter-Variable.ttf").Length -lt 100000) {
+            throw "Inter-Variable.ttf suspiciously small"
+          }
+
+  macos-mpv:
+    name: macOS mpv synthetic bundle
+    strategy:
+      fail-fast: false
+      matrix:
+        runner: [macos-15-intel, macos-15]
+    runs-on: ${{ matrix.runner }}
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v6
+      - name: Run macOS bundle pipeline tests
+        run: python3 tests/test_macos_mpv_bundle.py

@@ -141,7 +141,7 @@ fn arguments(raw: &str) -> Result<Vec<String>> {
                 UI::Shell::CommandLineToArgvW,
             },
         };
-        let line: Vec<u16> = format!("harbor.exe {raw}")
+        let line: Vec<u16> = format!("frame.exe {raw}")
             .encode_utf16()
             .chain(Some(0))
             .collect();

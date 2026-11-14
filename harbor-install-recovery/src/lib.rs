@@ -44,6 +44,10 @@ fn valid_version(version: &str) -> bool {
             .all(|part| !part.is_empty() && part.bytes().all(|c| c.is_ascii_digit()))
 }
 
+fn has_app_executable(dir: &Path) -> bool {
+    dir.join("frame.exe").is_file() || dir.join("harbor.exe").is_file()
+}
+
 pub struct Transaction {
     dest: PathBuf,
     root: PathBuf,
@@ -81,9 +85,9 @@ impl Transaction {
             return Err(invalid("invalid target version"));
         }
         let tx = Self::at(dest)?;
-        if !dest.join("harbor.exe").is_file() || !dest.join("harbor-install.json").is_file() {
+        if !has_app_executable(dest) || !dest.join("harbor-install.json").is_file() {
             return Err(invalid(
-                "recovery requires an existing managed Harbor installation",
+                "recovery requires an existing managed Frame or Harbor installation",
             ));
         }
         // create_dir is the single-install lock. Never reuse or erase an
@@ -107,7 +111,7 @@ impl Transaction {
     pub fn commit(&self) -> io::Result<()> {
         plain_path(&self.stage())?;
         plain_path(&self.previous())?;
-        if !self.stage().join("harbor.exe").is_file()
+        if !has_app_executable(&self.stage())
             || !self.stage().join("harbor-install.json").is_file()
         {
             return Err(invalid("staged application is incomplete"));
@@ -124,7 +128,7 @@ impl Transaction {
     pub fn restore(&self) -> io::Result<()> {
         plain_path(&self.previous())?;
         plain_path(&self.dest)?;
-        if !self.previous().join("harbor.exe").is_file() {
+        if !has_app_executable(&self.previous()) {
             return Err(invalid("no previous installation to restore"));
         }
         if self.dest.exists() {
@@ -253,5 +257,32 @@ mod tests {
         let dest = fixture();
         assert!(Transaction::begin(dest.parent().unwrap(), "0.9.122").is_err());
         assert!(Transaction::begin(&dest, "../bad").is_err());
+    }
+
+    #[test]
+    fn commits_and_restores_frame_installation() {
+        let id = std::time::SystemTime::now()
+            .duration_since(std::time::UNIX_EPOCH)
+            .unwrap()
+            .as_nanos();
+        let root = std::env::temp_dir()
+            .join(format!("frame-recovery-test-{}-{id}", std::process::id()));
+        let dest = root.join("Frame");
+        fs::create_dir_all(&dest).unwrap();
+        fs::write(dest.join("frame.exe"), b"old-frame").unwrap();
+        fs::write(dest.join("harbor-install.json"), b"old-marker").unwrap();
+
+        let tx = Transaction::begin(&dest, "0.2.1").unwrap();
+        fs::write(tx.stage().join("frame.exe"), b"new-frame").unwrap();
+        fs::write(tx.stage().join("harbor-install.json"), b"new-marker").unwrap();
+        tx.commit().unwrap();
+        assert_eq!(fs::read(dest.join("frame.exe")).unwrap(), b"new-frame");
+
+        tx.restore().unwrap();
+        assert_eq!(fs::read(dest.join("frame.exe")).unwrap(), b"old-frame");
+        assert_eq!(
+            fs::read(tx.root.join("failed/frame.exe")).unwrap(),
+            b"new-frame"
+        );
     }
 }

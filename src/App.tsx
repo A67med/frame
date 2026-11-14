@@ -1,6 +1,5 @@
 import { hasBackHandlers } from "@/lib/back-intercept";
 import { Suspense, useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { lazyView as lazy } from "@/lib/lazy-view";
 import { FloatingBack } from "@/chrome/floating-back";
 import { ensureCuratedLogos } from "@/lib/curated-logos";
 import { WindowControls } from "@/chrome/window-controls";
@@ -18,7 +17,7 @@ import { TopDock } from "@/chrome/topdock";
 import { CinematicOverlay } from "@/chrome/cinematic-overlay";
 import { Topbar, TogetherButton } from "@/chrome/topbar";
 import { TabHotkeys } from "@/chrome/tab-hotkeys";
-import { startMaintenance, subscribeMemoryPressure } from "@/lib/maintenance";
+import { startMaintenance } from "@/lib/maintenance";
 import { MiddleClickScroll } from "@/lib/use-middle-click-scroll";
 import { exitWindowFullscreenOnPlayerClose, toggleWindowFullscreen } from "@/lib/fullscreen-state";
 import { flushCloudSync } from "@/views/player/hooks/use-stremio-sync";
@@ -47,15 +46,9 @@ import { ScreensaverRoot } from "@/components/screensaver/screensaver-root";
 import { CustomCodeMount } from "@/components/custom-code-mount";
 import { MemoryHud } from "@/components/memory-hud";
 import { OfflineBanner } from "@/chrome/offline-banner";
-
-const MobileShell = lazy(() =>
-  import("@/views/mobile/mobile-shell").then((m) => ({ default: m.MobileShell })),
-);
 import { ListToastHost } from "@/components/lists/list-toast";
 import { DiagnosticsConsentHost } from "@/components/diagnostics/diagnostics-consent-host";
 import { AnnouncementGlobal } from "@/components/announcement-global";
-import { TogetherChatToast } from "@/components/together-chat-toast";
-import { TogetherCursors } from "@/components/together-cursors";
 import { TogetherHostLeavingPrompt } from "@/components/together-host-leaving-prompt";
 import { TogetherInviteToast } from "@/components/together-invite-toast";
 import { TogetherSummonToast } from "@/components/together-summon-toast";
@@ -64,8 +57,6 @@ import { ThemeBackdrop } from "@/components/theme-backdrop";
 import { TopRankModal } from "@/components/top-rank-modal";
 import { AuthProvider } from "@/lib/auth";
 import { ProfilesProvider, useProfiles } from "@/lib/profiles";
-
-import { useAutoDownloadRunner } from "@/lib/auto-download/runner";
 import { RemindersRunner } from "@/lib/reminders-runner";
 import { RemoteHostMount } from "@/lib/remote/host-mount";
 import { RemotePairPrompt } from "@/lib/remote/pair-prompt";
@@ -87,7 +78,7 @@ import { SearchProvider, useSearch } from "@/lib/search-context";
 import { SearchOverlay } from "@/components/search/search-overlay";
 import { SearchHotkey } from "@/components/search/search-hotkey";
 import { LinkOutInterstitial } from "@/components/link-out-interstitial";
-import { TogetherProvider, useTogether } from "@/lib/together/provider";
+import { TogetherProvider } from "@/lib/together/provider";
 import { DvrProvider } from "@/lib/dvr/provider";
 import { FavoritesProvider } from "@/lib/iptv/favorites";
 import { MediaFavoritesProvider } from "@/lib/media-favorites";
@@ -106,7 +97,7 @@ import {
   findHotkeyMatch,
   shouldHandleGlobalKeyboardEvent,
 } from "@/lib/hotkeys";
-import { ViewProvider, useView, type Frame, type MetaFilter, type View } from "@/lib/view";
+import { ViewProvider, useView, type Frame, type View } from "@/lib/view";
 import { ThemeChromeBridge } from "@/components/theme-chrome-bridge";
 import type { MetaType } from "@/lib/cinemeta";
 import { usePluginCataloguesAvailable } from "@/lib/streams/plugins/available";
@@ -132,196 +123,55 @@ import { releaseBigPictureFullscreen } from "@/views/big-picture/use-bp-fullscre
 import { getNavFocusTarget } from "@/lib/keyboard-navigation/geometry";
 import { SFX } from "@/lib/sfx";
 import { startMediaSessionWindowTracking } from "@/lib/media-session";
-
-const importWrapped = () => import("@/views/wrapped");
-const importDetail = () => import("@/views/detail");
-const importAddons = () => import("@/views/addons");
-const importDiscover = () => import("@/views/discover");
-const importCatalogs = () => import("@/views/catalogs");
-const importPlugins = () => import("@/views/plugins");
-const importAward = () => import("@/views/award");
-const importCuratedList = () => import("@/views/curated-list");
-const importFilter = () => import("@/views/filter");
-const importBrands = () => import("@/views/brands");
-const importGrid = () => import("@/views/grid");
-const importPerson = () => import("@/views/person");
-const importPeople = () => import("@/views/people");
-const importRadar = () => import("@/views/radar");
-const importFollowing = () => import("@/views/following");
-const importCollection = () => import("@/views/collection");
-const importEpisodeDetail = () => import("@/views/episode-detail");
-const importPlayPicker = () => import("@/views/play-picker");
-const importPlayer = () => import("@/views/player");
-const importMovies = () => import("@/views/movies");
-const importQueue = () => import("@/views/queue");
-const importService = () => import("@/views/service");
-const importSettings = () => import("@/views/settings");
-const importShows = () => import("@/views/shows");
-const importLibrary = () => import("@/views/library");
-const importCommunityCollections = () => import("@/views/collections/community-hub");
-const importDownloads = () => import("@/views/downloads");
-const importOnboarding = () => import("@/components/onboarding");
-
-const WrappedView = lazy(() => importWrapped().then((m) => ({ default: m.WrappedView })));
-const DetailView = lazy(() => importDetail().then((m) => ({ default: m.DetailView })));
-const AddonsView = lazy(() => importAddons().then((m) => ({ default: m.AddonsView })));
-const Discover = lazy(() => importDiscover().then((m) => ({ default: m.Discover })));
-const Catalogs = lazy(() => importCatalogs().then((m) => ({ default: m.Catalogs })));
-const PluginsView = lazy(() => importPlugins().then((m) => ({ default: m.Plugins })));
-const AwardView = lazy(() => importAward().then((m) => ({ default: m.AwardView })));
-const CuratedListView = lazy(() =>
-  importCuratedList().then((m) => ({ default: m.CuratedListView })),
-);
-const FilterView = lazy(() => importFilter().then((m) => ({ default: m.FilterView })));
-const BrandsView = lazy(() => importBrands().then((m) => ({ default: m.BrandsView })));
-const GridView = lazy(() => importGrid().then((m) => ({ default: m.GridView })));
-const PersonView = lazy(() => importPerson().then((m) => ({ default: m.PersonView })));
-const PeopleView = lazy(() => importPeople().then((m) => ({ default: m.PeopleView })));
-const RadarView = lazy(() => importRadar().then((m) => ({ default: m.RadarView })));
-const FollowingView = lazy(() => importFollowing().then((m) => ({ default: m.FollowingView })));
-const CollectionView = lazy(() => importCollection().then((m) => ({ default: m.CollectionView })));
-const AddonCollectionView = lazy(() =>
-  import("@/views/addon-collection").then((m) => ({ default: m.AddonCollectionView })),
-);
-const EpisodeDetailView = lazy(() =>
-  importEpisodeDetail().then((m) => ({ default: m.EpisodeDetailView })),
-);
-const CollectionsView = lazy(() =>
-  import("@/views/collections").then((m) => ({ default: m.CollectionsView })),
-);
-const CommunityCollectionsView = lazy(() =>
-  importCommunityCollections().then((m) => ({ default: m.CommunityCollectionsView })),
-);
-const PlayPicker = lazy(() => importPlayPicker().then((m) => ({ default: m.PlayPicker })));
-const PlayerView = lazy(() => importPlayer().then((m) => ({ default: m.PlayerView })));
-const Movies = lazy(() => importMovies().then((m) => ({ default: m.Movies })));
-const QueueView = lazy(() => importQueue().then((m) => ({ default: m.QueueView })));
-const ServiceView = lazy(() => importService().then((m) => ({ default: m.ServiceView })));
-const Settings = lazy(() => importSettings().then((m) => ({ default: m.Settings })));
-const Shows = lazy(() => importShows().then((m) => ({ default: m.Shows })));
-const LibraryView = lazy(() => importLibrary().then((m) => ({ default: m.LibraryView })));
-const DownloadsView = lazy(() => importDownloads().then((m) => ({ default: m.DownloadsView })));
-const OnboardingModal = lazy(() =>
-  importOnboarding().then((m) => ({ default: m.OnboardingModal })),
-);
-const BigPictureShell = lazy(() =>
-  import("@/views/big-picture/bp-shell").then((m) => ({ default: m.BigPictureShell })),
-);
-
-function useViewPreloader(tmdbKey: string) {
-  const keyRef = useRef(tmdbKey);
-  keyRef.current = tmdbKey;
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-    let cancelled = false;
-    const win = window as Window & {
-      requestIdleCallback?: (cb: () => void, opts?: { timeout?: number }) => number;
-    };
-    const schedule = (cb: () => void) =>
-      typeof win.requestIdleCallback === "function"
-        ? win.requestIdleCallback(cb, { timeout: 2500 })
-        : window.setTimeout(cb, 1200);
-    schedule(() => {
-      if (cancelled) return;
-      void importDetail();
-      void importPlayPicker();
-      void importPlayer();
-      void importSettings();
-      void importAddons();
-      void importDiscover();
-      void importPerson();
-      void importPeople();
-      void importRadar();
-      void importFilter();
-      void importMovies();
-      void importShows();
-      void importQueue();
-      void importAward();
-      void importService();
-      void importOnboarding();
-      void importCatalogs();
-      void importPlugins();
-      void importLibrary();
-      void importCommunityCollections();
-      void importDownloads();
-      void importGrid();
-      void importWrapped();
-      if (keyRef.current) {
-        void import("@/lib/feed/pool").then((m) => m.getPool(keyRef.current)).catch(() => {});
-      }
-    });
-    return () => {
-      cancelled = true;
-    };
-  }, []);
-}
-
-// Pages Frame dropped. Their frames still parse (old links, saved stacks), so
-// landing on one goes home instead of showing an empty layer.
-const REMOVED_PAGES = new Set<string>([
-  "anime",
-  "anime-award",
-  "calendar",
-  "kids",
-  "music",
-  "games",
-  "live",
-  "vod",
-  "sports",
-  "match-detail",
-  "manga",
-  "ebook",
-  "profile",
-  "feed",
-  "groups",
-  "group",
-  "list",
-]);
-
-const KEEP_ALIVE_MS = 1500;
-const IDLE_EVICT_MS = 60 * 1000;
-const PRESSURE_EVICT_MS = 1500;
-const UI_SCALE_MIN = 0.8;
-const UI_SCALE_MAX = 1.6;
-const UI_SCALE_STEP = 0.05;
-const UI_SCALE_ACTIVITY_EVENT = "harbor:ui-scale-activity";
-
-function clampUiScale(scale: number): number {
-  return Math.max(UI_SCALE_MIN, Math.min(UI_SCALE_MAX, Math.round(scale * 100) / 100));
-}
-
-function useKeepAlive(active: boolean, requested: boolean, pin = false): boolean {
-  const [mounted, setMounted] = useState(active && requested);
-  useEffect(() => {
-    if (!requested) {
-      setMounted(false);
-      return;
-    }
-    if (active || pin) {
-      setMounted(true);
-      return;
-    }
-    const t = setTimeout(() => setMounted(false), KEEP_ALIVE_MS);
-    return () => clearTimeout(t);
-  }, [active, requested, pin]);
-  return requested && (mounted || active || pin);
-}
-
-function useIdleEvict(active: boolean, pin = false): boolean {
-  const [alive, setAlive] = useState(active);
-  const [pressure, setPressure] = useState(false);
-  useEffect(() => subscribeMemoryPressure(setPressure), []);
-  useEffect(() => {
-    if (active || pin) {
-      setAlive(true);
-      return;
-    }
-    if (!alive) return;
-    const t = setTimeout(() => setAlive(false), pressure ? PRESSURE_EVICT_MS : IDLE_EVICT_MS);
-    return () => clearTimeout(t);
-  }, [active, alive, pressure, pin]);
-  return alive || active || pin;
-}
+import {
+  AddonCollectionView,
+  AddonsView,
+  AwardView,
+  BigPictureShell,
+  BrandsView,
+  Catalogs,
+  CollectionView,
+  CollectionsView,
+  CommunityCollectionsView,
+  CuratedListView,
+  DetailView,
+  Discover,
+  DownloadsView,
+  EpisodeDetailView,
+  FilterView,
+  FollowingView,
+  GridView,
+  LibraryView,
+  MobileShell,
+  Movies,
+  OnboardingModal,
+  PeopleView,
+  PersonView,
+  PlayPicker,
+  PlayerView,
+  PluginsView,
+  QueueView,
+  RadarView,
+  REMOVED_PAGES,
+  ServiceView,
+  Settings,
+  Shows,
+  useViewPreloader,
+  WrappedView,
+} from "@/app/views";
+import {
+  filterReactKey,
+  parseDeepLinkEpisode,
+  useIdleEvict,
+  useKeepAlive,
+} from "@/app/layer-lifecycle";
+import { clampUiScale, UI_SCALE_ACTIVITY_EVENT, UI_SCALE_STEP } from "@/app/ui-scale";
+import {
+  AutoDownloadRunner,
+  RevealOnMount,
+  TogetherFloater,
+  TogetherLocationPublisher,
+} from "@/app/runners";
 
 export function App({ onReady }: { onReady?: () => void }) {
   return (
@@ -429,126 +279,6 @@ export function App({ onReady }: { onReady?: () => void }) {
       </ProfilesProvider>
     </SettingsProvider>
   );
-}
-
-function TogetherFloater() {
-  const { chromeHidden } = useView();
-  if (chromeHidden) return null;
-  return (
-    <>
-      <TogetherChatToast />
-      <TogetherCursors />
-    </>
-  );
-}
-
-function AutoDownloadRunner() {
-  useAutoDownloadRunner();
-  return null;
-}
-
-function TogetherLocationPublisher() {
-  const { topKind, meta, personId, picker, player, service, addonDetailId } = useView();
-  const { snapshot, sendPresence } = useTogether();
-  const inSession = snapshot.state === "joined";
-  const participantsCount = snapshot.participants.length;
-  useEffect(() => {
-    if (!inSession) return;
-    const location = computeLocation();
-    sendPresence(location ?? undefined);
-    const id = window.setInterval(() => sendPresence(location ?? undefined), 6000);
-    return () => window.clearInterval(id);
-    function computeLocation(): import("@/lib/together/protocol").ParticipantLocation | null {
-      const metaToLoc = (m: import("@/lib/cinemeta").Meta) => ({
-        id: m.id,
-        type: (m.type === "series" ? "series" : "movie") as "movie" | "series",
-        name: m.name,
-        poster: m.poster,
-        background: m.background,
-        releaseInfo: m.releaseInfo,
-        logo: m.logo,
-      });
-      if (player) {
-        return {
-          kind: "player" as const,
-          meta: metaToLoc(player.meta),
-          episode: player.episode
-            ? {
-                season: player.episode.season,
-                episode: player.episode.episode,
-                name: player.episode.name,
-              }
-            : undefined,
-        };
-      }
-      if (picker) {
-        return {
-          kind: "picker" as const,
-          meta: metaToLoc(picker.meta),
-          episode: picker.episode
-            ? {
-                season: picker.episode.season,
-                episode: picker.episode.episode,
-                name: picker.episode.name,
-              }
-            : undefined,
-        };
-      }
-      if (topKind === "meta" && meta) return { kind: "meta" as const, meta: metaToLoc(meta) };
-      if (topKind === "person" && personId != null) return { kind: "person" as const, personId };
-      if (topKind === "service" && service) return { kind: "service" as const, service };
-      if (topKind === "addon-detail" && addonDetailId)
-        return { kind: "addon-detail" as const, addonId: addonDetailId };
-      if (topKind === "home") return { kind: "home" };
-      if (topKind === "discover") return { kind: "discover" };
-      if (topKind === "queue") return { kind: "queue" };
-      if (topKind === "addons") return { kind: "addons" };
-      if (topKind === "library") return { kind: "home" };
-      if (topKind === "settings") return { kind: "settings" };
-      return null;
-    }
-  }, [
-    inSession,
-    sendPresence,
-    topKind,
-    meta?.id,
-    personId,
-    picker?.meta.id,
-    picker?.episode?.season,
-    picker?.episode?.episode,
-    player?.meta.id,
-    player?.episode?.season,
-    player?.episode?.episode,
-    service,
-    addonDetailId,
-    participantsCount,
-  ]);
-  return null;
-}
-
-function filterReactKey(f: MetaFilter): string {
-  if (f.kind === "year" || f.kind === "runtime")
-    return `filter-${f.kind}-${f.mediaType}-${f.value}`;
-  if (f.kind === "country" || f.kind === "language")
-    return `filter-${f.kind}-${f.mediaType}-${f.iso}`;
-  return `filter-${f.kind}-${f.mediaType}-${f.id}`;
-}
-
-function parseDeepLinkEpisode(videoId?: string): { season: number; episode: number } | undefined {
-  if (!videoId) return undefined;
-  const parts = videoId.split(":");
-  if (parts.length < 3) return undefined;
-  const season = Number(parts[parts.length - 2]);
-  const episode = Number(parts[parts.length - 1]);
-  if (!Number.isFinite(season) || !Number.isFinite(episode)) return undefined;
-  return { season, episode };
-}
-
-function RevealOnMount({ onReady }: { onReady?: () => void }) {
-  useEffect(() => {
-    onReady?.();
-  }, [onReady]);
-  return null;
 }
 
 function Shell({ onReady }: { onReady?: () => void }) {

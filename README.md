@@ -78,6 +78,10 @@ pnpm test
 
 `scripts/test-installer-hooks.ps1` checks the Windows installer hook against decoy processes.
 
+## Architecture
+
+See [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) for the directory layout, module boundaries, compatibility identifiers, build/test commands, and cleanup path mapping.
+
 ## License
 
 MIT. See [LICENSE](LICENSE).

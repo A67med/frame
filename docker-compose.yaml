@@ -1,9 +1,9 @@
 services:
-  harbor-web:
+  frame-web:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: harbor-web
+    container_name: frame-web
     restart: unless-stopped
     ports:
       - "1420:1420"

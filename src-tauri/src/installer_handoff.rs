@@ -66,7 +66,7 @@ fn ensure_recovery_marker(dest: &Path, version: &str) -> Result<bool, String> {
         return read_install_marker(dest)
             .filter(|value| value.payload_version.unwrap_or(0) > 0)
             .map(|_| false)
-            .ok_or_else(|| "the existing Harbor install marker is invalid".into());
+            .ok_or_else(|| "the existing Frame install marker is invalid".into());
     }
     if !dest.join("frame.exe").is_file() {
         return Err("the Frame installation is missing frame.exe".into());

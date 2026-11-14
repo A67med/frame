@@ -80,7 +80,7 @@ jobs:
           echo "sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
           echo "ready=true" >> "$GITHUB_OUTPUT"
 
-build:
+  build:
     name: Windows x64 (NSIS)
     needs: prepare
     if: needs.prepare.outputs.ready == 'true'

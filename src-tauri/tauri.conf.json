@@ -1,7 +1,7 @@
 {
   "$schema": "https://schema.tauri.app/config/2",
   "productName": "Frame",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "identifier": "io.github.abdallahkattriah-sketch.frame",
   "build": {
     "beforeDevCommand": "pnpm dev",
@@ -127,7 +127,7 @@
     },
     "updater": {
       "endpoints": [
-        "https://github.com/abdallahkattriah-sketch/frame/releases/latest/download/latest.json"
+        "https://github.com/A67med/frame/releases/latest/download/latest.json"
       ],
       "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IDcyNzM0QzQ5MjdDNzkxOUUKUldTZWtjY25TVXh6Y3BVMi9ObUJDWVVRelVucVpkaDlaMFNidlZzUjBNUzZ4MEFLeFUvcndWREMK",
       "windows": {

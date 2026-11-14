@@ -1,6 +1,6 @@
 # Frame Architecture Guide
 
-Frame is a cross-platform desktop and TV media client built with **Tauri 2**, **React**, **TypeScript**, **Rust**, and **libmpv**. Frame originated as a fork of Harbor (`crazyrabbit0/harbor`) and maintains its MIT license attribution (`LICENSE`, `src-tauri/THIRD-PARTY-NOTICES.txt`) while evolving as an independent project at `abdallahkattriah-sketch/frame`.
+Frame is a cross-platform desktop and TV media client built with **Tauri 2**, **React**, **TypeScript**, **Rust**, and **libmpv**. Frame originated as a fork of Harbor (`crazyrabbit0/harbor`) and maintains its MIT license attribution (`LICENSE`, `src-tauri/THIRD-PARTY-NOTICES.txt`) while evolving as an independent project at `A67med/frame` (`abdallahkattriah-sketch/frame`).
 
 ## 1. Repository Layout
 
@@ -74,7 +74,7 @@ Several identifiers intentionally retain `harbor` prefixes for backward compatib
 
 - **Preserved runtime identifiers**: `harbor.*` storage keys, `harbor://` and `harbor:*` events, `harbor-*` CSS classes, `data-harbor-*` attributes, `HARBOR_*` environment variables, window labels (`harbor-pip`, `harbor-browser`, `harbor-modal-overlay`, `harbor-cf-solver`, `harbor-dj`, `harbor-ytmusic-embed`), `.harborstyle` / `.framestyle` theme formats, `harbor-install.json` installer marker, `harbor_lan` mDNS discovery, and all registered Tauri command names (`harbor_fetch`, `harbor_take_pending_file`, `harbor_flush_done`, etc.).
 - **Preserved crate/bundle resource paths**: `harbor-core/`, `harbor-install-recovery/`, `harbor-audio-plugin/`, and `src-tauri/resources/harbor-stream-blocker/` keep their established directory names so CI workflows, Flatpak manifests, macOS HAL lookup, and Windows bundle checks stay intact.
-- **Frame identity**: `package.json`, `src-tauri/tauri.conf.json`, Cargo package `frame`, bundle ID `io.github.abdallahkattriah-sketch.frame` (Flatpak `io.github.abdallahkattriah_sketch.Frame`), binary `frame.exe`, and repository links pointing to `https://github.com/abdallahkattriah-sketch/frame`.
+- **Frame identity**: `package.json`, `src-tauri/tauri.conf.json`, Cargo package `frame`, bundle ID `io.github.abdallahkattriah-sketch.frame` (Flatpak `io.github.abdallahkattriah_sketch.Frame`), binary `frame.exe`, updater endpoint `https://github.com/A67med/frame/releases/latest/download/latest.json`, and repository links pointing to `A67med/frame` / `abdallahkattriah-sketch/frame`.
 
 ## 5. Build, Check & Test Commands
 

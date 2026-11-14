@@ -7,6 +7,7 @@ import {
 } from "@/lib/player/playback-clock";
 import { isTruncatedEnd } from "@/lib/player/playback-end";
 import { isLocalUrl } from "@/lib/player/local-url";
+import { canAutoRetryStuckLoad } from "@/lib/player/stall-wait";
 import { clearOnePickerCache } from "@/lib/picker-cache";
 import { resolveViaDebrids } from "@/lib/streams/resolve";
 import { registerStreamProxy } from "@/lib/stream-proxy";
@@ -513,12 +514,14 @@ export function useAutoRetry(params: {
   ]);
 
   useEffect(() => {
-    if (snap.status === "ended") return;
     if (isP2pEngine && !engineFailure) return;
     if (!instantPlay && !inRoom) return;
-    if (snap.durationSec > 0 || getPlaybackPosition() > 1) return;
+    // Never restart a paused session. A paused stream can still have no duration
+    // or clock position, especially when paused before the first decoded frame.
+    if (!canAutoRetryStuckLoad(snap, getPlaybackPosition())) return;
     const t = window.setTimeout(() => {
-      if (snap.durationSec === 0 && getPlaybackPosition() === 0) {
+      // Check the latest snapshot too: pause/resume may happen while a retry is queued.
+      if (canAutoRetryStuckLoad(snapRef.current, getPlaybackPosition())) {
         triggerAutoRetry("stuck on load");
       }
     }, STUCK_AUTORETRY_MS);
@@ -527,6 +530,9 @@ export function useAutoRetry(params: {
     src.url,
     snap.durationSec,
     snap.status,
+    snap.firstFrameReady,
+    snap.videoWidth,
+    snap.videoHeight,
     triggerAutoRetry,
     isP2pEngine,
     engineFailure,

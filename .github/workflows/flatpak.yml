@@ -2,6 +2,11 @@ name: Flatpak
 
 on:
   workflow_dispatch:
+  pull_request:
+    paths:
+      - "flatpak/**"
+      - "src-tauri/tauri.flatpak.conf.json"
+      - ".github/workflows/flatpak.yml"
   workflow_call:
     inputs:
       ref:

@@ -118,8 +118,8 @@ jobs:
           # inside it), each path dependency outside it, and this workflow.
           if git diff --quiet "$BASE_SHA" "$GITHUB_SHA" -- \
             src-tauri \
-            harbor-core \
-            harbor-install-recovery \
+            crates/frame-core \
+            crates/frame-install-recovery \
             .github/workflows/ci.yml; then
             echo "changed=false" >> "$GITHUB_OUTPUT"
           else
@@ -154,8 +154,8 @@ jobs:
         uses: Swatinem/rust-cache@v2
         with:
           workspaces: |
-            harbor-core
-            harbor-install-recovery
+            crates/frame-core
+            crates/frame-install-recovery
             src-tauri
 
       - name: Check Tauri application
@@ -179,4 +179,4 @@ jobs:
 
       - name: Test install recovery
         if: steps.native-changes.outputs.changed == 'true'
-        run: cargo test --manifest-path harbor-install-recovery/Cargo.toml --locked
+        run: cargo test --manifest-path crates/frame-install-recovery/Cargo.toml --locked

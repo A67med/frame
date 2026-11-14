@@ -461,7 +461,7 @@ pub fn handoff_confirm(app: tauri::AppHandle, window: tauri::WebviewWindow) -> R
         return Ok(());
     }
     let dest = install_dir().ok_or("cannot resolve the install directory")?;
-    harbor_install_recovery::acknowledge(&dest, &app.package_info().version.to_string())
+    frame_install_recovery::acknowledge(&dest, &app.package_info().version.to_string())
         .map_err(|e| e.to_string())
 }
 
@@ -517,7 +517,7 @@ mod tests {
         std::fs::create_dir_all(&dest).unwrap();
         std::fs::write(dest.join("frame.exe"), b"test").unwrap();
 
-        assert!(harbor_install_recovery::Transaction::begin(&dest, "0.999.1").is_err());
+        assert!(frame_install_recovery::Transaction::begin(&dest, "0.999.1").is_err());
         assert!(ensure_recovery_marker(&dest, "0.9.124").unwrap());
 
         let marker: serde_json::Value =
@@ -527,7 +527,7 @@ mod tests {
         assert_eq!(marker["installer"], "harbor-bootstrap");
         assert!(!ensure_recovery_marker(&dest, "0.9.124").unwrap());
 
-        let transaction = harbor_install_recovery::Transaction::begin(&dest, "0.999.1").unwrap();
+        let transaction = frame_install_recovery::Transaction::begin(&dest, "0.999.1").unwrap();
         let recovery = transaction.root().to_path_buf();
         drop(transaction);
         std::fs::remove_dir_all(recovery).unwrap();

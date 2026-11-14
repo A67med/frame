@@ -1,8 +1,8 @@
 [package]
-name = "harbor-core"
+name = "frame-core"
 version = "0.1.0"
 edition = "2021"
-description = "Shared protocol layer for Harbor: stream parsing, trust filtering, scoring."
+description = "Shared protocol layer for Frame: stream parsing, trust filtering, scoring."
 
 [package.metadata.wasm-pack.profile.release]
 wasm-opt = false

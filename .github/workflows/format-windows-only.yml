@@ -27,10 +27,6 @@ jobs:
         run: |
           vp fmt .github/workflows/harbor-core.yml .github/workflows/release-packaging-smoke.yml scripts/release-assets.mjs tests/windows-release-manifest.test.mjs
           git diff --check
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add .github/workflows/harbor-core.yml .github/workflows/release-packaging-smoke.yml scripts/release-assets.mjs tests/windows-release-manifest.test.mjs
-          if ! git diff --cached --quiet; then
-            git commit -m "style(ci): apply project formatter to Windows-only release changes"
-            git push origin HEAD:ci/windows-only-release-20261114
-          fi
+          echo "===== FORMATTED DIFF START ====="
+          git diff -- .github/workflows/harbor-core.yml .github/workflows/release-packaging-smoke.yml scripts/release-assets.mjs tests/windows-release-manifest.test.mjs
+          echo "===== FORMATTED DIFF END ====="

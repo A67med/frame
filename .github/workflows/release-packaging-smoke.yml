@@ -32,4 +32,3 @@ jobs:
           if ((Get-Item "src-tauri/fonts/Inter-Variable.ttf").Length -lt 100000) {
             throw "Inter-Variable.ttf suspiciously small"
           }
-

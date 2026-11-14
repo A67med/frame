@@ -18,6 +18,7 @@
     "check:tvresources": "node scripts/check-tv-resources.mjs",
     "check:orphanstrings": "node scripts/orphan-strings.mjs",
     "check:capstan": "node scripts/capstan-stage.mjs --check",
+    "check:hygiene": "node scripts/check-repo-hygiene.mjs",
     "tauri": "tauri",
     "tauri:build:linux-system": "tauri build --config src-tauri/tauri.linux-system.conf.json",
     "build:tv": "tsc -b && vite build --mode android",

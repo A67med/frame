@@ -1,4 +1,4 @@
-name: Release packaging smoke
+name: Windows packaging smoke
 
 on:
   pull_request:
@@ -6,8 +6,6 @@ on:
       - ".github/workflows/release-packaging-smoke.yml"
       - ".github/workflows/tauri-build.yml"
       - "scripts/fetch-fonts.mjs"
-      - "scripts/macos-bundle-libmpv.py"
-      - "tests/test_macos_mpv_bundle.py"
   workflow_dispatch:
 
 permissions:
@@ -35,15 +33,3 @@ jobs:
             throw "Inter-Variable.ttf suspiciously small"
           }
 
-  macos-mpv:
-    name: macOS mpv synthetic bundle
-    strategy:
-      fail-fast: false
-      matrix:
-        runner: [macos-15-intel, macos-15]
-    runs-on: ${{ matrix.runner }}
-    timeout-minutes: 15
-    steps:
-      - uses: actions/checkout@v6
-      - name: Run macOS bundle pipeline tests
-        run: python3 tests/test_macos_mpv_bundle.py

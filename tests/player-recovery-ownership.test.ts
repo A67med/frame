@@ -3,6 +3,7 @@ import { readFileSync } from "node:fs";
 import test from "node:test";
 import ts from "typescript";
 import { emptySnapshot } from "../src/lib/player/bridge.ts";
+import { canAutoRetryStuckLoad } from "../src/lib/player/stall-wait.ts";
 
 function deferred<T = any>() {
   let resolve!: (value: T) => void, reject!: (error: Error) => void;
@@ -72,6 +73,7 @@ function recoveryHarness() {
     usePlaybackFlag: (read: () => boolean) => read(),
     isLocalUrl: () => false,
     isTruncatedEnd: () => false,
+    canAutoRetryStuckLoad,
     clearOnePickerCache() {},
     registerStreamProxy: (...args: any[]) => {
       const job = deferred();

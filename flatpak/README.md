@@ -1,6 +1,6 @@
 # Flatpak packaging
 
-Harbor is built as `io.github.abdallahkattriah_sketch.Frame` against the pinned GNOME 49 SDK. mpv is
+Frame is built as `io.github.abdallahkattriah_sketch.Frame` against the pinned GNOME 49 SDK. mpv is
 built in the sandbox, FFmpeg tools come from the SDK and use the codecs supplied
 through the matching platform runtime, and yt-dlp is installed at a digest-pinned
 version. No host multimedia tools are visible to the application.
@@ -25,7 +25,7 @@ packaged commands must resolve under `/app/bin`.
 
 ## Updating JavaScript or Rust dependencies
 
-After updating Harbor's version and lockfiles, refresh all Flatpak release
+After updating Frame's version and lockfiles, refresh all Flatpak release
 metadata and pinned dependency sources with:
 
 ```sh

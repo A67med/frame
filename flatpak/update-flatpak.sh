@@ -151,4 +151,4 @@ desktop-file-validate flatpak/io.github.abdallahkattriah_sketch.Frame.desktop
 appstreamcli validate --no-net "$metadata"
 flatpak-builder --show-manifest "$manifest" >/dev/null
 
-echo "Flatpak sources and metadata refreshed for Harbor $version ($release_date)."
+echo "Flatpak sources and metadata refreshed for Frame $version ($release_date)."

@@ -7,9 +7,7 @@ if (!version || !names.length) {
 }
 
 const base = `https://github.com/A67med/frame/releases/download/v${version}`;
-const ROWS = [
-  ["Windows", "x64", [/_x64-setup\.exe$/]],
-];
+const ROWS = [["Windows", "x64", [/_x64-setup\.exe$/]]];
 
 const lines = ["| OS | Architecture | Download |", "| --- | --- | --- |"];
 for (const [os, arch, patterns] of ROWS) {

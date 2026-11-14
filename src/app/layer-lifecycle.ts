@@ -47,7 +47,9 @@ export function filterReactKey(f: MetaFilter): string {
   return `filter-${f.kind}-${f.mediaType}-${f.id}`;
 }
 
-export function parseDeepLinkEpisode(videoId?: string): { season: number; episode: number } | undefined {
+export function parseDeepLinkEpisode(
+  videoId?: string,
+): { season: number; episode: number } | undefined {
   if (!videoId) return undefined;
   const parts = videoId.split(":");
   if (parts.length < 3) return undefined;

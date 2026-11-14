@@ -522,4 +522,6 @@ export const NAV_GROUPS: Array<{ heading: string | null; items: NavItem[] }> = [
   },
 ];
 
-export const NAV_ITEM_BY_ID = new Map(NAV_GROUPS.flatMap((g) => g.items).map((i) => [i.id, i] as const));
+export const NAV_ITEM_BY_ID = new Map(
+  NAV_GROUPS.flatMap((g) => g.items).map((i) => [i.id, i] as const),
+);

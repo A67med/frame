@@ -111,8 +111,7 @@ impl Transaction {
     pub fn commit(&self) -> io::Result<()> {
         plain_path(&self.stage())?;
         plain_path(&self.previous())?;
-        if !has_app_executable(&self.stage())
-            || !self.stage().join("harbor-install.json").is_file()
+        if !has_app_executable(&self.stage()) || !self.stage().join("harbor-install.json").is_file()
         {
             return Err(invalid("staged application is incomplete"));
         }
@@ -265,8 +264,8 @@ mod tests {
             .duration_since(std::time::UNIX_EPOCH)
             .unwrap()
             .as_nanos();
-        let root = std::env::temp_dir()
-            .join(format!("frame-recovery-test-{}-{id}", std::process::id()));
+        let root =
+            std::env::temp_dir().join(format!("frame-recovery-test-{}-{id}", std::process::id()));
         let dest = root.join("Frame");
         fs::create_dir_all(&dest).unwrap();
         fs::write(dest.join("frame.exe"), b"old-frame").unwrap();

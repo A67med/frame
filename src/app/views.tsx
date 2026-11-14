@@ -49,8 +49,12 @@ export const GridView = lazy(() => importGrid().then((m) => ({ default: m.GridVi
 export const PersonView = lazy(() => importPerson().then((m) => ({ default: m.PersonView })));
 export const PeopleView = lazy(() => importPeople().then((m) => ({ default: m.PeopleView })));
 export const RadarView = lazy(() => importRadar().then((m) => ({ default: m.RadarView })));
-export const FollowingView = lazy(() => importFollowing().then((m) => ({ default: m.FollowingView })));
-export const CollectionView = lazy(() => importCollection().then((m) => ({ default: m.CollectionView })));
+export const FollowingView = lazy(() =>
+  importFollowing().then((m) => ({ default: m.FollowingView })),
+);
+export const CollectionView = lazy(() =>
+  importCollection().then((m) => ({ default: m.CollectionView })),
+);
 export const AddonCollectionView = lazy(() =>
   import("@/views/addon-collection").then((m) => ({ default: m.AddonCollectionView })),
 );
@@ -71,7 +75,9 @@ export const ServiceView = lazy(() => importService().then((m) => ({ default: m.
 export const Settings = lazy(() => importSettings().then((m) => ({ default: m.Settings })));
 export const Shows = lazy(() => importShows().then((m) => ({ default: m.Shows })));
 export const LibraryView = lazy(() => importLibrary().then((m) => ({ default: m.LibraryView })));
-export const DownloadsView = lazy(() => importDownloads().then((m) => ({ default: m.DownloadsView })));
+export const DownloadsView = lazy(() =>
+  importDownloads().then((m) => ({ default: m.DownloadsView })),
+);
 export const OnboardingModal = lazy(() =>
   importOnboarding().then((m) => ({ default: m.OnboardingModal })),
 );

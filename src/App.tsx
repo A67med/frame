@@ -165,11 +165,7 @@ import {
   useIdleEvict,
   useKeepAlive,
 } from "@/app/layer-lifecycle";
-import {
-  clampUiScale,
-  UI_SCALE_ACTIVITY_EVENT,
-  UI_SCALE_STEP,
-} from "@/app/ui-scale";
+import { clampUiScale, UI_SCALE_ACTIVITY_EVENT, UI_SCALE_STEP } from "@/app/ui-scale";
 import {
   AutoDownloadRunner,
   RevealOnMount,

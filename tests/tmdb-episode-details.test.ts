@@ -3,7 +3,10 @@ import assert from "node:assert/strict";
 // @ts-expect-error Node test types are intentionally outside the browser-only tsconfig.
 import test from "node:test";
 import "./_localstorage-stub.ts";
-import type { EpisodeDetail, TmdbEpisodeResponse } from "../src/lib/providers/tmdb/tmdb-episode-types.ts";
+import type {
+  EpisodeDetail,
+  TmdbEpisodeResponse,
+} from "../src/lib/providers/tmdb/tmdb-episode-types.ts";
 
 const realFetch = globalThis.fetch;
 

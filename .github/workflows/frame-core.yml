@@ -1,20 +1,20 @@
-name: Harbor Core
+name: Frame Core
 
 on:
   push:
     paths:
-      - "harbor-core/**"
-      - ".github/workflows/harbor-core.yml"
+      - "crates/frame-core/**"
+      - ".github/workflows/frame-core.yml"
   pull_request:
     paths:
-      - "harbor-core/**"
-      - ".github/workflows/harbor-core.yml"
+      - "crates/frame-core/**"
+      - ".github/workflows/frame-core.yml"
 
 permissions:
   contents: read
 
 concurrency:
-  group: harbor-core-${{ github.workflow }}-${{ github.ref }}
+  group: frame-core-${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
@@ -25,7 +25,7 @@ jobs:
 
     defaults:
       run:
-        working-directory: harbor-core
+        working-directory: crates/frame-core
     steps:
       - name: Checkout
         uses: actions/checkout@v6
@@ -36,7 +36,7 @@ jobs:
       - name: Cache Rust build
         uses: Swatinem/rust-cache@v2
         with:
-          workspaces: harbor-core
+          workspaces: crates/frame-core
       - run: cargo check --all-targets
       - run: cargo test --all-targets
       - run: cargo clippy --all-targets -- -D warnings

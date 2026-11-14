@@ -41,10 +41,10 @@ jobs:
       - uses: taiki-e/install-action@v2
         with:
           tool: cargo-audit
-      - name: Audit harbor-core and install recovery
+      - name: Audit frame-core and install recovery
         run: |
-          cargo audit --file harbor-core/Cargo.lock
-          cargo audit --file harbor-install-recovery/Cargo.lock
+          cargo audit --file crates/frame-core/Cargo.lock
+          cargo audit --file crates/frame-install-recovery/Cargo.lock
       - name: Audit the Tauri application
         # zip 4 -> 9: RUSTSEC-2026-0367/0368/0369/0429 (direct and tauri-plugin-updater)
         # quick-xml < 0.41: RUSTSEC-2026-0194/0195 (transitive)

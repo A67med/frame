@@ -96,7 +96,7 @@ jobs:
       - uses: Swatinem/rust-cache@v2
         with:
           workspaces: |
-            harbor-core
+            crates/frame-core
             src-tauri
       - uses: pnpm/action-setup@v5
       - uses: actions/setup-node@v6
@@ -120,7 +120,7 @@ jobs:
       - name: Fetch external binaries
         run: pnpm run setup:binaries
       - name: Check and test media core
-        working-directory: harbor-core
+        working-directory: crates/frame-core
         run: |
           cargo check
           cargo test --all-targets

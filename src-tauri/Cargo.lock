@@ -1968,9 +1968,9 @@ dependencies = [
  "gilrs",
  "gtk",
  "hadris-iso",
- "harbor-core",
- "harbor-install-recovery",
  "harbor-udfread",
+ "frame-core",
+ "frame-install-recovery",
  "hound",
  "httpdate",
  "image",
@@ -2665,7 +2665,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "harbor-core"
+name = "frame-core"
 version = "0.1.0"
 dependencies = [
  "js-sys",
@@ -2679,7 +2679,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "harbor-install-recovery"
+name = "frame-install-recovery"
 version = "0.1.0"
 
 [[package]]

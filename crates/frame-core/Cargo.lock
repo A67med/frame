@@ -87,7 +87,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "harbor-core"
+name = "frame-core"
 version = "0.1.0"
 dependencies = [
  "js-sys",

@@ -107,6 +107,7 @@ export default defineConfig(({ mode }) => {
           "**/.firecrawl/**",
           "**/.diag/**",
           "**/_private/**",
+          "**/crates/frame-install-recovery/**",
           "**/harbor-install-recovery/**",
         ],
       },

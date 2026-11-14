@@ -4,7 +4,7 @@ dist/
 build/
 src-tauri/target/
 src-tauri/binaries/
-harbor-core/target/
+crates/frame-core/target/
 .git/
 .github/
 .vscode/

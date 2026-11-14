@@ -63,6 +63,12 @@ Frame checks GitHub Releases for a newer version and downloads it in the backgro
 
 Merging reviewed changes into `main` triggers the Windows-only Release workflow. The workflow prepares a consistent version, builds a signed Windows x64 NSIS installer, checks required bundled runtimes, generates a Windows-only `latest.json`, and publishes the GitHub Release automatically only after the build succeeds. macOS/Linux/Flatpak do not block Windows publication; Flatpak is manual-only. In-app updates require the `TAURI_SIGNING_PRIVATE_KEY` Actions secret matching `plugins.updater.pubkey` in `src-tauri/tauri.conf.json`. Builds with the previous updater public key may need a one-time manual installation.
 
+## Architecture & Documentation
+
+- [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md): Architecture guide, module structure, and subsystem responsibilities.
+- [docs/SOURCE-CLEANUP-AUDIT.md](docs/SOURCE-CLEANUP-AUDIT.md): Inventory, dependency tracking, and cleanup audit.
+- [docs/LEGACY-COMPATIBILITY.md](docs/LEGACY-COMPATIBILITY.md): Compatibility invariants, persistent keys, and theme contracts.
+
 ## Development
 
 ```sh
@@ -71,6 +77,7 @@ pnpm dev                 # browser build on http://127.0.0.1:1420
 pnpm tauri dev           # desktop app
 pnpm run typecheck
 pnpm test
+pnpm run check:hygiene   # repository hygiene & invariants check
 ```
 
 `scripts/test-installer-hooks.ps1` checks the Windows installer hook against decoy processes.

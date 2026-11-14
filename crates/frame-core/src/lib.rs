@@ -1,4 +1,4 @@
-//! Harbor shared protocol core.
+//! Frame shared protocol core.
 //!
 //! Hosts the pure-function pieces of the Stremio addon protocol pipeline so the same
 //! logic can run in the WebView via wasm-bindgen and in native shells via direct rlib
@@ -19,8 +19,13 @@ fn to_js_err<E: std::fmt::Display>(e: E) -> JsValue {
 }
 
 #[wasm_bindgen]
-pub fn harbor_core_version() -> String {
+pub fn frame_core_version() -> String {
     env!("CARGO_PKG_VERSION").to_string()
+}
+
+#[wasm_bindgen]
+pub fn harbor_core_version() -> String {
+    frame_core_version()
 }
 
 #[wasm_bindgen(start)]

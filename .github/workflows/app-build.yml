@@ -40,7 +40,7 @@ jobs:
         uses: Swatinem/rust-cache@v2
         with:
           workspaces: |
-            harbor-core
+            crates/frame-core
             src-tauri
 
       - name: Setup pnpm

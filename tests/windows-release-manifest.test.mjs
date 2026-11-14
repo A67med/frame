@@ -24,9 +24,14 @@ test("the updater manifest publishes Windows x64 only and references its signed 
     execFileSync(process.execPath, [script, "0.2.1", upload, sigs, join(dir, "notes.md")]);
     const manifest = JSON.parse(readFileSync(join(upload, "latest.json"), "utf8"));
     assert.deepEqual(Object.keys(manifest.platforms), ["windows-x86_64"]);
-    assert.match(manifest.platforms["windows-x86_64"].url, /A67med\/frame\/releases\/download\/v0\.2\.1\/Frame_0\.2\.1_x64-setup\.exe$/);
+    assert.match(
+      manifest.platforms["windows-x86_64"].url,
+      /A67med\/frame\/releases\/download\/v0\.2\.1\/Frame_0\.2\.1_x64-setup\.exe$/,
+    );
     assert.equal(manifest.platforms["windows-x86_64"].signature, "fixture-signature");
-    const rows = execFileSync(process.execPath, [downloads, "0.2.1", "Frame_0.2.1_x64-setup.exe"], { encoding: "utf8" });
+    const rows = execFileSync(process.execPath, [downloads, "0.2.1", "Frame_0.2.1_x64-setup.exe"], {
+      encoding: "utf8",
+    });
     assert.match(rows, /\| Windows \| x64 \|/);
     assert.doesNotMatch(rows, /macOS|Linux|abdallahkattriah-sketch/);
   } finally {
@@ -43,7 +48,11 @@ test("the updater manifest refuses unsigned or missing Windows installer", () =>
     mkdirSync(sigs);
     writeFileSync(join(upload, "Frame_0.2.1_x64-setup.exe"), "dummy-installer");
     writeFileSync(join(dir, "notes.md"), "Windows fixes");
-    const result = spawnSync(process.execPath, [script, "0.2.1", upload, sigs, join(dir, "notes.md")], { encoding: "utf8" });
+    const result = spawnSync(
+      process.execPath,
+      [script, "0.2.1", upload, sigs, join(dir, "notes.md")],
+      { encoding: "utf8" },
+    );
     assert.notEqual(result.status, 0);
     assert.match(result.stderr, /missing Frame_0\.2\.1_x64-setup\.exe or its signature/);
   } finally {

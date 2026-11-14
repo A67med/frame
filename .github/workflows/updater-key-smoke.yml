@@ -42,7 +42,7 @@ jobs:
             exit 1
           fi
           printf 'Frame signing smoke test - no executable or user data\n' > signing-test.txt
-          node node_modules/@tauri-apps/cli/tauri.js signer sign -p "" --app-version 0.2.1 signing-test.txt >/dev/null
+          node node_modules/@tauri-apps/cli/tauri.js signer sign -p "" signing-test.txt >/dev/null
           test -s signing-test.txt.sig
       - name: Verify signature with the checked-in public key
         run: |

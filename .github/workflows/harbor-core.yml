@@ -40,4 +40,3 @@ jobs:
       - run: cargo check --all-targets
       - run: cargo test --all-targets
       - run: cargo clippy --all-targets -- -D warnings
-

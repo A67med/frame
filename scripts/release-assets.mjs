@@ -6,14 +6,8 @@ if (!version || !names.length) {
   process.exit(1);
 }
 
-const base = `https://github.com/abdallahkattriah-sketch/frame/releases/download/v${version}`;
-const ROWS = [
-  ["Windows", "x64", [/_x64-setup\.exe$/]],
-  ["macOS", "Apple silicon", [/_aarch64\.dmg$/]],
-  ["macOS 15+", "Intel", [/_x64\.dmg$/]],
-  ["Linux", "x86_64", [/_amd64\.deb$/, /_amd64\.AppImage$/, /_x86_64\.flatpak$/]],
-  ["Linux", "arm64", [/_arm64\.deb$/, /_aarch64\.AppImage$/]],
-];
+const base = `https://github.com/A67med/frame/releases/download/v${version}`;
+const ROWS = [["Windows", "x64", [/_x64-setup\.exe$/]]];
 
 const lines = ["| OS | Architecture | Download |", "| --- | --- | --- |"];
 for (const [os, arch, patterns] of ROWS) {

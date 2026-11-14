@@ -33,9 +33,9 @@ The phone remote and Frame in a browser are off until you turn them on (**Settin
 
 ## Install
 
-Requirements: Windows 10 or 11 (x64). macOS and Linux builds are also produced.
+Requirements: Windows 10 or 11 (x64). Frame officially builds and releases Windows x64 only. macOS and Linux code may remain in the repository but is not tested or distributed.
 
-Download the installer for your platform from [Releases](https://github.com/abdallahkattriah-sketch/frame/releases). The Windows installer includes mpv and its runtime files. Windows also needs WebView2, which the installer sets up if it's missing.
+Download the Windows x64 installer from [Releases](https://github.com/A67med/frame/releases). The Windows installer includes mpv and its runtime files. Windows also needs WebView2, which the installer sets up if it's missing.
 
 Frame stores its data under the identifier `io.github.abdallahkattriah-sketch.frame`. On first launch it copies data from a v0.1.0 install (`app.harbor`) and leaves the original folder in place.
 
@@ -61,10 +61,7 @@ Frame checks GitHub Releases for a newer version and downloads it in the backgro
 
 ## Releases
 
-1. `node scripts/bump-version.mjs <x.y.z>`, commit, and merge to `main`.
-2. Tag that commit `v<x.y.z>` and push the tag.
-
-The Release workflow checks that the tag matches every version file and sits on `main`, builds all platforms, and creates a **draft** release behind the `release` environment. Nothing reaches users until the draft is published by hand. In-app updates need the `TAURI_SIGNING_PRIVATE_KEY` secret to match `plugins.updater.pubkey` in `src-tauri/tauri.conf.json`.
+Merging reviewed changes into `main` triggers the Windows-only Release workflow. The workflow prepares a consistent version, builds a signed Windows x64 NSIS installer, checks required bundled runtimes, generates a Windows-only `latest.json`, and publishes the GitHub Release automatically only after the build succeeds. macOS/Linux/Flatpak do not block Windows publication; Flatpak is manual-only. In-app updates require the `TAURI_SIGNING_PRIVATE_KEY` Actions secret matching `plugins.updater.pubkey` in `src-tauri/tauri.conf.json`. Builds with the previous updater public key may need a one-time manual installation.
 
 ## Development
 

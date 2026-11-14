@@ -360,7 +360,7 @@ def verify_app(args: argparse.Namespace) -> None:
     executable = app / "Contents" / "MacOS" / "frame"
     frameworks_dir = app / "Contents" / "Frameworks"
     if not executable.is_file():
-        raise RuntimeError(f"Harbor executable is missing from {app}")
+        raise RuntimeError(f"Frame executable is missing from {app}")
     if not frameworks_dir.is_dir():
         raise RuntimeError(f"Frameworks directory is missing from {app}")
     if not any(frameworks_dir.glob("libmpv*.dylib")):

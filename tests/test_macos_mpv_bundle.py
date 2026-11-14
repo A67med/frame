@@ -119,10 +119,10 @@ class MacMpvBundleTests(unittest.TestCase):
 
     def app(self):
         staged = self.prepare()
-        app = self.root / "Harbor.app"
+        app = self.root / "Frame.app"
         frameworks = app / "Contents/Frameworks"
         shutil.copytree(self.frameworks, frameworks)
-        executable = write_binary(app / "Contents/MacOS/harbor", loads=["@rpath/libmpv.2.dylib"],
+        executable = write_binary(app / "Contents/MacOS/frame", loads=["@rpath/libmpv.2.dylib"],
                                   rpaths=["@executable_path/../Frameworks"])
         mpv = executable.parent / "mpv"
         shutil.copy2(staged, mpv)
@@ -252,18 +252,18 @@ class MacMpvBundleTests(unittest.TestCase):
                     bundle.verify_app(argparse.Namespace(app=app, target=TRIPLE))
 
     def test_release_selection_never_uses_another_target(self):
-        other = write_binary(self.root / "src-tauri/target/x86_64-apple-darwin/release/harbor")
+        other = write_binary(self.root / "src-tauri/target/x86_64-apple-darwin/release/frame")
         with patch.dict(os.environ, {"CARGO_TARGET_DIR": str(self.root / "src-tauri/target")}):
             with self.assertRaisesRegex(RuntimeError, "Could not locate"):
                 bundle.release_binary(self.root, TRIPLE)
-            native = write_binary(self.root / "src-tauri/target/release/harbor")
+            native = write_binary(self.root / "src-tauri/target/release/frame")
             self.assertEqual(bundle.release_binary(self.root, TRIPLE), native)
-            target = write_binary(self.root / f"src-tauri/target/{TRIPLE}/release/harbor")
+            target = write_binary(self.root / f"src-tauri/target/{TRIPLE}/release/frame")
             self.assertEqual(bundle.release_binary(self.root, TRIPLE), target)
 
     def test_verification_rejects_wrong_architecture_in_final_app(self):
         app, _ = self.app()
-        binary = app / "Contents/MacOS/harbor"
+        binary = app / "Contents/MacOS/frame"
         write_binary(binary, **{**read_binary(binary), "arch": "x86_64"})
         with self.assertRaises(subprocess.CalledProcessError):
             bundle.verify_app(argparse.Namespace(app=app, target=TRIPLE))
@@ -276,7 +276,7 @@ class MacMpvBundleTests(unittest.TestCase):
 
     def test_relative_dependencies_must_exist_inside_frameworks(self):
         app, _ = self.app()
-        executable = app / "Contents/MacOS/harbor"
+        executable = app / "Contents/MacOS/frame"
         frameworks = app / "Contents/Frameworks"
         for load, error in (("@loader_path/../Frameworks/missing.dylib", "unbundled"),
                             ("@rpath/subdir/libmpv.2.dylib", "unbundled"),
